@@ -15,19 +15,23 @@ public class HolaSwing extends JFrame{
     }
 
     protected void ponBoton(String etiqueta, String mensaje) {
-        // Esta clase hereda de una interfaz
-        class MyActionListener implements ActionListener {
-
-            public void actionPerformed(ActionEvent e) {
-                System.out.println(MENSAJE + 
-                " Pulsado sobre ventana '" + _title + "' al boton '" + mensaje + "'");
-            }
-
-        }
 
         JButton boton = new JButton(etiqueta);
         add(boton);
-        boton.addActionListener(new MyActionListener());
+
+        // Función lambda
+        boton.addActionListener((ActionEvent e) -> 
+                System.out.println(MENSAJE + 
+                " Pulsado sobre ventana '" + _title + "' al botón '" + mensaje + "'")
+        );
+        
+        /*boton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println(MENSAJE + 
+                " Pulsado sobre ventana '" + _title + "' al botón '" + mensaje + "'");
+            }
+        });*/
+
     }
 
     public void init() {
