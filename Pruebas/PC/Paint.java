@@ -1,6 +1,9 @@
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
+import javafx.scene.shape.Circle;
+import sun.security.provider.PolicyParser.GrantEntry;
+
 import java.awt.*;
 import java.io.IOException;
 
@@ -24,8 +27,8 @@ public class Paint extends JFrame {
         }
     }
 
-    public void update(long deltaTime){
-        _x += _incrX * deltaTime / 1000.0;
+    public void update(double deltaTime){
+        _x += _incrX * deltaTime;
 
         if (_x < 0) {
             _x = -_x;
@@ -37,31 +40,58 @@ public class Paint extends JFrame {
         }
     }
 
-    public void render(){
-        Graphics g = getGraphics();
-        try {
+    public void render(Graphics g){
+        if(_logo != null)
             g.setColor(Color.blue);
-            g.fillRect(0, 0, 400, 400);
-            if (_logo != null) {
-                g.drawImage(_logo, (int)_x, 100, null);
-            }
-        }
-        finally {
-            g.dispose();
-        }
+            g.fillRect(0, 0, 800, 800);
+            g.drawImage(_logo, (int)_x, 100, null);
     }
 
     public static void main(String[] args) {
         Paint ventana = new Paint("Paint");
         ventana.init();
         ventana.setVisible(true);
+
+        int veces = 100;
+        do {
+            try {
+                ventana.createBufferStrategy(2);
+            } catch (Exception e){
+                
+            }
+        } while(veces-- > 0);
+
+        if (veces == 0){
+            System.err.println("No se pudo crear el BufferStrategy.");
+            return;
+        }
+
+        java.awt.image.BufferStrategy strategy;
+        strategy = ventana.getBufferStrategy();
+
         long lastFrameTime = System.nanoTime();
 
         while(true){
+
             long currentTime = System.nanoTime();
-            ventana.update((currentTime - lastFrameTime) / 1000000);
+            long nanoElapsedTime = currentTime - lastFrameTime;
             lastFrameTime = currentTime;
-            ventana.render();
+            double elapsedTime = (double) nanoElapsedTime / 1.0E9;
+
+            ventana.update(elapsedTime);
+            do {
+                do {
+                    Graphics g = strategy.getDrawGraphics();
+                    try {
+                        ventana.render(g);
+                    }
+                    finally {
+                        g.dispose();
+                    }
+                } while(strategy.contentsRestored());
+
+                strategy.show();
+            } while(strategy.contentsLost());
             try {
                 Thread.sleep(1);
             } catch (Exception e) {
@@ -72,6 +102,6 @@ public class Paint extends JFrame {
 
     Image _logo;
     double _x = 0;
-    int _incrX = 5;
+    int _incrX = 50;
     int _imageWidth;
 }
