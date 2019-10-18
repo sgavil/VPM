@@ -1,0 +1,16 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - HolaSwing",
+            "request": "launch",
+            "mainClass": "HolaSwing"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Paint",
+            "request": "launch",
+            "mainClass": "Paint"
+        }
+    ]
+}
