@@ -1,4 +1,4 @@
-package com.gavilanvillar.java_tech;
+package com.gavilanvillar.pc_tech;
 
 import com.gavilanvillar.abs_layer.Graphics;
 import com.gavilanvillar.abs_layer.Image;
@@ -9,7 +9,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 
-public class JGraphics implements Graphics {
+public class PCGraphics implements Graphics {
 
     @Override
     public Image newImage(String name) {
@@ -21,7 +21,7 @@ public class JGraphics implements Graphics {
             System.err.println("<JGrapichs> No se ha podido cargar el recurso: " + name);
         }
 
-        return new JImage(sprite);
+        return new PCImage(sprite);
     }
 
 

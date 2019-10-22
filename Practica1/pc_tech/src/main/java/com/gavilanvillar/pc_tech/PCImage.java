@@ -1,10 +1,10 @@
-package com.gavilanvillar.java_tech;
+package com.gavilanvillar.pc_tech;
 
 import com.gavilanvillar.abs_layer.Image;
 
-public class JImage implements Image {
+public class PCImage implements Image {
 
-    public JImage(java.awt.Image sprite){
+    public PCImage(java.awt.Image sprite){
         this._sprite = sprite;
     }
 

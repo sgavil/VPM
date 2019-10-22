@@ -1,11 +1,11 @@
-package com.gavilanvillar.java_tech;
+package com.gavilanvillar.pc_tech;
 
 import com.gavilanvillar.abs_layer.Game;
 import com.gavilanvillar.abs_layer.Graphics;
 import com.gavilanvillar.abs_layer.Input;
 
-public class JGame implements Game {
-    public JGame(JGraphics graphics, JInput input){
+public class PCGame implements Game {
+    public PCGame(PCGraphics graphics, PCInput input){
         this._graphics = graphics;
         this._input = input;
 
@@ -20,6 +20,6 @@ public class JGame implements Game {
         return _input;
     }
 
-    private static JGraphics _graphics = null;
-    private static JInput _input = null;
+    private static PCGraphics _graphics = null;
+    private static PCInput _input = null;
 }

@@ -1,1 +1,1 @@
-include ':android_entry', ':android_tech', ':java_entry', ':java_tech', ':GameLogic', ':abs_layer'
+include ':android_entry', ':android_tech', ':pc_entry', ':pc_tech', ':GameLogic', ':abs_layer'

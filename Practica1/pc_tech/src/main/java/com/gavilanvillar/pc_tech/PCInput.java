@@ -1,11 +1,11 @@
-package com.gavilanvillar.java_tech;
+package com.gavilanvillar.pc_tech;
 
 
 import com.gavilanvillar.abs_layer.Input;
 
 import java.util.List;
 
-public class JInput implements Input {
+public class PCInput implements Input {
     @Override
     public List<TouchEvent> getTouchEvents() {
         return null;
