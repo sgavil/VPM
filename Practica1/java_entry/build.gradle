@@ -2,6 +2,8 @@ apply plugin: 'java-library'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(path: ':java_tech')
+    implementation project(path: ':GameLogic')
 }
 
 sourceCompatibility = "7"
