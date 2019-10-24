@@ -1,9 +1,0 @@
-apply plugin: 'java-library'
-
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(path: ':abs_layer')
-}
-
-sourceCompatibility = "7"
-targetCompatibility = "7"
