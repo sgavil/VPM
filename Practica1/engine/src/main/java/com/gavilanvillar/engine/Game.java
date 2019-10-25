@@ -4,4 +4,6 @@ public interface Game {
     Graphics getGraphics();
 
     Input getInput();
+
+    void run();
 }

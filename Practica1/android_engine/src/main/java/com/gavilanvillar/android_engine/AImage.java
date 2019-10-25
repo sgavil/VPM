@@ -6,8 +6,16 @@ import com.gavilanvillar.engine.Image;
 
 public class AImage implements Image {
 
+    public void init(){
+
+    }
+
     public AImage(Bitmap image) {
         this._image = image;
+    }
+
+    public Bitmap getImage() {
+        return _image;
     }
 
     @Override

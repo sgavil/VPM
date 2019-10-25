@@ -1,6 +1,7 @@
 package com.gavilanvillar.android_game;
 
 import android.os.Bundle;
+import android.view.SurfaceView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,19 +10,27 @@ import com.gavilanvillar.android_engine.AGraphics;
 import com.gavilanvillar.android_engine.AInput;
 import com.gavilanvillar.game_logic.GameLogic;
 
-public class AndroidGame extends AppCompatActivity {
+public class AndroidEntry extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        init();
+    }
 
-
-        //Se inicializa el motor de android
-        AInput input = new AInput();
-        AGraphics graphics = new AGraphics(this.getAssets());
-        AGame game = new AGame(graphics,input);
+    void init(){
+        // Inicializamos AGame
+        _game = new AGame(new AGraphics(this.getAssets(), new SurfaceView(this)), new AInput());
 
         //Se llama a la logica
-        new GameLogic(game);
+        _gameLogic = new GameLogic();
+        _gameLogic.init(_game);
+
+        _game.run();
     }
+
+    AInput _input;
+    AGraphics _graphics;
+    AGame _game;
+    GameLogic _gameLogic;
 }

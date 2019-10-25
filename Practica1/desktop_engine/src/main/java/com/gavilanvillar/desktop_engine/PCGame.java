@@ -20,6 +20,11 @@ public class PCGame implements Game {
         return _input;
     }
 
+    @Override
+    public void run() {
+
+    }
+
     private static PCGraphics _graphics = null;
     private static PCInput _input = null;
 }

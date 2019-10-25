@@ -1,6 +1,6 @@
-package com.gavilanvillar.desktop_game;
+package com.gavilanvillar.desktop_entry;
 
-public class DesktopGame {
+public class DesktopEntry {
     public static void main(String[]args){
 
         /*PCInput input = new PCInput();

@@ -4,6 +4,7 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.view.SurfaceView;
 
 import com.gavilanvillar.engine.Graphics;
 import com.gavilanvillar.engine.Image;
@@ -13,9 +14,9 @@ import java.io.InputStream;
 
 public class AGraphics implements Graphics {
 
-    public AGraphics(AssetManager assetManager)
-    {
+    public AGraphics(AssetManager assetManager, SurfaceView surfaceView) {
         this._assetManager = assetManager;
+        this._surfaceView = surfaceView;
     }
 
     @Override
@@ -44,9 +45,18 @@ public class AGraphics implements Graphics {
         _canvas.drawColor(color);
     }
 
+    public void lockCanvas(){
+        while(!_surfaceView.getHolder().getSurface().isValid());
+        _canvas = _surfaceView.getHolder().lockCanvas();
+    }
+
+    public void unlockCanvas(){
+        _surfaceView.getHolder().unlockCanvasAndPost(_canvas);
+    }
+
     @Override
     public void drawImage(Image image, int x, int y) {
-
+        if(image != null) _canvas.drawBitmap(((AImage)image).getImage(), x, y, null);
     }
 
     @Override
@@ -60,6 +70,7 @@ public class AGraphics implements Graphics {
     }
 
     private AssetManager _assetManager;
+    private SurfaceView _surfaceView;
     private Canvas _canvas;
 
 }

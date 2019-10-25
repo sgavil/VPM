@@ -1,1 +1,1 @@
-include ':android_game', ':android_engine', ':desktop_game', ':desktop_engine', ':game_logic', ':engine'
+include ':android_entry', ':android_engine', ':desktop_entry', ':desktop_engine', ':game_logic', ':engine'
