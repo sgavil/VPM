@@ -4,6 +4,7 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.view.SurfaceView;
 
 import com.gavilanvillar.engine.Graphics;
@@ -57,17 +58,19 @@ public class AGraphics implements Graphics {
     @Override
     public void drawImage(Image image, int x, int y) {
         if(image != null)
-            _canvas.drawBitmap(((AImage)image).getImage(), x, y, null);
+            _canvas.drawBitmap(((AImage)image).getImage(), new Rect(image.getHeight() * 4, 0, image.getHeight() * 5, image.getHeight()), new Rect(0, 0, getWidht(), getHeight()), null);
+
+        //_canvas.drawBitmap(((AImage)image).getImage(), x, y, null);
     }
 
     @Override
-    public int getWidht() {
-        return 0;
+    public int getWidht(){
+        return _surfaceView.getWidth();
     }
 
     @Override
     public int getHeight() {
-        return 0;
+        return _surfaceView.getHeight();
     }
 
     private AssetManager _assetManager;

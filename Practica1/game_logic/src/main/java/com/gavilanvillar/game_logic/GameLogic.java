@@ -19,13 +19,13 @@ public class GameLogic {
     void loadResources() {
 
         _resources.put("Balls", _game.getGraphics().newImage("sprites/balls.png"));
-        //_resources.put("Background", _game.getGraphics().newImage("sprites/background.png"));
+        _resources.put("Backgrounds", _game.getGraphics().newImage("sprites/backgrounds.png"));
     }
 
     public void start(){}
 
     public void render(){
-        _game.getGraphics().drawImage((Image)_resources.get("Balls"), 40, 40);
+        _game.getGraphics().drawImage((Image)_resources.get("Backgrounds"), 0, 0);
     }
 
     public void update(){
