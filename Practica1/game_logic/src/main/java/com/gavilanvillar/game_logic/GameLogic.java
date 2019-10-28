@@ -7,21 +7,19 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 
 public class GameLogic {
-    public GameLogic(){
+    public GameLogic(Game game){
+        this._game = game;
     }
 
-    public void init(Game game){
-
-        this._game = game;
+    public void init(){
         _resources = new Hashtable();
-
         loadResources();
     }
 
     void loadResources() {
 
-        _resources.put("Balls", this._game.getGraphics().newImage("sprites/balls.png"));
-        _resources.put("Background", this._game.getGraphics().newImage("sprites/background.png"));
+        _resources.put("Balls", _game.getGraphics().newImage("sprites/balls.png"));
+        //_resources.put("Background", _game.getGraphics().newImage("sprites/background.png"));
     }
 
     public void start(){}
