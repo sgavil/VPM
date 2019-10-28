@@ -58,7 +58,7 @@ public class AGraphics implements Graphics {
     @Override
     public void drawImage(Image image, int x, int y) {
         if(image != null)
-            _canvas.drawBitmap(((AImage)image).getImage(), new Rect(image.getHeight() * 4, 0, image.getHeight() * 5, image.getHeight()), new Rect(0, 0, getWidht(), getHeight()), null);
+            _canvas.drawBitmap(((AImage)image).getImage(), new Rect(image.getHeight() * 3, 0, image.getHeight() * 4, image.getHeight()), new Rect(0, 0, getWidht(), getHeight()), null);
 
         //_canvas.drawBitmap(((AImage)image).getImage(), x, y, null);
     }

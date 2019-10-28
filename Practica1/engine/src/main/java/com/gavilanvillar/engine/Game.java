@@ -5,5 +5,5 @@ public interface Game {
 
     Input getInput();
 
-    void run();
+    //void run();
 }
