@@ -39,7 +39,7 @@ public class PCGraphics implements Graphics {
     }
 
     @Override
-    public int getWidht() {
+    public int getWidth() {
         return 0;
     }
 

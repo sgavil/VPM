@@ -16,7 +16,7 @@ public interface Graphics {
      */
     void drawImage(Image image, int x, int y);
 
-    int getWidht();
+    int getWidth();
 
     int getHeight();
 

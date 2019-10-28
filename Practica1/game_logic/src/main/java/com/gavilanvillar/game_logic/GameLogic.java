@@ -16,19 +16,34 @@ public class GameLogic {
         loadResources();
     }
 
+    /**
+     * Método que carga todos los recursos gráficos que encuentra en la carpeta "assets/sprites/"
+     */
     void loadResources() {
 
-        _resources.put("Balls", _game.getGraphics().newImage("sprites/balls.png"));
+        _resources.put("ArrowsBackground", _game.getGraphics().newImage("sprites/arrowsBackground.png"));
         _resources.put("Backgrounds", _game.getGraphics().newImage("sprites/backgrounds.png"));
+        _resources.put("Balls", _game.getGraphics().newImage("sprites/balls.png"));
+        _resources.put("Buttons", _game.getGraphics().newImage("sprites/buttons.png"));
+        _resources.put("GameOver", _game.getGraphics().newImage("sprites/gameOver.png"));
+        _resources.put("HowToPlay", _game.getGraphics().newImage("sprites/howToPlay.png"));
+        _resources.put("Instructions", _game.getGraphics().newImage("sprites/instructions.png"));
+        _resources.put("PlayAgain", _game.getGraphics().newImage("sprites/playAgain.png"));
+        _resources.put("Players", _game.getGraphics().newImage("sprites/players.png"));
+        _resources.put("ScoreFonts", _game.getGraphics().newImage("sprites/scoreFonts.png"));
+        _resources.put("SwitchDashLogo", _game.getGraphics().newImage("sprites/switchDashLogo.png"));
+        _resources.put("TapToPlay", _game.getGraphics().newImage("sprites/tapToPlay.png"));
+        _resources.put("White", _game.getGraphics().newImage("sprites/white.png"));
+
     }
 
     public void start(){}
 
     public void render(){
-        _game.getGraphics().drawImage((Image)_resources.get("Backgrounds"), 0, 0);
+        _game.getGraphics().drawImage((Image)_resources.get("HowToPlay"), 0, 0);
     }
 
-    public void update(){
+    public void update(double elapsedTime){
 
     }
 

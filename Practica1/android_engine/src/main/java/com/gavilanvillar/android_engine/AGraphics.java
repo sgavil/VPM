@@ -4,7 +4,6 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Rect;
 import android.view.SurfaceView;
 
 import com.gavilanvillar.engine.Graphics;
@@ -14,6 +13,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class AGraphics implements Graphics {
+    final int ANCHO_RES = 1080;
+    final int ALTO_RES = 1920;
 
     public AGraphics(AssetManager assetManager, SurfaceView surfaceView) {
         this._assetManager = assetManager;
@@ -57,14 +58,23 @@ public class AGraphics implements Graphics {
 
     @Override
     public void drawImage(Image image, int x, int y) {
-        if(image != null)
-            _canvas.drawBitmap(((AImage)image).getImage(), new Rect(image.getHeight() * 3, 0, image.getHeight() * 4, image.getHeight()), new Rect(0, 0, getWidht(), getHeight()), null);
+        setScaleFactor();
+        if(image != null) {
+            Bitmap resize = Bitmap.createScaledBitmap(((AImage) image).getImage(), (int) (image.getWidth() * _scaleFactorX),
+                    (int) (image.getHeight() * _scaleFactorY), false);
+            _canvas.drawBitmap(resize, 0, 0, null);
+        }
 
         //_canvas.drawBitmap(((AImage)image).getImage(), x, y, null);
     }
 
+    public void setScaleFactor(){
+        _scaleFactorX = ((float)getWidth() / (float)ANCHO_RES);
+        _scaleFactorY = ((float)getHeight() / (float)ALTO_RES);
+    }
+
     @Override
-    public int getWidht(){
+    public int getWidth(){
         return _surfaceView.getWidth();
     }
 
@@ -73,8 +83,11 @@ public class AGraphics implements Graphics {
         return _surfaceView.getHeight();
     }
 
-    private AssetManager _assetManager;
-    private SurfaceView _surfaceView;
-    private Canvas _canvas;
+    private AssetManager _assetManager = null;
+    private SurfaceView _surfaceView = null;
+    private Canvas _canvas = null;
+
+    private float _scaleFactorX = 0;
+    private float _scaleFactorY = 0;
 
 }

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.gavilanvillar.android_engine.AGame;
 import com.gavilanvillar.game_logic.GameLogic;
 
+
 public class AndroidEntry extends AppCompatActivity {
 
     /**
@@ -67,12 +68,12 @@ public class AndroidEntry extends AppCompatActivity {
     void init(){
 
         // Inicializamos AGame
-        _game = new AGame(this);
+        _game = new AGame();
 
         // Inicializamos GameLogic
         _gameLogic = new GameLogic(_game);
 
-        _game.init(_gameLogic);
+        _game.init(this, _gameLogic);
         _gameLogic.init();
 
         //_game.run();
