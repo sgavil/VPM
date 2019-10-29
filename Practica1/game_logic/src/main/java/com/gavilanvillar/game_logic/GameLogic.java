@@ -3,6 +3,7 @@ package com.gavilanvillar.game_logic;
 import com.gavilanvillar.engine.Game;
 import com.gavilanvillar.engine.Image;
 
+import java.awt.Color;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -40,7 +41,11 @@ public class GameLogic {
     public void start(){}
 
     public void render(){
-        _game.getGraphics().drawImage((Image)_resources.get("HowToPlay"), 0, 0);
+        _game.getGraphics().drawImage((Image)_resources.get("Buttons"), 5, 0,
+                100,0,
+                10,1);
+
+        _game.getGraphics().drawImage((Image)_resources.get("HowToPlay"),0,300);
     }
 
     public void update(double elapsedTime){

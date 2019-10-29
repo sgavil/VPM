@@ -1,5 +1,6 @@
 package com.gavilanvillar.android_game;
 
+import android.graphics.Point;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;

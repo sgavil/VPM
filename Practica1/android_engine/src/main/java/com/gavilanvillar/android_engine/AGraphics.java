@@ -1,10 +1,14 @@
 package com.gavilanvillar.android_engine;
 
 import android.content.res.AssetManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.view.SurfaceView;
+import android.view.Window;
 
 import com.gavilanvillar.engine.Graphics;
 import com.gavilanvillar.engine.Image;
@@ -12,13 +16,26 @@ import com.gavilanvillar.engine.Image;
 import java.io.IOException;
 import java.io.InputStream;
 
+
+/*
+* El booleano de landscaped es para ver si esta tumbado o no, ya que cada vez que se tumba muere la activity y se vuelve a crear
+*
+* int frameBufferWidth =isLandscape ? 480 : 320;
+ int frameBufferHeight =isLandscape ? 320 : 480;
+*
+* */
 public class AGraphics implements Graphics {
     final int ANCHO_RES = 1080;
     final int ALTO_RES = 1920;
 
-    public AGraphics(AssetManager assetManager, SurfaceView surfaceView) {
+    public AGraphics(AssetManager assetManager, SurfaceView surfaceView, boolean isLandscape, Point windowSize) {
         this._assetManager = assetManager;
         this._surfaceView = surfaceView;
+        this._isLandscape = isLandscape;
+        this._windowsHeight = windowSize.y;
+        this._windowsWidth = windowSize.x;
+
+        setScaleFactor();
     }
 
     @Override
@@ -58,29 +75,47 @@ public class AGraphics implements Graphics {
 
     @Override
     public void drawImage(Image image, int x, int y) {
-        setScaleFactor();
+
         if(image != null) {
             Bitmap resize = Bitmap.createScaledBitmap(((AImage) image).getImage(), (int) (image.getWidth() * _scaleFactorX),
                     (int) (image.getHeight() * _scaleFactorY), false);
-            _canvas.drawBitmap(resize, 0, 0, null);
+            _canvas.drawBitmap(resize, x, y, null);
         }
-
-        //_canvas.drawBitmap(((AImage)image).getImage(), x, y, null);
     }
 
+    @Override
+    public void drawImage(Image image, int srcX,int srcY,int destY,int destX,int cellsX,int cellsY){
+        if(image != null) {
+            int cellWidth = (((AImage) image).getImage()).getWidth() / cellsX;
+            int cellHeight = (((AImage) image).getImage()).getHeight() / cellsY;
+
+            Bitmap cuttedMap = Bitmap.createBitmap((((AImage) image).getImage()),cellWidth*srcX,cellHeight*srcY,cellWidth,cellHeight);
+
+            Bitmap resize = Bitmap.createScaledBitmap(cuttedMap, (int) (cuttedMap.getWidth() * _scaleFactorX),
+                    (int) (cuttedMap.getHeight() * _scaleFactorY), false);
+
+            _canvas.drawBitmap(resize, destX,destY, null);
+        }
+    }
+
+
     public void setScaleFactor(){
-        _scaleFactorX = ((float)getWidth() / (float)ANCHO_RES);
-        _scaleFactorY = ((float)getHeight() / (float)ALTO_RES);
+
+        int width = _isLandscape ? _windowsHeight : _windowsWidth;
+        int height = _isLandscape ? _windowsWidth : _windowsHeight;
+
+        _scaleFactorX = ((float)width/ (float)ANCHO_RES);
+        _scaleFactorY = ((float)height / (float)ALTO_RES);
     }
 
     @Override
     public int getWidth(){
-        return _surfaceView.getWidth();
+        return _windowsWidth;
     }
 
     @Override
     public int getHeight() {
-        return _surfaceView.getHeight();
+        return _windowsHeight;
     }
 
     private AssetManager _assetManager = null;
@@ -89,5 +124,9 @@ public class AGraphics implements Graphics {
 
     private float _scaleFactorX = 0;
     private float _scaleFactorY = 0;
+
+    private boolean _isLandscape;
+    private int _windowsHeight;
+    private int _windowsWidth;
 
 }

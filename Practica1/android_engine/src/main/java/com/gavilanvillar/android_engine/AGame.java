@@ -1,6 +1,10 @@
 package com.gavilanvillar.android_engine;
 
+import android.content.res.Configuration;
+import android.graphics.Point;
 import android.view.SurfaceView;
+import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,10 +19,23 @@ public class AGame implements Game{
     }
 
     public void init(AppCompatActivity androidEntry, GameLogic gameLogic){
+
+
+        androidEntry.getSupportActionBar().hide();
+
+        androidEntry.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        boolean isLandscape =androidEntry.getResources().getConfiguration().orientation ==
+                Configuration.ORIENTATION_LANDSCAPE;
+
+        Point size = new Point();
+        androidEntry.getWindowManager().getDefaultDisplay().getSize(size);
+
         SurfaceView view = new SurfaceView(androidEntry);
         androidEntry.setContentView(view);
 
-        _graphics = new AGraphics(androidEntry.getAssets(), view);
+        _graphics = new AGraphics(androidEntry.getAssets(), view,isLandscape,size);
         _input = new AInput();
 
         _runnable = new MyRunnable();
