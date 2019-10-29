@@ -51,9 +51,7 @@ public class GameLogic implements Logic {
 
     @Override
     public void render(double deltaTime) {
-        _game.getGraphics().drawImage((Image)_resources.get("Buttons"), 5, 0,
-                100,0,
-                10,1);
+        _game.getGraphics().drawImage((Image)_resources.get("Buttons"), 5, 0);
 
         _game.getGraphics().drawImage((Image)_resources.get("HowToPlay"),0,300);
     }

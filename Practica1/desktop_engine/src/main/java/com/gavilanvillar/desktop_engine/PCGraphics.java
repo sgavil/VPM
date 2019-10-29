@@ -1,5 +1,6 @@
 package com.gavilanvillar.desktop_engine;
 
+import com.gavilanvillar.engine.AbstractGraphics;
 import com.gavilanvillar.engine.Graphics;
 import com.gavilanvillar.engine.Image;
 
@@ -8,10 +9,15 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 
-public class PCGraphics implements Graphics {
+public class PCGraphics extends AbstractGraphics {
 
     public void setGraphics(java.awt.Graphics g){
         this._graphics = g;
+    }
+
+    @Override
+    public void setCanvasSize(int x, int y){
+
     }
 
     @Override

@@ -6,12 +6,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Point;
-import android.graphics.Rect;
 import android.view.SurfaceView;
 import android.view.Window;
 
+import com.gavilanvillar.engine.AbstractGraphics;
 import com.gavilanvillar.engine.Graphics;
 import com.gavilanvillar.engine.Image;
+import com.gavilanvillar.engine.Rect;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,7 +25,7 @@ import java.io.InputStream;
  int frameBufferHeight =isLandscape ? 320 : 480;
 *
 * */
-public class AGraphics implements Graphics {
+public class AGraphics extends AbstractGraphics {
     final int ANCHO_RES = 1080;
     final int ALTO_RES = 1920;
 
@@ -34,8 +35,11 @@ public class AGraphics implements Graphics {
         this._isLandscape = isLandscape;
         this._windowsHeight = windowSize.y;
         this._windowsWidth = windowSize.x;
+    }
 
-        setScaleFactor();
+    @Override
+    public void setCanvasSize(int x, int y){
+        
     }
 
     @Override
@@ -77,35 +81,9 @@ public class AGraphics implements Graphics {
     public void drawImage(Image image, int x, int y) {
 
         if(image != null) {
-            Bitmap resize = Bitmap.createScaledBitmap(((AImage) image).getImage(), (int) (image.getWidth() * _scaleFactorX),
-                    (int) (image.getHeight() * _scaleFactorY), false);
-            _canvas.drawBitmap(resize, x, y, null);
+            _canvas.drawBitmap(((AImage)image).getImage(), x, y, null);
         }
-    }
 
-    @Override
-    public void drawImage(Image image, int srcX,int srcY,int destY,int destX,int cellsX,int cellsY){
-        if(image != null) {
-            int cellWidth = (((AImage) image).getImage()).getWidth() / cellsX;
-            int cellHeight = (((AImage) image).getImage()).getHeight() / cellsY;
-
-            Bitmap cuttedMap = Bitmap.createBitmap((((AImage) image).getImage()),cellWidth*srcX,cellHeight*srcY,cellWidth,cellHeight);
-
-            Bitmap resize = Bitmap.createScaledBitmap(cuttedMap, (int) (cuttedMap.getWidth() * _scaleFactorX),
-                    (int) (cuttedMap.getHeight() * _scaleFactorY), false);
-
-            _canvas.drawBitmap(resize, destX,destY, null);
-        }
-    }
-
-
-    public void setScaleFactor(){
-
-        int width = _isLandscape ? _windowsHeight : _windowsWidth;
-        int height = _isLandscape ? _windowsWidth : _windowsHeight;
-
-        _scaleFactorX = ((float)width/ (float)ANCHO_RES);
-        _scaleFactorY = ((float)height / (float)ALTO_RES);
     }
 
     @Override
@@ -121,9 +99,6 @@ public class AGraphics implements Graphics {
     private AssetManager _assetManager = null;
     private SurfaceView _surfaceView = null;
     private Canvas _canvas = null;
-
-    private float _scaleFactorX = 0;
-    private float _scaleFactorY = 0;
 
     private boolean _isLandscape;
     private int _windowsHeight;

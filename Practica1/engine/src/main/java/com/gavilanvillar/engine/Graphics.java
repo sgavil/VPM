@@ -2,6 +2,14 @@ package com.gavilanvillar.engine;
 
 public interface Graphics {
 
+    /**
+     * Pone el canvas en las coordenadas del juego con el escalado.
+     *
+     * @param x posición x en coordenadas del juego
+     * @param y posición y en coordenadas del juego
+     */
+    void setCanvasSize(int x, int y);
+
     public Image newImage(String name);
 
     void clear(int color);
@@ -16,7 +24,11 @@ public interface Graphics {
      */
     void drawImage(Image image, int x, int y);
 
-    void drawImage(Image image, int srcX,int srcY,int destY,int destX,int cellsX,int cellsY);
+    //void drawImage(Image image, Rect src, int x, int y);
+
+    //void drawImage(Image image, Rect src, Rect dest);
+
+    //void drawImage(Image image, Rect src, Rect dest, int alpha);
 
     int getWidth();
 
