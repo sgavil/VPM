@@ -2,12 +2,13 @@ package com.gavilanvillar.game_logic;
 
 import com.gavilanvillar.engine.Game;
 import com.gavilanvillar.engine.Image;
+import com.gavilanvillar.engine.Logic;
 
 import java.awt.Color;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
-public class GameLogic {
+public class GameLogic implements Logic {
     public GameLogic(Game game){
         this._game = game;
     }
@@ -40,18 +41,20 @@ public class GameLogic {
 
     public void start(){}
 
-    public void render(){
+    Game _game;
+    Dictionary _resources;
+
+    @Override
+    public void update(double deltaTime) {
+
+    }
+
+    @Override
+    public void render(double deltaTime) {
         _game.getGraphics().drawImage((Image)_resources.get("Buttons"), 5, 0,
                 100,0,
                 10,1);
 
         _game.getGraphics().drawImage((Image)_resources.get("HowToPlay"),0,300);
     }
-
-    public void update(double elapsedTime){
-
-    }
-
-    Game _game;
-    Dictionary _resources;
 }

@@ -11,14 +11,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.gavilanvillar.engine.Game;
 import com.gavilanvillar.engine.Graphics;
 import com.gavilanvillar.engine.Input;
-import com.gavilanvillar.game_logic.GameLogic;
+import com.gavilanvillar.engine.Logic;
 
 public class AGame implements Game{
 
     public AGame(){
     }
 
-    public void init(AppCompatActivity androidEntry, GameLogic gameLogic){
+    public void init(AppCompatActivity androidEntry, Logic gameLogic){
 
 
         androidEntry.getSupportActionBar().hide();

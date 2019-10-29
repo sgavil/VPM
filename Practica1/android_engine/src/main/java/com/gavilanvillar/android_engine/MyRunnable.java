@@ -1,7 +1,7 @@
 package com.gavilanvillar.android_engine;
 
 
-import com.gavilanvillar.game_logic.GameLogic;
+import com.gavilanvillar.engine.Logic;
 
 //--------------------------------------------------------------------
 //                         Clase MyRunnable
@@ -9,7 +9,7 @@ import com.gavilanvillar.game_logic.GameLogic;
 class MyRunnable implements Runnable{
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    public void init(GameLogic gameLogic, AGraphics graphics){
+    public void init(Logic gameLogic, AGraphics graphics){
         this._gameLogic = gameLogic;
         this._graphics = graphics;
     }
@@ -104,7 +104,7 @@ class MyRunnable implements Runnable{
 
             // Pintamos el frame
             _graphics.lockCanvas();
-            _gameLogic.render();
+            _gameLogic.render(elapsedTime);
             _graphics.unlockCanvas();
 
         }
@@ -132,7 +132,7 @@ class MyRunnable implements Runnable{
      */
     volatile boolean _running = false;
 
-    GameLogic _gameLogic = null;
+    Logic _gameLogic = null;
     AGraphics _graphics = null;
 
 } // class MyRunnable
