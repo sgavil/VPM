@@ -18,28 +18,18 @@ import java.io.IOException;
 import java.io.InputStream;
 
 
-/*
-* El booleano de landscaped es para ver si esta tumbado o no, ya que cada vez que se tumba muere la activity y se vuelve a crear
-*
-* int frameBufferWidth =isLandscape ? 480 : 320;
- int frameBufferHeight =isLandscape ? 320 : 480;
-*
-* */
 public class AGraphics extends AbstractGraphics {
-    final int ANCHO_RES = 1080;
-    final int ALTO_RES = 1920;
 
-    public AGraphics(AssetManager assetManager, SurfaceView surfaceView, boolean isLandscape, Point windowSize) {
+    public AGraphics(AssetManager assetManager, SurfaceView surfaceView, Point windowSize) {
         this._assetManager = assetManager;
         this._surfaceView = surfaceView;
-        this._isLandscape = isLandscape;
         this._windowsHeight = windowSize.y;
         this._windowsWidth = windowSize.x;
     }
 
     @Override
     public void setCanvasSize(int x, int y){
-        
+
     }
 
     @Override
@@ -78,12 +68,10 @@ public class AGraphics extends AbstractGraphics {
     }
 
     @Override
-    public void drawImage(Image image, int x, int y) {
-
+    public void drawImagePrivate(Image image, int x, int y) {
         if(image != null) {
             _canvas.drawBitmap(((AImage)image).getImage(), x, y, null);
         }
-
     }
 
     @Override
@@ -100,7 +88,6 @@ public class AGraphics extends AbstractGraphics {
     private SurfaceView _surfaceView = null;
     private Canvas _canvas = null;
 
-    private boolean _isLandscape;
     private int _windowsHeight;
     private int _windowsWidth;
 

@@ -1,20 +1,26 @@
 package com.gavilanvillar.game_logic;
 
+import com.gavilanvillar.engine.AbstractGraphics;
 import com.gavilanvillar.engine.Game;
 import com.gavilanvillar.engine.Image;
 import com.gavilanvillar.engine.Logic;
+import com.gavilanvillar.engine.Rect;
+import com.gavilanvillar.engine.Sprite;
 
 import java.awt.Color;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
 public class GameLogic implements Logic {
+    final int ANCHO_RES = 1080;
+    final int ALTO_RES = 1920;
+
     public GameLogic(Game game){
         this._game = game;
     }
 
     public void init(){
-        _resources = new Hashtable();
+        ((AbstractGraphics)_game.getGraphics()).setLogicResolution(ANCHO_RES, ALTO_RES);
         loadResources();
     }
 
@@ -23,26 +29,53 @@ public class GameLogic implements Logic {
      */
     void loadResources() {
 
-        _resources.put("ArrowsBackground", _game.getGraphics().newImage("sprites/arrowsBackground.png"));
-        _resources.put("Backgrounds", _game.getGraphics().newImage("sprites/backgrounds.png"));
-        _resources.put("Balls", _game.getGraphics().newImage("sprites/balls.png"));
-        _resources.put("Buttons", _game.getGraphics().newImage("sprites/buttons.png"));
-        _resources.put("GameOver", _game.getGraphics().newImage("sprites/gameOver.png"));
-        _resources.put("HowToPlay", _game.getGraphics().newImage("sprites/howToPlay.png"));
-        _resources.put("Instructions", _game.getGraphics().newImage("sprites/instructions.png"));
-        _resources.put("PlayAgain", _game.getGraphics().newImage("sprites/playAgain.png"));
-        _resources.put("Players", _game.getGraphics().newImage("sprites/players.png"));
-        _resources.put("ScoreFonts", _game.getGraphics().newImage("sprites/scoreFonts.png"));
-        _resources.put("SwitchDashLogo", _game.getGraphics().newImage("sprites/switchDashLogo.png"));
-        _resources.put("TapToPlay", _game.getGraphics().newImage("sprites/tapToPlay.png"));
-        _resources.put("White", _game.getGraphics().newImage("sprites/white.png"));
+        Image image = null;
+
+        image = _game.getGraphics().newImage("sprites/arrowsBackground.png");
+        _arrowsBackground = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));
+
+        image = _game.getGraphics().newImage("sprites/backgrounds.png");
+        _backgrounds = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));
+
+        image = _game.getGraphics().newImage("sprites/balls.png");
+        _balls = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));
+
+        image = _game.getGraphics().newImage("sprites/buttons.png");
+        _buttons = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));
+
+        image = _game.getGraphics().newImage("sprites/gameOver.png");
+        _gameOver = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));
+
+        image = _game.getGraphics().newImage("sprites/howToPlay.png");
+        _howToPlay = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));
+
+        image = _game.getGraphics().newImage("sprites/instructions.png");
+        _instructions = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));
+
+        image = _game.getGraphics().newImage("sprites/playAgain.png");
+        _playAgain = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));
+
+        image = _game.getGraphics().newImage("sprites/players.png");
+        _players = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));
+
+        image = _game.getGraphics().newImage("sprites/scoreFont.png");
+        _scoreFont = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));
+
+        image = _game.getGraphics().newImage("sprites/switchDashLogo.png");
+        _switchDashLogo = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));
+
+        image = _game.getGraphics().newImage("sprites/tapToPlay.png");
+        _tapToPlay = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));
+
+        image = _game.getGraphics().newImage("sprites/white.png");
+       _white = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));
 
     }
 
-    public void start(){}
+    public void start(){
 
-    Game _game;
-    Dictionary _resources;
+    }
+
 
     @Override
     public void update(double deltaTime) {
@@ -51,8 +84,22 @@ public class GameLogic implements Logic {
 
     @Override
     public void render(double deltaTime) {
-        _game.getGraphics().drawImage((Image)_resources.get("Buttons"), 5, 0);
-
-        _game.getGraphics().drawImage((Image)_resources.get("HowToPlay"),0,300);
+        _players.draw(_game.getGraphics(), 0, 0);
     }
+
+
+    Game _game;
+    Sprite _arrowsBackground = null;
+    Sprite _backgrounds = null;
+    Sprite _balls = null;
+    Sprite _buttons = null;
+    Sprite _gameOver = null;
+    Sprite _howToPlay = null;
+    Sprite _instructions = null;
+    Sprite _playAgain = null;
+    Sprite _players = null;
+    Sprite _scoreFont = null;
+    Sprite _switchDashLogo = null;
+    Sprite _tapToPlay = null;
+    Sprite _white = null;
 }

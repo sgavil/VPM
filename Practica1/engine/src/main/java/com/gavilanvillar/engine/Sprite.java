@@ -7,8 +7,8 @@ public class Sprite {
         this._rect = rect;
     }
 
-    public void draw(Graphics g/*, ...*/){
-        //g.drawImage(_image/*, ...*/);
+    public void draw(Graphics g, int x, int y){
+        g.drawImage(_image, x, y);
     }
 
     public void drawCentered(){
