@@ -60,8 +60,8 @@ public abstract class AbstractGraphics implements Graphics {
     }
 
     public void drawImageCentered(Image image, Rect src){
-        int newX = (int)(_physicWidth / 2) - (int)((src._width * _scaleFactor - src._left * _scaleFactor) / 2);
-        int newY = (int)(_physicHeight / 2) - (int)((src._height * _scaleFactor - src._top * _scaleFactor) / 2);
+        int newX = _midX - (int)((src._width * _scaleFactor) / 2);
+        int newY = _midY - (int)((src._height * _scaleFactor) / 2);
 
         Rect destRect = new Rect(newX, (int)(src._width * _scaleFactor) + newX,
                 newY, (int)(src._height * _scaleFactor) + newY);
@@ -70,18 +70,22 @@ public abstract class AbstractGraphics implements Graphics {
     }
 
     public void drawImageCenteredAxisX(Image image, Rect src, int y){
-        int newX = (int)(_physicWidth / 2) - (int)((src._width * _scaleFactor - src._left * _scaleFactor) / 2);
+
+        int newX = _midX - (int)((src._width * _scaleFactor) / 2);
         int newY = _initialY + (int)(y * _scaleFactor);
 
         Rect destRect = new Rect(newX, (int)(src._width * _scaleFactor) + newX,
                 newY, (int)(src._height * _scaleFactor) + newY);
 
+        System.out.print("========================================" + (newY));
+
         drawImagePrivate(image, src, destRect);
     }
 
     public void drawImageCenteredAxisY(Image image, Rect src, int x){
+
         int newX = _initialX + (int)(x * _scaleFactor);
-        int newY = (int)(_physicHeight / 2) - (int)((src._height * _scaleFactor - src._top * _scaleFactor) / 2);
+        int newY = _midY - (int)((src._height * _scaleFactor) / 2);
 
         Rect destRect = new Rect(newX, (int)(src._width * _scaleFactor) + newX,
                 newY, (int)(src._height * _scaleFactor) + newY);
@@ -104,6 +108,9 @@ public abstract class AbstractGraphics implements Graphics {
     private void setInitialPos(){
         _initialX = (_physicWidth - (int)(_logicWidth * _scaleFactor)) / 2;
         _initialY = (_physicHeight - (int)(_logicHeight * _scaleFactor)) / 2;
+
+        _midX= (int)(_physicWidth / 2);
+        _midY = (int)(_physicHeight / 2);
     }
 
     @Override
@@ -120,6 +127,9 @@ public abstract class AbstractGraphics implements Graphics {
     int _physicHeight = 0;
     int _logicWidth = 0;
     int _logicHeight = 0;
+
+    int _midX = 0;
+    int _midY = 0;
 
     float _scaleFactor = 0;
     int _initialX = 0;
