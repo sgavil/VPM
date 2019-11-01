@@ -1,15 +1,22 @@
 package com.gavilanvillar.desktop_entry;
 
+import com.gavilanvillar.desktop_engine.PCGame;
+import com.gavilanvillar.desktop_engine.PCWindow;
+import com.gavilanvillar.game_logic.SwitchDash;
+
 public class DesktopEntry {
     public static void main(String[]args){
 
-        /*PCInput input = new PCInput();
-        PCGraphics graphics = new PCGraphics();
-        com.gavilanvillar.desktop_engine.PCGame game = new com.gavilanvillar.desktop_engine.PCGame(graphics, input);
+        PCWindow window = new PCWindow("SwitchDash");
+        if(!window.init())
+            return;
 
-        new GameLogic(game);*/
+        PCGame game = new PCGame();
+        SwitchDash gameLogic = new SwitchDash(game);
 
-        System.out.printf("HOLAAAAAAAAAAAAAAA");
+        game.init(window, gameLogic);
+        gameLogic.init();
 
+        game.run();
     }
 }

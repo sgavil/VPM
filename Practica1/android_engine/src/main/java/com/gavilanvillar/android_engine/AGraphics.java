@@ -74,8 +74,10 @@ public class AGraphics extends AbstractGraphics {
     @Override
     public void drawImagePrivate(Image image, Rect srcRect, Rect destRect) {
         if(image != null) {
-            android.graphics.Rect src = new android.graphics.Rect(srcRect._left, srcRect._top, srcRect._right, srcRect._bottom);
-            android.graphics.Rect dest = new android.graphics.Rect(destRect._left, destRect._top, destRect._right, destRect._bottom);
+            android.graphics.Rect src = new android.graphics.Rect(srcRect._left, srcRect._top,
+                    srcRect._right, srcRect._bottom);
+            android.graphics.Rect dest = new android.graphics.Rect(destRect._left, destRect._top,
+                    destRect._right, destRect._bottom);
 
             _canvas.drawBitmap(((AImage)image).getImage(), src, dest, null);
         }

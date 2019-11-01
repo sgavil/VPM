@@ -92,7 +92,6 @@ public abstract class AbstractGraphics implements Graphics {
     } // drawImage
 
     public void drawImage(Image image, Rect src, Rect dest){
-
         // Calculo de la posición inicial en coordenadas del juego donde se pintará la imagen
         int newX = _initialX + dest._left;
         int newY = _initialY + dest._top;
@@ -171,7 +170,7 @@ public abstract class AbstractGraphics implements Graphics {
      */
     private void setScaleFactor(){
 
-        // Inicializa dos "floats" al valor máximo para después elegir el menor de ambos
+        // Inicializa dos "floats" al valor máxim o para después elegir el menor de ambos
         float scaleW = Float.MAX_VALUE;
         float scaleH = Float.MAX_VALUE;
 

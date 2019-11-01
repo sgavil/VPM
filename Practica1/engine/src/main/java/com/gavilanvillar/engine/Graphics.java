@@ -16,7 +16,7 @@ public interface Graphics {
      */
     void setCanvasSize(int x, int y);
 
-    public Image newImage(String name);
+    Image newImage(String name);
 
     void clear(int color);
 
