@@ -18,7 +18,11 @@ import com.gavilanvillar.engine.Sprite;
 import java.io.IOException;
 import java.io.InputStream;
 
-
+/**
+ * Clase AGraphics
+ *
+ * Heredada de la clase AbstractGraphics
+ */
 public class AGraphics extends AbstractGraphics {
 
     public AGraphics(AssetManager assetManager, SurfaceView surfaceView, Point windowSize) {
@@ -77,6 +81,9 @@ public class AGraphics extends AbstractGraphics {
         }
     }
 
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //        Atributos protegidos/privados (de AGraphics)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     private AssetManager _assetManager = null;
     private SurfaceView _surfaceView = null;

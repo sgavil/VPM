@@ -18,7 +18,7 @@ public class Rect {
     } // Rect
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    //        Atributos protegidos/privados (de Rect)
+    //        Atributos públicos (de Rect)
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     public int _left;
     public int _right;

@@ -5,7 +5,6 @@ package com.gavilanvillar.engine;
  *
  * Contiene la información sobre "Image" y "Rect" de una imagen, y los métodos básicos para llamar
  * a los métodos que realizan el pintado de la clase Graphics.
- *
  */
 public class Sprite {
 
@@ -71,16 +70,30 @@ public class Sprite {
 
     }
 
+    /**
+     * Devuelve la imagen que almacena la clase Sprite.
+     *
+     * @return Imagen
+     */
     public Image getImage(){
         return _image;
     }
 
+    /**
+     * Devuelve el rectágulo fuente del Sprite.
+     *
+     * @return Rectángulo fuente
+     */
     public Rect getRect(){
         return _rect;
     }
 
-    private Image _image;
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //        Atributos protegidos/privados (de Sprite)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    private Rect _rect;
+    private Image _image = null;
+
+    private Rect _rect = null;
 
 } // interface Sprite

@@ -3,7 +3,7 @@ package com.gavilanvillar.engine;
 /**
  * Clase AbstractGraphics
  *
- * Contiene los métodos genéricos para el escalado.
+ * Implementa la interfac Graphics. Contiene los métodos genéricos para el escalado.
  */
 public abstract class AbstractGraphics implements Graphics {
 
@@ -59,14 +59,18 @@ public abstract class AbstractGraphics implements Graphics {
 
     public void drawImage(Image image, int x, int y){
 
-        // Calcula la posición inicial en coordenadas del juego donde se pintará la imagen
+        // Calculo de la posición inicial en coordenadas del juego donde se pintará la imagen
         int newX = _initialX +(int)(x * _scaleFactor);
         int newY = _initialY + (int)(y * _scaleFactor);
 
+        // Guarda el rectángulo fuente en una nueva variable
         Rect srcRect = new Rect(0, image.getWidth(), 0, image.getHeight());
+
+        // Crea un nuevo rectángulo destino
         Rect destRect = new Rect(newX, (int)(image.getWidth() * _scaleFactor) + newX,
                 newY, (int)(image.getHeight() * _scaleFactor) + newY);
 
+        // Llama al "drawImagePrivate" con la imagen a pintar y los rectángulos fuente y destino
         drawImagePrivate(image, srcRect, destRect);
 
     } // drawImage
@@ -74,60 +78,77 @@ public abstract class AbstractGraphics implements Graphics {
 
     public void drawImage(Image image, Rect src, int x, int y){
 
+        // Calculo de la posición inicial en coordenadas del juego donde se pintará la imagen
         int newX = _initialX + (int)(x * _scaleFactor);
         int newY = _initialY + (int)(y * _scaleFactor);
 
+        // Crea un nuevo rectángulo destino
         Rect destRect = new Rect(newX, (int)(src._width * _scaleFactor) + newX,
                 newY, (int)(src._height * _scaleFactor) + newY);
 
+        // Llama al "drawImagePrivate" con la imagen a pintar y los rectángulos fuente y destino
         drawImagePrivate(image, src, destRect);
 
     } // drawImage
 
     public void drawImage(Image image, Rect src, Rect dest){
 
+        // Calculo de la posición inicial en coordenadas del juego donde se pintará la imagen
         int newX = _initialX + dest._left;
         int newY = _initialY + dest._top;
 
+        // Crea un nuevo rectángulo destino
         Rect destRect = new Rect(newX, (int)(dest._width * _scaleFactor) + newX,
                 newY, (int)(dest._height * _scaleFactor) + newY);
 
+        // Llama al "drawImagePrivate" con la imagen a pintar y los rectángulos fuente y destino
         drawImagePrivate(image, src, destRect);
 
     } // drawImage
 
     public void drawImageCentered(Image image, Rect src){
 
+        // Calculo de la posición inicial (centrada) en coordenadas del juego donde se pintará la imagen
         int newX = _midX - (int)((src._width * _scaleFactor) / 2);
         int newY = _midY - (int)((src._height * _scaleFactor) / 2);
 
+        // Crea un nuevo rectángulo destino
         Rect destRect = new Rect(newX, (int)(src._width * _scaleFactor) + newX,
                 newY, (int)(src._height * _scaleFactor) + newY);
 
+        // Llama al "drawImagePrivate" con la imagen a pintar y los rectángulos fuente y destino
         drawImagePrivate(image, src, destRect);
 
     } // drawImageCentered
 
     public void drawImageCenteredAxisX(Image image, Rect src, int y){
 
+        // Calculo de la posición inicial (centrada en el eje X) en coordenadas del juego
+        // donde se pintará la imagen
         int newX = _midX - (int)((src._width * _scaleFactor) / 2);
         int newY = _initialY + (int)(y * _scaleFactor);
 
+        // Crea un nuevo rectángulo destino
         Rect destRect = new Rect(newX, (int)(src._width * _scaleFactor) + newX,
                 newY, (int)(src._height * _scaleFactor) + newY);
 
+        // Llama al "drawImagePrivate" con la imagen a pintar y los rectángulos fuente y destino
         drawImagePrivate(image, src, destRect);
 
     } // drawImageCenteredAxisX
 
     public void drawImageCenteredAxisY(Image image, Rect src, int x){
 
+        // Calculo de la posición inicial (centrada en el eje Y) en coordenadas del juego
+        // donde se pintará la imagen
         int newX = _initialX + (int)(x * _scaleFactor);
         int newY = _midY - (int)((src._height * _scaleFactor) / 2);
 
+        // Crea un nuevo rectángulo destino
         Rect destRect = new Rect(newX, (int)(src._width * _scaleFactor) + newX,
                 newY, (int)(src._height * _scaleFactor) + newY);
 
+        // Llama al "drawImagePrivate" con la imagen a pintar y los rectángulos fuente y destino
         drawImagePrivate(image, src, destRect);
 
     } // drawImageCenteredAxisY
@@ -150,10 +171,17 @@ public abstract class AbstractGraphics implements Graphics {
      */
     private void setScaleFactor(){
 
+        // Inicializa dos "floats" al valor máximo para después elegir el menor de ambos
         float scaleW = Float.MAX_VALUE;
         float scaleH = Float.MAX_VALUE;
+
+        // Calcula los factores de escala que harían falta para ajustar el ancho y el alto
+        // a la ventana
         scaleW = (float)_physicWidth / (float)_logicWidth;
         scaleH = (float)_physicHeight / (float)_logicHeight;
+
+        // Elige el menor factor de escalado debido a que es el lado que ha habido que ajustar
+        // más a la ventana
         _scaleFactor = Math.min(scaleH, scaleW);
 
     } // setScaleFactor
@@ -164,9 +192,11 @@ public abstract class AbstractGraphics implements Graphics {
      */
     private void setInitialPos(){
 
+        // Calcula la posición inicial (0, 0) según el factor de escalado actual
         _initialX = (_physicWidth - (int)(_logicWidth * _scaleFactor)) / 2;
         _initialY = (_physicHeight - (int)(_logicHeight * _scaleFactor)) / 2;
 
+        // Calcula el centro de ambos ejes
         _midX = (int)(_physicWidth / 2);
         _midY = (int)(_physicHeight / 2);
 
@@ -188,16 +218,16 @@ public abstract class AbstractGraphics implements Graphics {
     //        Atributos protegidos/privados (de AbstractGraphics)
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    int _physicWidth = 0;
-    int _physicHeight = 0;
-    int _logicWidth = 0;
-    int _logicHeight = 0;
+    private int _physicWidth = 0;
+    private int _physicHeight = 0;
+    private int _logicWidth = 0;
+    private int _logicHeight = 0;
 
-    int _midX = 0;
-    int _midY = 0;
+    private int _midX = 0;
+    private int _midY = 0;
 
-    float _scaleFactor = 0;
-    int _initialX = 0;
-    int _initialY = 0;
+    private float _scaleFactor = 0;
+    private int _initialX = 0;
+    private int _initialY = 0;
 
 } // class AbstractGraphics
