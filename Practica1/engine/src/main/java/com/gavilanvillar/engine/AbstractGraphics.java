@@ -9,11 +9,16 @@ public abstract class AbstractGraphics implements Graphics {
         _logicWidth = w;
         _logicHeight = h;
 
+        setScaleFactor();
+        setInitialPos();
     }
 
     public void setPhysicResolution(int w, int h){
         _physicWidth = w;
         _physicHeight = h;
+
+        setScaleFactor();
+        setInitialPos();
     }
 
     public void swapPhysicResolution(){
@@ -22,10 +27,6 @@ public abstract class AbstractGraphics implements Graphics {
 
     public void drawImage(Image image, int x, int y){
         // x e y están en coordenadas "lógicas de canvas/juego
-
-        setScaleFactor();
-        setInitialPos();
-
         Rect srcRect = new Rect(0, image.getWidth(), 0, image.getHeight());
         int newX = _initialX + x;
         int newY = _initialY + y;
@@ -36,9 +37,6 @@ public abstract class AbstractGraphics implements Graphics {
     }
 
     public void drawImage(Image image, Rect src, Rect dest){
-        setScaleFactor();
-        setInitialPos();
-
         int newX = _initialX + dest._left;
         int newY = _initialY + dest._top;
         Rect destRect = new Rect(newX, (int)(dest._right * _scaleFactor) + newX,
