@@ -105,6 +105,7 @@ public abstract class AbstractGraphics implements Graphics {
 
     } // drawImage
 
+
     public void drawImageCentered(Image image, Rect src){
 
         // Calculo de la posición inicial (centrada) en coordenadas del juego donde se pintará la imagen

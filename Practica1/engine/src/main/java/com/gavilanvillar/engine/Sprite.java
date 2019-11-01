@@ -26,6 +26,8 @@ public class Sprite {
 
     }
 
+
+
     /**
      * Método para llamar a "drawImage" de Graphics
      *
@@ -78,6 +80,7 @@ public class Sprite {
     public Image getImage(){
         return _image;
     }
+
 
     /**
      * Devuelve el rectágulo fuente del Sprite.

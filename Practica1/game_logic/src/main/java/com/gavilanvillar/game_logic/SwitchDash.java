@@ -4,8 +4,11 @@ import com.gavilanvillar.engine.AbstractGraphics;
 import com.gavilanvillar.engine.Game;
 import com.gavilanvillar.engine.GameState;
 import com.gavilanvillar.engine.Image;
+import com.gavilanvillar.engine.Input;
 import com.gavilanvillar.engine.Rect;
 import com.gavilanvillar.engine.Sprite;
+
+import java.util.List;
 
 public class SwitchDash implements GameState {
     private final int WIDTH_RES = 1080;
@@ -119,17 +122,30 @@ public class SwitchDash implements GameState {
 
     @Override
     public void update(double deltaTime) {
+        List<Input.TouchEvent> ev = _game.getInput().getTouchEvents();
+
+        if(ev.size() > 0){
+            posY = ev.get(0).getY();
+
+            System.out.println("AAA" + " " +posX + " " + posY);
+        }
+
 
     }
 
     @Override
     public void render(double deltaTime) {
         _greenBackground.draw(_game.getGraphics(), new Rect(0, WIDTH_RES, 0, HEIGHT_RES));
-        _whiteBall.draw(_game.getGraphics(), new Rect(0, 32, 0, 32));
+        _whiteBall.draw(_game.getGraphics(), posX,posY);
         _whitePlayer.drawCentered(_game.getGraphics(), _whitePlayer.getRect(), 1700, 0);
+
+
     }
 
     private Game _game;
+
+    private int posX = 0;
+    private int posY = 0;
 
     //Backgrounds
     private Sprite _greenBackground;

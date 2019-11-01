@@ -48,7 +48,7 @@ public class PCGame implements Game {
             lastFrameTime = currentTime;
             double elapsedTime = (double) nanoElapsedTime / 1.0E9;
 
-            _gameLogic.update(elapsedTime);
+          //  _gameLogic.update(elapsedTime);
 
             // Informe de FPS
             if (currentTime - informePrevio > 1000000000l) {
