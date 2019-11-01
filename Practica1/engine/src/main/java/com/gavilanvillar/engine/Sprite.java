@@ -11,12 +11,9 @@ public class Sprite {
         g.drawImage(_image, x, y);
     }
 
-    public void draw(Graphics g, Rect src, int x, int y){
-        g.drawImage(_image, src, x, y);
-    }
 
-    public void draw(Graphics g, Rect src, Rect dest){
-        g.drawImage(_image, src, dest);
+    public void draw(Graphics g, Rect dest){
+        g.drawImage(_image, _rect, dest);
     }
 
     public void drawCentered(Graphics g, Rect src){

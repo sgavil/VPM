@@ -1,13 +1,13 @@
 package com.gavilanvillar.android_game;
 
 import android.content.res.Configuration;
-import android.graphics.Point;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.gavilanvillar.android_engine.AGame;
-import com.gavilanvillar.game_logic.GameLogic;
+import com.gavilanvillar.game_logic.SwitchDash;
+
 
 
 public class AndroidEntry extends AppCompatActivity {
@@ -82,7 +82,7 @@ public class AndroidEntry extends AppCompatActivity {
         _game = new AGame();
 
         // Inicializamos GameLogic
-        _gameLogic = new GameLogic(_game);
+        _gameLogic = new SwitchDash(_game);
 
         _game.init(this, _gameLogic);
         _gameLogic.init();
@@ -92,5 +92,5 @@ public class AndroidEntry extends AppCompatActivity {
     } // init
 
     AGame _game = null;
-    GameLogic _gameLogic = null;
+    SwitchDash _gameLogic = null;
 }

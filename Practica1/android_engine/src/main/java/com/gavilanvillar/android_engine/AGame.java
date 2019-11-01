@@ -7,16 +7,16 @@ import android.view.WindowManager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.gavilanvillar.engine.Game;
+import com.gavilanvillar.engine.GameState;
 import com.gavilanvillar.engine.Graphics;
 import com.gavilanvillar.engine.Input;
-import com.gavilanvillar.engine.Logic;
 
 public class AGame implements Game, Runnable{
 
     public AGame(){
     }
 
-    public void init(AppCompatActivity androidEntry, Logic gameLogic){
+    public void init(AppCompatActivity androidEntry, GameState gameState){
 
         androidEntry.getSupportActionBar().hide();
 
@@ -31,7 +31,7 @@ public class AGame implements Game, Runnable{
 
         this._graphics = new AGraphics(androidEntry.getAssets(), view, size);
         this._input = new AInput();
-        this._gameLogic = gameLogic;
+        this._gameState = gameState;
     }
 
     /**
@@ -112,7 +112,7 @@ public class AGame implements Game, Runnable{
             long nanoElapsedTime = currentTime - lastFrameTime;
             lastFrameTime = currentTime;
             double elapsedTime = (double) nanoElapsedTime / 1.0E9;
-            _gameLogic.update(elapsedTime);
+            _gameState.update(elapsedTime);
             // Informe de FPS
             if (currentTime - informePrevio > 1000000000l) {
                 long fps = frames * 1000000000l / (currentTime - informePrevio);
@@ -124,7 +124,7 @@ public class AGame implements Game, Runnable{
 
             // Pintamos el frame
             _graphics.lockCanvas();
-            _gameLogic.render(elapsedTime);
+            _gameState.render(elapsedTime);
             _graphics.unlockCanvas();
 
         }
@@ -165,6 +165,6 @@ public class AGame implements Game, Runnable{
 
     private static AGraphics _graphics = null;
     private static AInput _input = null;
-    private static Logic _gameLogic = null;
+    private static GameState _gameState = null;
 
 } // class AGame
