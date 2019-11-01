@@ -1,32 +1,65 @@
 package com.gavilanvillar.engine;
 
 /**
- * Clase que contiene los métodos genéricos para el escalado.
+ * Clase AbstractGraphics
+ *
+ * Contiene los métodos genéricos para el escalado.
  */
 public abstract class AbstractGraphics implements Graphics {
 
+    /**
+     * Método que solo llama al principio de la aplicación para guardar los valores
+     * de la resolución que se mantendrá durante la ejecución. Por ejemplo, 1920x1080.
+     *
+     * También llama a métodos que calculan el factor de escalado según la orientación de la
+     * pantalla y calculan la posición inicial.
+     *
+     * @param w Ancho de la resolución
+     * @param h Alto de la resolución
+     */
     public void setLogicResolution(int w, int h){
+
         _logicWidth = w;
         _logicHeight = h;
 
         setScaleFactor();
         setInitialPos();
-    }
 
+    } // setLogicResolution
+
+    /**
+     * Método que guarda el tamaño de la físico de la pantalla. Por ejemplo, 2060x1080
+     *
+     * Además llama a los métodos que se encargan de calcular el nuevo factor de escala y
+     * la nueva posición inicial.
+     *
+     * @param w Ancho de la pantalla
+     * @param h Alto de la pantalla
+     */
     public void setPhysicResolution(int w, int h){
+
         _physicWidth = w;
         _physicHeight = h;
 
         setScaleFactor();
         setInitialPos();
-    }
 
+    } // setPhysicResolution
+
+    /**
+     * Método que se llama cada vez que cambia la orientación de la pantalla. Intercambia
+     * los valores de alto y ancho de la pantalla respectivamente.
+     */
     public void swapPhysicResolution(){
+
         setPhysicResolution(_physicHeight, _physicWidth);
-    }
+
+    } // swapPhysicsResolution
+
 
     public void drawImage(Image image, int x, int y){
-        // x e y están en coordenadas "lógicas de canvas/juego
+
+        // Calcula la posición inicial en coordenadas del juego donde se pintará la imagen
         int newX = _initialX +(int)(x * _scaleFactor);
         int newY = _initialY + (int)(y * _scaleFactor);
 
@@ -35,11 +68,12 @@ public abstract class AbstractGraphics implements Graphics {
                 newY, (int)(image.getHeight() * _scaleFactor) + newY);
 
         drawImagePrivate(image, srcRect, destRect);
-    }
+
+    } // drawImage
 
 
     public void drawImage(Image image, Rect src, int x, int y){
-        // x e y están en coordenadas "lógicas de canvas/juego
+
         int newX = _initialX + (int)(x * _scaleFactor);
         int newY = _initialY + (int)(y * _scaleFactor);
 
@@ -47,9 +81,11 @@ public abstract class AbstractGraphics implements Graphics {
                 newY, (int)(src._height * _scaleFactor) + newY);
 
         drawImagePrivate(image, src, destRect);
-    }
+
+    } // drawImage
 
     public void drawImage(Image image, Rect src, Rect dest){
+
         int newX = _initialX + dest._left;
         int newY = _initialY + dest._top;
 
@@ -57,9 +93,11 @@ public abstract class AbstractGraphics implements Graphics {
                 newY, (int)(dest._height * _scaleFactor) + newY);
 
         drawImagePrivate(image, src, destRect);
-    }
+
+    } // drawImage
 
     public void drawImageCentered(Image image, Rect src){
+
         int newX = _midX - (int)((src._width * _scaleFactor) / 2);
         int newY = _midY - (int)((src._height * _scaleFactor) / 2);
 
@@ -67,7 +105,8 @@ public abstract class AbstractGraphics implements Graphics {
                 newY, (int)(src._height * _scaleFactor) + newY);
 
         drawImagePrivate(image, src, destRect);
-    }
+
+    } // drawImageCentered
 
     public void drawImageCenteredAxisX(Image image, Rect src, int y){
 
@@ -77,10 +116,9 @@ public abstract class AbstractGraphics implements Graphics {
         Rect destRect = new Rect(newX, (int)(src._width * _scaleFactor) + newX,
                 newY, (int)(src._height * _scaleFactor) + newY);
 
-        System.out.print("========================================" + (newY));
-
         drawImagePrivate(image, src, destRect);
-    }
+
+    } // drawImageCenteredAxisX
 
     public void drawImageCenteredAxisY(Image image, Rect src, int x){
 
@@ -91,27 +129,48 @@ public abstract class AbstractGraphics implements Graphics {
                 newY, (int)(src._height * _scaleFactor) + newY);
 
         drawImagePrivate(image, src, destRect);
-    }
 
+    } // drawImageCenteredAxisY
+
+    /**
+     * Método vacío que se llamará para realizar el pintado de la imagen. Las clases que
+     * heredan de esta deben reimplementarlo.
+     *
+     * @param image Imagen a pintar
+     * @param srcRect Rectángulo fuente de la imagen
+     * @param destRect Rectángulo destino de la pantalla donde se pintará la imagen
+     */
     public void drawImagePrivate(Image image, Rect srcRect, Rect destRect){
 
-    }
+    } // drawImagePrivate
 
+    /**
+     * Método que calcula el factor de escalado de la ventana lógica del juego según
+     * la ventana física y la resolución esperada.
+     */
     private void setScaleFactor(){
+
         float scaleW = Float.MAX_VALUE;
         float scaleH = Float.MAX_VALUE;
         scaleW = (float)_physicWidth / (float)_logicWidth;
         scaleH = (float)_physicHeight / (float)_logicHeight;
         _scaleFactor = Math.min(scaleH, scaleW);
-    }
 
+    } // setScaleFactor
+
+    /**
+     * Método que calcula la posición inicial (0, 0) en coordenadas del juego dentro de la
+     * ventana física. Además calcula el centro en los ejes X e Y de la ventana.
+     */
     private void setInitialPos(){
+
         _initialX = (_physicWidth - (int)(_logicWidth * _scaleFactor)) / 2;
         _initialY = (_physicHeight - (int)(_logicHeight * _scaleFactor)) / 2;
 
-        _midX= (int)(_physicWidth / 2);
+        _midX = (int)(_physicWidth / 2);
         _midY = (int)(_physicHeight / 2);
-    }
+
+    } // setInitialPos
 
     @Override
     public int getWidth(){
@@ -122,6 +181,12 @@ public abstract class AbstractGraphics implements Graphics {
     public int getHeight() {
         return _physicHeight;
     }
+
+
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //        Atributos protegidos/privados (de AbstractGraphics)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     int _physicWidth = 0;
     int _physicHeight = 0;
@@ -134,4 +199,5 @@ public abstract class AbstractGraphics implements Graphics {
     float _scaleFactor = 0;
     int _initialX = 0;
     int _initialY = 0;
-}
+
+} // class AbstractGraphics

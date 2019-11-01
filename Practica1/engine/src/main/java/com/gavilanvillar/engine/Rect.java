@@ -1,7 +1,11 @@
 package com.gavilanvillar.engine;
 
+/**
+ * Clase Rect
+ *
+ * Contiene los parámetros de tamaño de un SPRITE.
+ */
 public class Rect {
-    public Rect(){}
 
     public Rect(int _left, int _right, int _top, int _bottom) {
         this._left = _left;
@@ -11,8 +15,11 @@ public class Rect {
         this._top = _top;
         this._bottom = _bottom;
         this._height = this._bottom - this._top;
-    }
+    } // Rect
 
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //        Atributos protegidos/privados (de Rect)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     public int _left;
     public int _right;
     public int _width;
@@ -21,4 +28,4 @@ public class Rect {
     public int _bottom;
     public int _height;
 
-}
+} // class Rect
