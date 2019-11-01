@@ -36,7 +36,7 @@ public class GameLogic implements Logic {
 
         image = _game.getGraphics().newImage("sprites/backgrounds.png");
         _backgrounds = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));
-        _actualBG = new Sprite(_backgrounds.getImage(), new Rect(0, image.getHeight(), 0, image.getHeight()));
+        _actualBG = new Sprite(image, new Rect(0, image.getHeight(), 0, image.getHeight()));
 
         image = _game.getGraphics().newImage("sprites/balls.png");
         _balls = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));
@@ -58,6 +58,7 @@ public class GameLogic implements Logic {
 
         image = _game.getGraphics().newImage("sprites/players.png");
         _players = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));
+        _actualPlayer = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight() / 2));
 
         image = _game.getGraphics().newImage("sprites/scoreFont.png");
         _scoreFont = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));
@@ -90,21 +91,26 @@ public class GameLogic implements Logic {
     @Override
     public void render(double deltaTime) {
         _actualBG.draw(_game.getGraphics(), _actualBG.getRect(), new Rect(0, ANCHO_RES, 0, ALTO_RES));
-        _players.draw(_game.getGraphics(), 50, 50);
+        _actualPlayer.drawCentered(_game.getGraphics(), _actualPlayer.getRect(), 1700, 0);
     }
 
 
     Game _game;
     Sprite _arrowsBackground = null;
+
     Sprite _backgrounds = null;
     Sprite _actualBG = null;
+
     Sprite _balls = null;
     Sprite _buttons = null;
     Sprite _gameOver = null;
     Sprite _howToPlay = null;
     Sprite _instructions = null;
     Sprite _playAgain = null;
+
     Sprite _players = null;
+    Sprite _actualPlayer = null;
+
     Sprite _scoreFont = null;
     Sprite _switchDashLogo = null;
     Sprite _tapToPlay = null;

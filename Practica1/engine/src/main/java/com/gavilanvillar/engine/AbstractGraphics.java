@@ -27,20 +27,64 @@ public abstract class AbstractGraphics implements Graphics {
 
     public void drawImage(Image image, int x, int y){
         // x e y están en coordenadas "lógicas de canvas/juego
+        int newX = _initialX +(int)(x * _scaleFactor);
+        int newY = _initialY + (int)(y * _scaleFactor);
+
         Rect srcRect = new Rect(0, image.getWidth(), 0, image.getHeight());
-        int newX = _initialX + x;
-        int newY = _initialY + y;
         Rect destRect = new Rect(newX, (int)(image.getWidth() * _scaleFactor) + newX,
                 newY, (int)(image.getHeight() * _scaleFactor) + newY);
 
         drawImagePrivate(image, srcRect, destRect);
     }
 
+
+    public void drawImage(Image image, Rect src, int x, int y){
+        // x e y están en coordenadas "lógicas de canvas/juego
+        int newX = _initialX + (int)(x * _scaleFactor);
+        int newY = _initialY + (int)(y * _scaleFactor);
+
+        Rect destRect = new Rect(newX, (int)(src._right * _scaleFactor) + newX,
+                newY, (int)(src._bottom * _scaleFactor) + newY);
+
+        drawImagePrivate(image, src, destRect);
+    }
+
     public void drawImage(Image image, Rect src, Rect dest){
         int newX = _initialX + dest._left;
         int newY = _initialY + dest._top;
+
         Rect destRect = new Rect(newX, (int)(dest._right * _scaleFactor) + newX,
                 newY, (int)(dest._bottom * _scaleFactor) + newY);
+
+        drawImagePrivate(image, src, destRect);
+    }
+
+    public void drawImageCentered(Image image, Rect src){
+        int newX = (int)(_physicWidth / 2) - (int)((src._right * _scaleFactor - src._left * _scaleFactor) / 2);
+        int newY = (int)(_physicHeight / 2) - (int)((src._bottom * _scaleFactor - src._top * _scaleFactor) / 2);
+
+        Rect destRect = new Rect(newX, (int)(src._right * _scaleFactor) + newX,
+                newY, (int)(src._bottom * _scaleFactor) + newY);
+
+        drawImagePrivate(image, src, destRect);
+    }
+
+    public void drawImageCenteredAxisX(Image image, Rect src, int y){
+        int newX = (int)(_physicWidth / 2) - (int)((src._right * _scaleFactor - src._left * _scaleFactor) / 2);
+        int newY = _initialY + (int)(y * _scaleFactor);
+
+        Rect destRect = new Rect(newX, (int)(src._right * _scaleFactor) + newX,
+                newY, (int)(src._bottom * _scaleFactor) + newY);
+
+        drawImagePrivate(image, src, destRect);
+    }
+
+    public void drawImageCenteredAxisY(Image image, Rect src, int x){
+        int newX = _initialX + (int)(x * _scaleFactor);
+        int newY = (int)(_physicHeight / 2) - (int)((src._bottom * _scaleFactor - src._top * _scaleFactor) / 2);
+
+        Rect destRect = new Rect(newX, (int)(src._right * _scaleFactor) + newX,
+                newY, (int)(src._bottom * _scaleFactor) + newY);
 
         drawImagePrivate(image, src, destRect);
     }

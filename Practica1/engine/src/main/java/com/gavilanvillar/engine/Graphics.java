@@ -24,9 +24,16 @@ public interface Graphics {
      */
     void drawImage(Image image, int x, int y);
 
+    void drawImage(Image image, Rect src, int x, int y);
+
     void drawImage(Image image, Rect src, Rect dest);
 
 
+    void drawImageCentered(Image image, Rect src);
+
+    void drawImageCenteredAxisX(Image image, Rect src, int y);
+
+    void drawImageCenteredAxisY(Image image, Rect src, int x);
     //void drawImage(Image image, Rect src, int x, int y);
 
     //void drawImage(Image image, Rect src, Rect dest);

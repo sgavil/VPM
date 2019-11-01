@@ -73,7 +73,6 @@ public class AGraphics extends AbstractGraphics {
             android.graphics.Rect src = new android.graphics.Rect(srcRect._left, srcRect._top, srcRect._right, srcRect._bottom);
             android.graphics.Rect dest = new android.graphics.Rect(destRect._left, destRect._top, destRect._right, destRect._bottom);
 
-            System.out.print("======================================" + dest.right);
             _canvas.drawBitmap(((AImage)image).getImage(), src, dest, null);
         }
     }
