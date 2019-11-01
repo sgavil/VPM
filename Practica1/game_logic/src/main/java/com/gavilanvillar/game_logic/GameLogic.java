@@ -36,6 +36,7 @@ public class GameLogic implements Logic {
 
         image = _game.getGraphics().newImage("sprites/backgrounds.png");
         _backgrounds = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));
+        _actualBG = new Sprite(_backgrounds.getImage(), new Rect(0, image.getHeight(), 0, image.getHeight()));
 
         image = _game.getGraphics().newImage("sprites/balls.png");
         _balls = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));
@@ -72,6 +73,10 @@ public class GameLogic implements Logic {
 
     }
 
+    public void orientationChanged(boolean portrait){
+        ((AbstractGraphics)_game.getGraphics()).swapPhysicResolution();
+    }
+
     public void start(){
 
     }
@@ -84,13 +89,15 @@ public class GameLogic implements Logic {
 
     @Override
     public void render(double deltaTime) {
-        _players.draw(_game.getGraphics(), 0, 0);
+        _actualBG.draw(_game.getGraphics(), _actualBG.getRect(), new Rect(0, ANCHO_RES, 0, ALTO_RES));
+        _players.draw(_game.getGraphics(), 50, 50);
     }
 
 
     Game _game;
     Sprite _arrowsBackground = null;
     Sprite _backgrounds = null;
+    Sprite _actualBG = null;
     Sprite _balls = null;
     Sprite _buttons = null;
     Sprite _gameOver = null;

@@ -1,5 +1,6 @@
 package com.gavilanvillar.android_game;
 
+import android.content.res.Configuration;
 import android.graphics.Point;
 import android.os.Bundle;
 
@@ -60,6 +61,15 @@ public class AndroidEntry extends AppCompatActivity {
         _game.pause();
 
     } // onPause
+
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Checks the orientation of the screen
+        _gameLogic.orientationChanged(newConfig.orientation == Configuration.ORIENTATION_PORTRAIT);
+
+    } // onConfigurationChanged
 
 
     /**

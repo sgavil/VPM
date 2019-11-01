@@ -13,6 +13,7 @@ import com.gavilanvillar.engine.AbstractGraphics;
 import com.gavilanvillar.engine.Graphics;
 import com.gavilanvillar.engine.Image;
 import com.gavilanvillar.engine.Rect;
+import com.gavilanvillar.engine.Sprite;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,8 +24,7 @@ public class AGraphics extends AbstractGraphics {
     public AGraphics(AssetManager assetManager, SurfaceView surfaceView, Point windowSize) {
         this._assetManager = assetManager;
         this._surfaceView = surfaceView;
-        this._windowsHeight = windowSize.y;
-        this._windowsWidth = windowSize.x;
+        super.setPhysicResolution(windowSize.x, windowSize.y);
     }
 
     @Override
@@ -68,27 +68,18 @@ public class AGraphics extends AbstractGraphics {
     }
 
     @Override
-    public void drawImagePrivate(Image image, int x, int y) {
+    public void drawImagePrivate(Image image, Rect srcRect, Rect destRect) {
         if(image != null) {
-            _canvas.drawBitmap(((AImage)image).getImage(), x, y, null);
+            android.graphics.Rect src = new android.graphics.Rect(srcRect._left, srcRect._top, srcRect._right, srcRect._bottom);
+            android.graphics.Rect dest = new android.graphics.Rect(destRect._left, destRect._top, destRect._right, destRect._bottom);
+
+            System.out.print("======================================" + dest.right);
+            _canvas.drawBitmap(((AImage)image).getImage(), src, dest, null);
         }
     }
 
-    @Override
-    public int getWidth(){
-        return _windowsWidth;
-    }
-
-    @Override
-    public int getHeight() {
-        return _windowsHeight;
-    }
 
     private AssetManager _assetManager = null;
     private SurfaceView _surfaceView = null;
     private Canvas _canvas = null;
-
-    private int _windowsHeight;
-    private int _windowsWidth;
-
 }
