@@ -91,7 +91,7 @@ public class SwitchDash implements GameState {
         Image image = _game.getGraphics().newImage("sprites/balls.png");
 
         _whiteBall = new Sprite(image, new Rect(0, image.getWidth() / BALLS_HORIZONTAL, 0, image.getHeight() / BALLS_VERTICAL));
-        _blackBall = new Sprite(image, new Rect(0, image.getWidth() / BALLS_HORIZONTAL, image.getHeight() / BALLS_VERTICAL, image.getHeight() / BALLS_VERTICAL));
+        _blackBall = new Sprite(image, new Rect(0, image.getWidth() / BALLS_HORIZONTAL, image.getHeight() / BALLS_VERTICAL, image.getHeight()));
     }
 
     private void loadMenuSprites() {
@@ -127,7 +127,7 @@ public class SwitchDash implements GameState {
         if(ev.size() > 0){
             posY = ev.get(0).getY();
 
-            System.out.println("AAA" + " " +posX + " " + posY);
+            System.out.println("AAA" + " " + posX + " " + posY);
         }
 
 
@@ -136,15 +136,15 @@ public class SwitchDash implements GameState {
     @Override
     public void render(double deltaTime) {
         _greenBackground.draw(_game.getGraphics(), new Rect(0, WIDTH_RES, 0, HEIGHT_RES));
-        _whiteBall.draw(_game.getGraphics(), posX,posY);
-        _whitePlayer.drawCentered(_game.getGraphics(), _whitePlayer.getRect(), 1700, 0);
+        _blackBall.drawCentered(_game.getGraphics(), posY, 0);
+        _whitePlayer.drawCentered(_game.getGraphics(), 1700, 0);
 
 
     }
 
     private Game _game;
 
-    private int posX = 0;
+    private int posX = 100;
     private int posY = 0;
 
     //Backgrounds

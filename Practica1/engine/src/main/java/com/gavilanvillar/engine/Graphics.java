@@ -25,16 +25,6 @@ public interface Graphics {
      * Mapea cada pixel de la imagen en el pixel de la pantalla.
      *
      * @param image Imagen a pintar
-     * @param x Posición "x" en coordenadas del juego
-     * @param y Posición "y" en coordenadas del juego
-     */
-    void drawImage(Image image, int x, int y);
-
-    /**
-     * Pinta la imagen "image" en la posición (x, y) de la pantalla/ventana.
-     * Mapea cada pixel de la imagen en el pixel de la pantalla.
-     *
-     * @param image Imagen a pintar
      * @param src Rectángulo fuente de la imagen
      * @param x Posición "x" en coordenadas del juego
      * @param y Posición "y" en coordenadas del juego

@@ -56,26 +56,6 @@ public abstract class AbstractGraphics implements Graphics {
 
     } // swapPhysicsResolution
 
-
-    public void drawImage(Image image, int x, int y){
-
-        // Calculo de la posición inicial en coordenadas del juego donde se pintará la imagen
-        int newX = _initialX +(int)(x * _scaleFactor);
-        int newY = _initialY + (int)(y * _scaleFactor);
-
-        // Guarda el rectángulo fuente en una nueva variable
-        Rect srcRect = new Rect(0, image.getWidth(), 0, image.getHeight());
-
-        // Crea un nuevo rectángulo destino
-        Rect destRect = new Rect(newX, (int)(image.getWidth() * _scaleFactor) + newX,
-                newY, (int)(image.getHeight() * _scaleFactor) + newY);
-
-        // Llama al "drawImagePrivate" con la imagen a pintar y los rectángulos fuente y destino
-        drawImagePrivate(image, srcRect, destRect);
-
-    } // drawImage
-
-
     public void drawImage(Image image, Rect src, int x, int y){
 
         // Calculo de la posición inicial en coordenadas del juego donde se pintará la imagen
