@@ -29,7 +29,7 @@ public interface Graphics {
      * @param x Posición "x" en coordenadas del juego
      * @param y Posición "y" en coordenadas del juego
      */
-    void drawImage(Image image, Rect src, int x, int y);
+    void drawImage(Image image, Rect src, int x, int y, float alpha);
 
     /**
      * Pinta la imagen "image" en la posición (x, y) de la pantalla/ventana.
@@ -39,7 +39,7 @@ public interface Graphics {
      * @param src Rectángulo fuente de la imagen
      * @param dest Rectángulo destino de la pantalla donde se pintará la imagen
      */
-    void drawImage(Image image, Rect src, Rect dest);
+    void drawImage(Image image, Rect src, Rect dest, float alpha);
 
     /**
      * Pinta la imagen "image" en el centro de la pantalla/ventana.
@@ -48,7 +48,7 @@ public interface Graphics {
      * @param image Imagen a pintar
      * @param src Rectángulo fuente de la imagen
      */
-    void drawImageCentered(Image image, Rect src);
+    void drawImageCentered(Image image, Rect src, float alpha);
 
     /**
      * Pinta la imagen "image" en el centro del eje X de la pantalla/ventana.
@@ -58,7 +58,7 @@ public interface Graphics {
      * @param src Rectángulo fuente de la imagen
      * @param y Posición "y" en coordenadas del juego
      */
-    void drawImageCenteredAxisX(Image image, Rect src, int y);
+    void drawImageCenteredAxisX(Image image, Rect src, int y, float alpha);
 
     /**
      * Pinta la imagen "image" en el centro del eje Y de la pantalla/ventana.
@@ -68,8 +68,7 @@ public interface Graphics {
      * @param src Rectángulo fuente de la imagen
      * @param x Posición "x" en coordenadas del juego
      */
-    void drawImageCenteredAxisY(Image image, Rect src, int x);
-    //void drawImage(Image image, Rect src, int x, int y);
+    void drawImageCenteredAxisY(Image image, Rect src, int x, float alpha);
 
     int getWidth();
 

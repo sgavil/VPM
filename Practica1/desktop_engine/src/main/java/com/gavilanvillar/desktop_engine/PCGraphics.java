@@ -5,7 +5,9 @@ import com.gavilanvillar.engine.Graphics;
 import com.gavilanvillar.engine.Image;
 import com.gavilanvillar.engine.Rect;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -42,32 +44,27 @@ public class PCGraphics extends AbstractGraphics {
 
     @Override
     public void clear(int color) {
-
+        _graphics.setColor(Color.black);
+        _graphics.fillRect(0, 0, getWidth(), getHeight());
     }
 
     @Override
-    public void drawImagePrivate(Image image, Rect srcRect, Rect destRect) {
+    public void drawImagePrivate(Image image, Rect srcRect, Rect destRect, float alpha) {
         if(image != null) {
-            _graphics.drawImage(((PCImage) image).getAWTImage(),
+            Graphics2D g2d = (Graphics2D)_graphics.create();
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+            g2d.drawImage(((PCImage) image).getAWTImage(),
                     destRect._left, destRect._top,
                     destRect._right, destRect._bottom,
                     srcRect._left, srcRect._top,
                     srcRect._right, srcRect._bottom,
                     null);
+            //g2d.dispose();
             //System.out.print(destRect._width);
         }
     }
 
-    @Override
-    public int getWidth() {
-        return 0;
-    }
-
-    @Override
-    public int getHeight() {
-        return 0;
-    }
-
     java.awt.Graphics _graphics;
+
 }
 

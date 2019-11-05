@@ -30,6 +30,9 @@ public class SwitchDash implements GameState {
     public void init() {
         ((AbstractGraphics) _game.getGraphics()).setLogicResolution(WIDTH_RES, HEIGHT_RES);
         loadResources();
+
+        int randomBackground = (int)Math.floor(Math.random() * _backgrounds.length);
+        _actualBackground = _backgrounds[randomBackground];
     }
 
     /**
@@ -67,15 +70,28 @@ public class SwitchDash implements GameState {
 
         image = _game.getGraphics().newImage("sprites/backgrounds.png");
 
-        _greenBackground = new Sprite(image, new Rect(0, (image.getWidth() / BACKGROUNDS_HORIZONTAL), 0, image.getHeight()));
-        _emeraldBackground = new Sprite(image, new Rect((image.getWidth() / BACKGROUNDS_HORIZONTAL), (image.getWidth() / BACKGROUNDS_HORIZONTAL) * 2, 0, image.getHeight()));
-        _cyanBackground = new Sprite(image, new Rect((image.getWidth() / BACKGROUNDS_HORIZONTAL) * 2, (image.getWidth() / BACKGROUNDS_HORIZONTAL) * 3, 0, image.getHeight()));
-        _blueBackground = new Sprite(image, new Rect((image.getWidth() / BACKGROUNDS_HORIZONTAL) * 3, (image.getWidth() / BACKGROUNDS_HORIZONTAL) * 4, 0, image.getHeight()));
-        _purpleBackground = new Sprite(image, new Rect((image.getWidth() / BACKGROUNDS_HORIZONTAL) * 4, (image.getWidth() / BACKGROUNDS_HORIZONTAL) * 5, 0, image.getHeight()));
-        _hardBlueBackground = new Sprite(image, new Rect((image.getWidth() / BACKGROUNDS_HORIZONTAL) * 5, (image.getWidth() / BACKGROUNDS_HORIZONTAL) * 6, 0, image.getHeight()));
-        _yellowBackground = new Sprite(image, new Rect((image.getWidth() / BACKGROUNDS_HORIZONTAL) * 6, (image.getWidth() / BACKGROUNDS_HORIZONTAL) * 7, 0, image.getHeight()));
-        _redBackground = new Sprite(image, new Rect((image.getWidth() / BACKGROUNDS_HORIZONTAL) * 7, (image.getWidth() / BACKGROUNDS_HORIZONTAL) * 8, 0, image.getHeight()));
-        _greyBackground = new Sprite(image, new Rect((image.getWidth() / BACKGROUNDS_HORIZONTAL) * 8, (image.getWidth() / BACKGROUNDS_HORIZONTAL) * 9, 0, image.getHeight()));
+        _greenBackground = new Sprite(image, new Rect(0, (image.getWidth() / BACKGROUNDS_HORIZONTAL),
+                0, image.getHeight()));
+        _emeraldBackground = new Sprite(image, new Rect((image.getWidth() / BACKGROUNDS_HORIZONTAL),
+                (image.getWidth() / BACKGROUNDS_HORIZONTAL) * 2, 0, image.getHeight()));
+        _cyanBackground = new Sprite(image, new Rect((image.getWidth() / BACKGROUNDS_HORIZONTAL) * 2,
+                (image.getWidth() / BACKGROUNDS_HORIZONTAL) * 3, 0, image.getHeight()));
+        _blueBackground = new Sprite(image, new Rect((image.getWidth() / BACKGROUNDS_HORIZONTAL) * 3,
+                (image.getWidth() / BACKGROUNDS_HORIZONTAL) * 4, 0, image.getHeight()));
+        _purpleBackground = new Sprite(image, new Rect((image.getWidth() / BACKGROUNDS_HORIZONTAL) * 4,
+                (image.getWidth() / BACKGROUNDS_HORIZONTAL) * 5, 0, image.getHeight()));
+        _hardBlueBackground = new Sprite(image, new Rect((image.getWidth() / BACKGROUNDS_HORIZONTAL) * 5,
+                (image.getWidth() / BACKGROUNDS_HORIZONTAL) * 6, 0, image.getHeight()));
+        _yellowBackground = new Sprite(image, new Rect((image.getWidth() / BACKGROUNDS_HORIZONTAL) * 6,
+                (image.getWidth() / BACKGROUNDS_HORIZONTAL) * 7, 0, image.getHeight()));
+        _redBackground = new Sprite(image, new Rect((image.getWidth() / BACKGROUNDS_HORIZONTAL) * 7,
+                (image.getWidth() / BACKGROUNDS_HORIZONTAL) * 8, 0, image.getHeight()));
+        _greyBackground = new Sprite(image, new Rect((image.getWidth() / BACKGROUNDS_HORIZONTAL) * 8,
+                (image.getWidth() / BACKGROUNDS_HORIZONTAL) * 9, 0, image.getHeight()));
+
+        _backgrounds = new Sprite[] {_greenBackground, _emeraldBackground, _cyanBackground,
+                _blueBackground, _purpleBackground, _hardBlueBackground, _yellowBackground,
+                _redBackground, _greyBackground};
     }
 
     private void loadPlayers() {
@@ -122,32 +138,43 @@ public class SwitchDash implements GameState {
 
     @Override
     public void update(double deltaTime) {
-        List<Input.TouchEvent> ev = _game.getInput().getTouchEvents();
+        /*List<Input.TouchEvent> ev = _game.getInput().getTouchEvents();
 
         if(ev.size() > 0){
             posY = ev.get(0).getY();
 
             System.out.println("AAA" + " " + posX + " " + posY);
+        }*/
+        //arrowsPosY += (1000 * deltaTime);
+        if(arrowsPosY >= HEIGHT_RES)
+        {
+            arrowsPosY -= _arrowsBackground.getRect()._height;
         }
 
-
+        /*
+        * HAY QUE PREGUNTARLE SOBRE EL TOROIDE Y SOBRE EL MANEJO DE LOS ESTADOS
+        * */
     }
 
     @Override
     public void render(double deltaTime) {
-        _greenBackground.draw(_game.getGraphics(), new Rect(0, WIDTH_RES, 0, HEIGHT_RES));
-        _blackBall.drawCentered(_game.getGraphics(), posY, 0);
-        _whitePlayer.drawCentered(_game.getGraphics(), 1700, 0);
-
-
+        _game.getGraphics().clear(0x00000FF);
+        _actualBackground.draw(_game.getGraphics(), new Rect(0, WIDTH_RES,
+                0, HEIGHT_RES), 1.0f);
+        _arrowsBackground.drawCentered(_game.getGraphics(), arrowsPosY, 0, 0.3f);
+        //_blackBall.drawCentered(_game.getGraphics(), posY, 0, 1.0f);
+        _whitePlayer.drawCentered(_game.getGraphics(), 1200, 0, 1.0f);
     }
 
     private Game _game;
 
     private int posX = 100;
-    private int posY = 0;
+    private int arrowsPosY = 0;
+    private int nextArrowsY = 0;
 
     //Backgrounds
+    private Sprite[] _backgrounds = null;
+    private Sprite _actualBackground = null;
     private Sprite _greenBackground;
     private Sprite _emeraldBackground = null;
     private Sprite _cyanBackground = null;

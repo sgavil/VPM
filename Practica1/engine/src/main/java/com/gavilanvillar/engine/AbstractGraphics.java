@@ -56,7 +56,7 @@ public abstract class AbstractGraphics implements Graphics {
 
     } // swapPhysicsResolution
 
-    public void drawImage(Image image, Rect src, int x, int y){
+    public void drawImage(Image image, Rect src, int x, int y, float alpha){
 
         // Calculo de la posición inicial en coordenadas del juego donde se pintará la imagen
         int newX = _initialX + (int)(x * _scaleFactor);
@@ -67,26 +67,26 @@ public abstract class AbstractGraphics implements Graphics {
                 newY, (int)(src._height * _scaleFactor) + newY);
 
         // Llama al "drawImagePrivate" con la imagen a pintar y los rectángulos fuente y destino
-        drawImagePrivate(image, src, destRect);
+        drawImagePrivate(image, src, destRect, alpha);
 
     } // drawImage
 
-    public void drawImage(Image image, Rect src, Rect dest){
+    public void drawImage(Image image, Rect src, Rect dest, float alpha){
         // Calculo de la posición inicial en coordenadas del juego donde se pintará la imagen
-        int newX = _initialX + dest._left;
-        int newY = _initialY + dest._top;
+        int newX = _initialX + (int)(dest._left * _scaleFactor);
+        int newY = _initialY + (int)(dest._top * _scaleFactor);
 
         // Crea un nuevo rectángulo destino
         Rect destRect = new Rect(newX, (int)(dest._width * _scaleFactor) + newX,
                 newY, (int)(dest._height * _scaleFactor) + newY);
 
         // Llama al "drawImagePrivate" con la imagen a pintar y los rectángulos fuente y destino
-        drawImagePrivate(image, src, destRect);
+        drawImagePrivate(image, src, destRect, alpha);
 
     } // drawImage
 
 
-    public void drawImageCentered(Image image, Rect src){
+    public void drawImageCentered(Image image, Rect src, float alpha){
 
         // Calculo de la posición inicial (centrada) en coordenadas del juego donde se pintará la imagen
         int newX = _midX - (int)((src._width * _scaleFactor) / 2);
@@ -97,11 +97,11 @@ public abstract class AbstractGraphics implements Graphics {
                 newY, (int)(src._height * _scaleFactor) + newY);
 
         // Llama al "drawImagePrivate" con la imagen a pintar y los rectángulos fuente y destino
-        drawImagePrivate(image, src, destRect);
+        drawImagePrivate(image, src, destRect, alpha);
 
     } // drawImageCentered
 
-    public void drawImageCenteredAxisX(Image image, Rect src, int y){
+    public void drawImageCenteredAxisX(Image image, Rect src, int y, float alpha){
 
         // Calculo de la posición inicial (centrada en el eje X) en coordenadas del juego
         // donde se pintará la imagen
@@ -113,11 +113,11 @@ public abstract class AbstractGraphics implements Graphics {
                 newY, (int)(src._height * _scaleFactor) + newY);
 
         // Llama al "drawImagePrivate" con la imagen a pintar y los rectángulos fuente y destino
-        drawImagePrivate(image, src, destRect);
+        drawImagePrivate(image, src, destRect, alpha);
 
     } // drawImageCenteredAxisX
 
-    public void drawImageCenteredAxisY(Image image, Rect src, int x){
+    public void drawImageCenteredAxisY(Image image, Rect src, int x, float alpha){
 
         // Calculo de la posición inicial (centrada en el eje Y) en coordenadas del juego
         // donde se pintará la imagen
@@ -129,7 +129,7 @@ public abstract class AbstractGraphics implements Graphics {
                 newY, (int)(src._height * _scaleFactor) + newY);
 
         // Llama al "drawImagePrivate" con la imagen a pintar y los rectángulos fuente y destino
-        drawImagePrivate(image, src, destRect);
+        drawImagePrivate(image, src, destRect, alpha);
 
     } // drawImageCenteredAxisY
 
@@ -141,7 +141,7 @@ public abstract class AbstractGraphics implements Graphics {
      * @param srcRect Rectángulo fuente de la imagen
      * @param destRect Rectángulo destino de la pantalla donde se pintará la imagen
      */
-    public void drawImagePrivate(Image image, Rect srcRect, Rect destRect){
+    public void drawImagePrivate(Image image, Rect srcRect, Rect destRect, float alpha){
 
     } // drawImagePrivate
 

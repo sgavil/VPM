@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.view.SurfaceView;
 import android.view.Window;
@@ -72,14 +73,16 @@ public class AGraphics extends AbstractGraphics {
     }
 
     @Override
-    public void drawImagePrivate(Image image, Rect srcRect, Rect destRect) {
+    public void drawImagePrivate(Image image, Rect srcRect, Rect destRect, float alpha) {
         if(image != null) {
             android.graphics.Rect src = new android.graphics.Rect(srcRect._left, srcRect._top,
                     srcRect._right, srcRect._bottom);
             android.graphics.Rect dest = new android.graphics.Rect(destRect._left, destRect._top,
                     destRect._right, destRect._bottom);
 
-            _canvas.drawBitmap(((AImage)image).getImage(), src, dest, null);
+            Paint alphaPaint = new Paint();
+            alphaPaint.setAlpha((int)(alpha * 255));
+            _canvas.drawBitmap(((AImage)image).getImage(), src, dest, alphaPaint);
         }
     }
 

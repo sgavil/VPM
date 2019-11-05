@@ -20,9 +20,9 @@ public class Sprite {
      * @param x Posición "x" en coordenadas del juego
      * @param y Posición "y" en coordenadas del juego
      */
-    public void draw(Graphics g, int x, int y){
+    public void draw(Graphics g, int x, int y, float alpha){
 
-        g.drawImage(_image, _rect, x, y);
+        g.drawImage(_image, _rect, x, y, alpha);
 
     }
 
@@ -32,10 +32,9 @@ public class Sprite {
      * @param g Graphics
      * @param dest Rectángulo destino de la pantalla donde se pintará la imagen
      */
-    public void draw(Graphics g, Rect dest){
+    public void draw(Graphics g, Rect dest, float alpha){
 
-        g.drawImage(_image, _rect, dest);
-
+        g.drawImage(_image, _rect, dest, alpha);
     }
 
     /**
@@ -43,9 +42,9 @@ public class Sprite {
      *
      * @param g Graphics
      */
-    public void drawCentered(Graphics g){
+    public void drawCentered(Graphics g, float alpha){
 
-        g.drawImageCentered(_image, _rect);
+        g.drawImageCentered(_image, _rect, alpha);
 
     }
 
@@ -58,12 +57,12 @@ public class Sprite {
      *              axis == 0 eje X
      *              axis == 1 eje Y
      */
-    public void drawCentered(Graphics g, int pos, int axis){
+    public void drawCentered(Graphics g, int pos, int axis, float alpha){
 
         if (axis == 0)
-            g.drawImageCenteredAxisX(_image, _rect, pos);
+            g.drawImageCenteredAxisX(_image, _rect, pos, alpha);
         else if (axis == 1){
-            g.drawImageCenteredAxisY(_image, _rect, pos);
+            g.drawImageCenteredAxisY(_image, _rect, pos, alpha);
         }
 
     }

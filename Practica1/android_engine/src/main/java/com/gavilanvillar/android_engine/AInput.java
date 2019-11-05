@@ -17,9 +17,15 @@ public class AInput implements Input {
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                _touchEvents.add(new TouchEvent((int)motionEvent.getX(),(int)motionEvent.getY()));
+                TouchEvent event = new TouchEvent();
+                event._x = (int)motionEvent.getX();
+                event._y = (int)motionEvent.getY();
+                _touchEvents.add(event);
+
                 return  true;
             }
+
+
         });
     }
     @Override
