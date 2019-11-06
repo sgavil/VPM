@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.gavilanvillar.android_engine.AGame;
+import com.gavilanvillar.engine.ResourceManager;
 import com.gavilanvillar.game_logic.SwitchDash;
 
 
@@ -85,7 +86,11 @@ public class AndroidEntry extends AppCompatActivity {
         _gameLogic = new SwitchDash(_game);
 
         _game.init(this, _gameLogic);
-        _gameLogic.init();
+
+        _resourceManager = new ResourceManager(_game);
+        _resourceManager.init();
+
+        _gameLogic.init(_resourceManager);
 
         //_game.run();
 
@@ -93,4 +98,5 @@ public class AndroidEntry extends AppCompatActivity {
 
     AGame _game = null;
     SwitchDash _gameLogic = null;
+    ResourceManager _resourceManager = null;
 }

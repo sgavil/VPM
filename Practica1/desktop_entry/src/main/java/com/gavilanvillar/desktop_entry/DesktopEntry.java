@@ -2,6 +2,7 @@ package com.gavilanvillar.desktop_entry;
 
 import com.gavilanvillar.desktop_engine.PCGame;
 import com.gavilanvillar.desktop_engine.PCWindow;
+import com.gavilanvillar.engine.ResourceManager;
 import com.gavilanvillar.game_logic.SwitchDash;
 
 public class DesktopEntry {
@@ -15,7 +16,11 @@ public class DesktopEntry {
         SwitchDash gameLogic = new SwitchDash(game);
 
         game.init(window, gameLogic);
-        gameLogic.init();
+
+        ResourceManager resourceManager = new ResourceManager(game);
+        resourceManager.init();
+
+        gameLogic.init(resourceManager);
 
         game.run();
     }
