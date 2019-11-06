@@ -121,6 +121,10 @@ public class ResourceManager {
     public Sprite getWhitePlayer() { return _whitePlayer; }
     public Sprite getBlackPlayer() { return _blackPlayer; }
 
+    // Para el menú
+    public Sprite getSwitchDashLogo() { return _switchDashLogo; }
+    public Sprite getTapToPlay() { return _tapToPlay; }
+
     Game _game;
 
     private final int BACKGROUNDS_HORIZONTAL = 9;

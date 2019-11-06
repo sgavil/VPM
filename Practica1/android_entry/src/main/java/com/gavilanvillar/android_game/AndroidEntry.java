@@ -6,7 +6,9 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.gavilanvillar.android_engine.AGame;
+import com.gavilanvillar.android_engine.AGraphics;
 import com.gavilanvillar.engine.ResourceManager;
+import com.gavilanvillar.game_logic.Menu;
 import com.gavilanvillar.game_logic.SwitchDash;
 
 
@@ -68,7 +70,7 @@ public class AndroidEntry extends AppCompatActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         // Checks the orientation of the screen
-        _gameLogic.orientationChanged(newConfig.orientation == Configuration.ORIENTATION_PORTRAIT);
+        ((AGraphics)_game.getGraphics()).swapPhysicResolution();
 
     } // onConfigurationChanged
 
@@ -83,7 +85,7 @@ public class AndroidEntry extends AppCompatActivity {
         _game = new AGame();
 
         // Inicializamos GameLogic
-        _gameLogic = new SwitchDash(_game);
+        _gameLogic = new Menu(_game);
 
         _game.init(this, _gameLogic);
 
@@ -97,6 +99,6 @@ public class AndroidEntry extends AppCompatActivity {
     } // init
 
     AGame _game = null;
-    SwitchDash _gameLogic = null;
+    Menu _gameLogic = null;
     ResourceManager _resourceManager = null;
 }
