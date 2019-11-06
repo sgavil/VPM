@@ -53,13 +53,16 @@ public class PCGraphics extends AbstractGraphics {
         if(image != null) {
             Graphics2D g2d = (Graphics2D)_graphics.create();
             g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+
             g2d.drawImage(((PCImage) image).getAWTImage(),
                     destRect._left, destRect._top,
                     destRect._right, destRect._bottom,
                     srcRect._left, srcRect._top,
                     srcRect._right, srcRect._bottom,
                     null);
-            //g2d.dispose();
+
+            g2d.dispose();
+
             //System.out.print(destRect._width);
         }
     }

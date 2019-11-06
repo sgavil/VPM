@@ -3,16 +3,17 @@ package com.gavilanvillar.android_engine;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.gavilanvillar.engine.AbstractInput;
 import com.gavilanvillar.engine.Input;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AInput implements Input {
+public class AInput extends AbstractInput {
 
     public AInput(View view){
 
-        _touchEvents = new ArrayList<>();
+        _touchEventList = new ArrayList<>();
 
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -20,7 +21,22 @@ public class AInput implements Input {
                 TouchEvent event = new TouchEvent();
                 event._x = (int)motionEvent.getX();
                 event._y = (int)motionEvent.getY();
-                _touchEvents.add(event);
+
+                switch (motionEvent.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        event._type = EventType.PULSADO;
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        event._type = EventType.LIBERADO;
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        event._type = EventType.DESPLAZADO;
+                        break;
+                    default:
+                        break;
+                }
+
+                addEvent(event);
 
                 return  true;
             }
@@ -28,10 +44,4 @@ public class AInput implements Input {
 
         });
     }
-    @Override
-    public List<TouchEvent> getTouchEvents() {
-        return _touchEvents;
-    }
-    public void clearEvents(){_touchEvents.clear();}
-    private List<TouchEvent> _touchEvents;
 }

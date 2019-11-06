@@ -5,6 +5,8 @@ import com.gavilanvillar.engine.Game;
 import com.gavilanvillar.engine.GameState;
 import com.gavilanvillar.engine.Image;
 import com.gavilanvillar.engine.Input;
+import com.gavilanvillar.engine.Input.EventType;
+import com.gavilanvillar.engine.Input.TouchEvent;
 import com.gavilanvillar.engine.Rect;
 import com.gavilanvillar.engine.ResourceManager;
 import com.gavilanvillar.engine.Sprite;
@@ -56,17 +58,25 @@ public class SwitchDash implements GameState {
             arrowsPosY_1 = arrowsPosY_0 - _arrowsBackground.getImage().getHeight();
     }
 
+    public void swapPlayers(){
+        _actualPlayer = (_actualPlayer == _resourceManager.getWhitePlayer()) ?
+                _resourceManager.getBlackPlayer() : _resourceManager.getWhitePlayer();
+    }
+
     @Override
     public void update(double deltaTime) {
-        /*List<Input.TouchEvent> ev = _game.getInput().getTouchEvents();
+        List<TouchEvent> ev = _game.getInput().getTouchEvents();
 
-        if(ev.size() > 0){
-            posY = ev.get(0).getY();
-
-            System.out.println("AAA" + " " + posX + " " + posY);
-        }*/
-
+        for (TouchEvent e: ev){
+            if (e._type == EventType.PULSADO)
+                System.out.print("PULSADOOOOOOOOOOOOOOOOOO \n");
+            else if (e._type == EventType.LIBERADO)
+                swapPlayers();
+            else if (e._type == EventType.DESPLAZADO)
+                System.out.print("DESPLAZADOOOOOOOOOOOOOO \n");
+        }
         arrowsMovement(deltaTime);
+
     }
 
     @Override

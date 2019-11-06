@@ -17,11 +17,16 @@ public class PCGame implements Game {
 
     public void init(PCWindow window, GameState gameLogic){
         this._window = window;
-        this._gameLogic = gameLogic;
-        this._graphics = new PCGraphics(this._window.getWidth(), this._window.getHeight());
-        this._input = new PCInput();
 
+        this._gameLogic = gameLogic;
+
+        this._graphics = new PCGraphics(this._window.getWidth(), this._window.getHeight());
         this._window.setGraphics(this._graphics);
+
+        this._input = new PCInput();
+        this._input.init();
+        this._window.getContentPane().addMouseListener(this._input.getMouseController());
+        this._window.getContentPane().addMouseMotionListener(this._input.getMouseController());
     }
 
     @Override

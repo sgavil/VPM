@@ -113,10 +113,10 @@ public class AGame implements Game, Runnable{
             lastFrameTime = currentTime;
             double elapsedTime = (double) nanoElapsedTime / 1.0E9;
             _gameState.update(elapsedTime);
-            _input.clearEvents();
             // Informe de FPS
             if (currentTime - informePrevio > 1000000000l) {
                 long fps = frames * 1000000000l / (currentTime - informePrevio);
+                System.out.println("" + fps + " fps");
                 frames = 0;
                 informePrevio = currentTime;
             }

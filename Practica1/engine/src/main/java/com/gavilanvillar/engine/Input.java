@@ -30,5 +30,4 @@ public interface Input {
      */
     List<TouchEvent> getTouchEvents();
 
-
 }
