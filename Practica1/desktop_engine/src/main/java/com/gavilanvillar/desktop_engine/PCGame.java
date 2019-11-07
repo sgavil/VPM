@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 
 import com.gavilanvillar.engine.Game;
 import com.gavilanvillar.engine.GameState;
+import com.gavilanvillar.engine.GameStateManager;
 import com.gavilanvillar.engine.Graphics;
 import com.gavilanvillar.engine.Input;
 
@@ -15,10 +16,12 @@ public class PCGame implements Game {
 
     }
 
-    public void init(PCWindow window, GameState gameLogic){
+    public void init(PCWindow window, GameState gameState){
         this._window = window;
 
-        this._gameLogic = gameLogic;
+        this._gameStateManager = new GameStateManager();
+        this._gameStateManager.setState(gameState);
+
 
         this._graphics = new PCGraphics(this._window.getWidth(), this._window.getHeight());
         this._window.setGraphics(this._graphics);
@@ -27,6 +30,11 @@ public class PCGame implements Game {
         this._input.init();
         this._window.getContentPane().addMouseListener(this._input.getMouseController());
         this._window.getContentPane().addMouseMotionListener(this._input.getMouseController());
+    }
+
+    @Override
+    public GameStateManager getGameStateManager() {
+        return _gameStateManager;
     }
 
     @Override
@@ -53,7 +61,8 @@ public class PCGame implements Game {
             lastFrameTime = currentTime;
             double elapsedTime = (double) nanoElapsedTime / 1.0E9;
 
-            _gameLogic.update(elapsedTime);
+            _gameStateManager.getActualState().update(elapsedTime);
+            _gameStateManager.getActualState().handleEvent();
 
             // Informe de FPS
             if (currentTime - informePrevio > 1000000000l) {
@@ -69,7 +78,7 @@ public class PCGame implements Game {
                     java.awt.Graphics graphics = _window.getStrategy().getDrawGraphics();
                     _graphics.setGraphics(graphics);
                     try {
-                        _gameLogic.render(elapsedTime);
+                        _gameStateManager.getActualState().render();
                     }
                     finally {
                         graphics.dispose();
@@ -90,7 +99,7 @@ public class PCGame implements Game {
 
 
     private static PCWindow _window = null;
-    private static GameState _gameLogic = null;
+    private static GameStateManager _gameStateManager = null;
     private static PCGraphics _graphics = null;
     private static PCInput _input = null;
 }

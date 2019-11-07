@@ -29,24 +29,7 @@ public class SwitchDash extends AbstractGameState {
         int randomBackground = (int)Math.floor(Math.random() * _resourceManager.getBackgrounds().length);
 
         _actualBackground = _resourceManager.getBackgrounds()[randomBackground];
-        _arrowsBackground = _resourceManager.getArrowsBackground();
         _actualPlayer = _resourceManager.getWhitePlayer();
-
-        _arrowsPosY_0 = 0 - _arrowsBackground.getImage().getHeight();
-        _arrowsPosY_1 = 0;
-    }
-
-
-    private void arrowsMovement(double deltaTime){
-        int newArrowsPos = 0;
-        newArrowsPos += (_arrowsVel * deltaTime);
-        _arrowsPosY_0 += newArrowsPos;
-        _arrowsPosY_1 += newArrowsPos;
-
-        if(_arrowsPosY_0 >= HEIGHT_RES && _arrowsPosY_1 >= 0)
-            _arrowsPosY_0 = _arrowsPosY_1 - _arrowsBackground.getImage().getHeight();
-        if(_arrowsPosY_1 >= HEIGHT_RES && _arrowsPosY_0 >= 0)
-            _arrowsPosY_1 = _arrowsPosY_0 - _arrowsBackground.getImage().getHeight();
     }
 
     public void swapPlayers(){
@@ -56,6 +39,24 @@ public class SwitchDash extends AbstractGameState {
 
     @Override
     public void update(double deltaTime) {
+
+        arrowsMovement(deltaTime);
+
+    }
+
+    @Override
+    public void render() {
+        _game.getGraphics().clear(0xFF000000);
+        _actualBackground.draw(_game.getGraphics(), new Rect(0, WIDTH_RES,
+                0, HEIGHT_RES), 1.0f);
+        _arrowsBackground.drawCentered(_game.getGraphics(), _arrowsPosY_0, 0, 0.3f);
+        _arrowsBackground.drawCentered(_game.getGraphics(), _arrowsPosY_1, 0, 0.3f);
+        //_blackBall.drawCentered(_game.getGraphics(), posY, 0, 1.0f);
+        _actualPlayer.drawCentered(_game.getGraphics(), 1200, 0, 1.0f);
+    }
+
+    @Override
+    public void handleEvent() {
         List<TouchEvent> ev = _game.getInput().getTouchEvents();
 
         for (TouchEvent e: ev){
@@ -66,28 +67,9 @@ public class SwitchDash extends AbstractGameState {
             else if (e._type == EventType.DESPLAZADO)
                 System.out.print("DESPLAZADOOOOOOOOOOOOOO \n");
         }
-        arrowsMovement(deltaTime);
-
     }
 
-    @Override
-    public void render(double deltaTime) {
-        _game.getGraphics().clear(0xFF000000);
-        _actualBackground.draw(_game.getGraphics(), new Rect(0, WIDTH_RES,
-                0, HEIGHT_RES), 1.0f);
-        _arrowsBackground.drawCentered(_game.getGraphics(), _arrowsPosY_0, 0, 0.3f);
-        _arrowsBackground.drawCentered(_game.getGraphics(), _arrowsPosY_1, 0, 0.3f);
-        //_blackBall.drawCentered(_game.getGraphics(), posY, 0, 1.0f);
-        _actualPlayer.drawCentered(_game.getGraphics(), 1200, 0, 1.0f);
-    }
-
-
-
-    private float _arrowsVel = 750.0f;
-    private int _arrowsPosY_0 = 0;
-    private int _arrowsPosY_1 = 0;
 
     private Sprite _actualBackground = null;
-    private Sprite _arrowsBackground = null;
     private Sprite _actualPlayer = null;
 }

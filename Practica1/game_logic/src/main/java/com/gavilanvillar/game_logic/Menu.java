@@ -26,55 +26,19 @@ public class Menu extends AbstractGameState {
 
 
         _switchDashLogo = _resourceManager.getSwitchDashLogo();
-        _tapToPlay = _resourceManager.getTapToPlay();
-
-        _arrowsBackground = _resourceManager.getArrowsBackground();
-        _arrowsPosY_0 = 0 - _arrowsBackground.getImage().getHeight();
-        _arrowsPosY_1 = 0;
-
     }
 
 
-    private void arrowsMovement(double deltaTime){
-        int newArrowsPos = 0;
-        newArrowsPos += (_arrowsVel * deltaTime);
-        _arrowsPosY_0 += newArrowsPos;
-        _arrowsPosY_1 += newArrowsPos;
-
-        if(_arrowsPosY_0 >= HEIGHT_RES && _arrowsPosY_1 >= 0)
-            _arrowsPosY_0 = _arrowsPosY_1 - _arrowsBackground.getImage().getHeight();
-        if(_arrowsPosY_1 >= HEIGHT_RES && _arrowsPosY_0 >= 0)
-            _arrowsPosY_1 = _arrowsPosY_0 - _arrowsBackground.getImage().getHeight();
-    }
-
-    void fadeInFadeOutTap(double deltaTime){
-        if(tapAlpha +(deltaAlpha * deltaTime) >= 1.0f) {
-            fadeOut = true;
-            fadeIn = false;
-
-        }
-        else if (tapAlpha - (deltaAlpha * deltaTime) <= 0.0f) {
-            fadeOut = false;
-            fadeIn = true;
-        }
-
-
-        if(fadeOut)
-            tapAlpha -= (deltaAlpha * deltaTime);
-        else if (fadeIn)
-            tapAlpha += (deltaAlpha * deltaTime);
-    }
 
     @Override
     public void update(double deltaTime) {
-        List<TouchEvent> ev = _game.getInput().getTouchEvents();
 
         fadeInFadeOutTap(deltaTime);
         arrowsMovement(deltaTime);
     }
 
     @Override
-    public void render(double deltaTime) {
+    public void render() {
         _actualBackground.draw(_game.getGraphics(), new Rect(0, WIDTH_RES,
                 0, HEIGHT_RES), 1.0f);
 
@@ -85,17 +49,27 @@ public class Menu extends AbstractGameState {
         _tapToPlay.drawCentered(_game.getGraphics(), 950, 0, tapAlpha);
     }
 
-    private float deltaAlpha = 1.2f;
-    private float tapAlpha = 1.0f;
-    private boolean fadeIn = false;
-    private boolean fadeOut = true;
+    @Override
+    public void handleEvent() {
 
-    private float _arrowsVel = 750.0f;
-    private int _arrowsPosY_0 = 0;
-    private int _arrowsPosY_1 = 0;
+        List<TouchEvent> ev = _game.getInput().getTouchEvents();
 
-    private Sprite _arrowsBackground = null;
+        for (TouchEvent e: ev){
+            if (e._type == EventType.PULSADO)
+                System.out.print("PULSADOOOOOOOOOOOOOOOOOO \n");
+            else if (e._type == EventType.LIBERADO) {
+                Tutorial s = new Tutorial(_game);
+                s.init(_resourceManager);
+                _game.getGameStateManager().setState(s);
+            }
+            else if (e._type == EventType.DESPLAZADO)
+                System.out.print("DESPLAZADOOOOOOOOOOOOOO \n");
+        }
+
+    }
+
+
     private Sprite _actualBackground = null;
     private Sprite _switchDashLogo = null;
-    private Sprite _tapToPlay = null;
+
 }

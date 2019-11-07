@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.gavilanvillar.engine.Game;
 import com.gavilanvillar.engine.GameState;
+import com.gavilanvillar.engine.GameStateManager;
 import com.gavilanvillar.engine.Graphics;
 import com.gavilanvillar.engine.Input;
 
@@ -42,7 +43,8 @@ public class AGame implements Game, Runnable{
 
         this._graphics = new AGraphics(androidEntry.getAssets(), view, size);
         this._input = new AInput(view);
-        this._gameState = gameState;
+        this._gameStateManager = new GameStateManager();
+        this._gameStateManager.setState(gameState);
 
     } // init
 
@@ -124,7 +126,10 @@ public class AGame implements Game, Runnable{
             long nanoElapsedTime = currentTime - lastFrameTime;
             lastFrameTime = currentTime;
             double elapsedTime = (double) nanoElapsedTime / 1.0E9;
-            _gameState.update(elapsedTime);
+
+            _gameStateManager.getActualState().update(elapsedTime);
+            _gameStateManager.getActualState().handleEvent();
+
             // Informe de FPS
             if (currentTime - informePrevio > 1000000000l) {
                 long fps = frames * 1000000000l / (currentTime - informePrevio);
@@ -136,13 +141,18 @@ public class AGame implements Game, Runnable{
 
             // Pintamos el frame
             _graphics.lockCanvas();
-            _gameState.render(elapsedTime);
+            _gameStateManager.getActualState().render();
             _graphics.unlockCanvas();
 
         }
 
     } // run
 
+
+    @Override
+    public GameStateManager getGameStateManager(){
+        return _gameStateManager;
+    }
 
     @Override
     public Graphics getGraphics() {
@@ -181,6 +191,6 @@ public class AGame implements Game, Runnable{
 
     private static AGraphics _graphics = null;
     private static AInput _input = null;
-    private static GameState _gameState = null;
+    private static GameStateManager _gameStateManager = null;
 
 } // class AGame

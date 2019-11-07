@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.gavilanvillar.android_engine.AGame;
 import com.gavilanvillar.android_engine.AGraphics;
+import com.gavilanvillar.engine.GameStateManager;
 import com.gavilanvillar.engine.ResourceManager;
 import com.gavilanvillar.game_logic.Menu;
 import com.gavilanvillar.game_logic.SwitchDash;
@@ -99,6 +100,7 @@ public class AndroidEntry extends AppCompatActivity {
     } // init
 
     AGame _game = null;
+    GameStateManager _gameStateManager = null;
     Menu _gameLogic = null;
     ResourceManager _resourceManager = null;
 }

@@ -77,7 +77,7 @@ public class PCGraphics extends AbstractGraphics {
         if(image != null) {
 
             // Crea una variable Graphics2D que se usará para pintar la imagen con un "filtro"
-            Graphics2D g2d = (Graphics2D)_graphics.create();
+            Graphics2D g2d = (Graphics2D)_graphics;
 
             // Se le añade el "filtro" de transparencia
             g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
@@ -90,8 +90,6 @@ public class PCGraphics extends AbstractGraphics {
                     srcRect._left, srcRect._top,
                     srcRect._right, srcRect._bottom,
                     null);
-
-            g2d.dispose();
 
         }
 

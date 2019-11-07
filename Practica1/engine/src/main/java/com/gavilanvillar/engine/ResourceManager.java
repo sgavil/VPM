@@ -35,17 +35,15 @@ public class ResourceManager {
         /*image = _game.getGraphics().newImage("sprites/scoreFont.png");
         _scoreFont = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));*/
 
-
-
-        /*image = _game.getGraphics().newImage("sprites/white.png");
-        _white = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));*/
-
     }
 
     private void loadBGs() {
 
         Image image = _game.getGraphics().newImage("sprites/arrowsBackground.png");
         _arrowsBackground = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));
+
+        image = _game.getGraphics().newImage("sprites/white.png");
+        _white = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));
 
         image = _game.getGraphics().newImage("sprites/backgrounds.png");
 
@@ -117,6 +115,7 @@ public class ResourceManager {
 
     public Sprite[] getBackgrounds(){ return _backgrounds; }
     public Sprite getArrowsBackground() { return _arrowsBackground; }
+    public Sprite getWhite() { return _white; }
 
     public Sprite getWhitePlayer() { return _whitePlayer; }
     public Sprite getBlackPlayer() { return _blackPlayer; }
@@ -149,6 +148,7 @@ public class ResourceManager {
     private Sprite _greyBackground = null;
 
     private Sprite _arrowsBackground = null;
+    private Sprite _white = null;
 
     //Balls
     private Sprite _whiteBall = null;
