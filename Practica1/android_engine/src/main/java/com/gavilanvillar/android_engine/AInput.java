@@ -35,8 +35,9 @@ public class AInput extends AbstractInput {
                     default:
                         break;
                 }
-
-                addEvent(event);
+                synchronized (this) {
+                    addEvent(event);
+                }
 
                 return  true;
             }

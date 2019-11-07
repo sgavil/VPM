@@ -70,7 +70,7 @@ public class AndroidEntry extends AppCompatActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         // Checks the orientation of the screen
-        ((AGraphics)_game.getGraphics()).swapPhysicResolution();
+        _game.getGraphics().swapPhysicResolution();
 
     } // onConfigurationChanged
 

@@ -72,7 +72,7 @@ public class SwitchDash extends AbstractGameState {
 
     @Override
     public void render(double deltaTime) {
-        _game.getGraphics().clear(0x00000FF);
+        _game.getGraphics().clear(0xFF000000);
         _actualBackground.draw(_game.getGraphics(), new Rect(0, WIDTH_RES,
                 0, HEIGHT_RES), 1.0f);
         _arrowsBackground.drawCentered(_game.getGraphics(), _arrowsPosY_0, 0, 0.3f);

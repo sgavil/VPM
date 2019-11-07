@@ -7,55 +7,11 @@ package com.gavilanvillar.engine;
  */
 public abstract class AbstractGraphics implements Graphics {
 
-    /**
-     * Método que solo llama al principio de la aplicación para guardar los valores
-     * de la resolución que se mantendrá durante la ejecución. Por ejemplo, 1920x1080.
-     *
-     * También llama a métodos que calculan el factor de escalado según la orientación de la
-     * pantalla y calculan la posición inicial.
-     *
-     * @param w Ancho de la resolución
-     * @param h Alto de la resolución
-     */
-    public void setLogicResolution(int w, int h){
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //            Métodos reimplementados (de Graphics)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        _logicWidth = w;
-        _logicHeight = h;
-
-        setScaleFactor();
-        setInitialPos();
-
-    } // setLogicResolution
-
-    /**
-     * Método que guarda el tamaño de la físico de la pantalla. Por ejemplo, 2060x1080
-     *
-     * Además llama a los métodos que se encargan de calcular el nuevo factor de escala y
-     * la nueva posición inicial.
-     *
-     * @param w Ancho de la pantalla
-     * @param h Alto de la pantalla
-     */
-    public void setPhysicResolution(int w, int h){
-
-        _physicWidth = w;
-        _physicHeight = h;
-
-        setScaleFactor();
-        setInitialPos();
-
-    } // setPhysicResolution
-
-    /**
-     * Método que se llama cada vez que cambia la orientación de la pantalla. Intercambia
-     * los valores de alto y ancho de la pantalla respectivamente.
-     */
-    public void swapPhysicResolution(){
-
-        setPhysicResolution(_physicHeight, _physicWidth);
-
-    } // swapPhysicsResolution
-
+    @Override
     public void drawImage(Image image, Rect src, int x, int y, float alpha){
 
         // Calculo de la posición inicial en coordenadas del juego donde se pintará la imagen
@@ -71,6 +27,7 @@ public abstract class AbstractGraphics implements Graphics {
 
     } // drawImage
 
+    @Override
     public void drawImage(Image image, Rect src, Rect dest, float alpha){
         // Calculo de la posición inicial en coordenadas del juego donde se pintará la imagen
         int newX = _initialX + (int)(dest._left * _scaleFactor);
@@ -85,7 +42,7 @@ public abstract class AbstractGraphics implements Graphics {
 
     } // drawImage
 
-
+    @Override
     public void drawImageCentered(Image image, Rect src, float alpha){
 
         // Calculo de la posición inicial (centrada) en coordenadas del juego donde se pintará la imagen
@@ -101,6 +58,7 @@ public abstract class AbstractGraphics implements Graphics {
 
     } // drawImageCentered
 
+    @Override
     public void drawImageCenteredAxisX(Image image, Rect src, int y, float alpha){
 
         // Calculo de la posición inicial (centrada en el eje X) en coordenadas del juego
@@ -117,6 +75,7 @@ public abstract class AbstractGraphics implements Graphics {
 
     } // drawImageCenteredAxisX
 
+    @Override
     public void drawImageCenteredAxisY(Image image, Rect src, int x, float alpha){
 
         // Calculo de la posición inicial (centrada en el eje Y) en coordenadas del juego
@@ -133,17 +92,76 @@ public abstract class AbstractGraphics implements Graphics {
 
     } // drawImageCenteredAxisY
 
-    /**
-     * Método vacío que se llamará para realizar el pintado de la imagen. Las clases que
-     * heredan de esta deben reimplementarlo.
-     *
-     * @param image Imagen a pintar
-     * @param srcRect Rectángulo fuente de la imagen
-     * @param destRect Rectángulo destino de la pantalla donde se pintará la imagen
-     */
-    public void drawImagePrivate(Image image, Rect srcRect, Rect destRect, float alpha){
+    @Override
+    public int getWidth(){
 
-    } // drawImagePrivate
+        return _physicWidth;
+
+    } // getWidth
+
+    @Override
+    public int getHeight() {
+
+        return _physicHeight;
+
+    } // getHeight
+
+    @Override
+    public int getInitialX(){
+
+        return _initialX;
+
+    } // getInitialX
+
+    @Override
+    public int getInitialY(){
+
+        return _initialY;
+
+    } // getInitialY
+
+    @Override
+    public float getScaleFactor(){
+
+        return _scaleFactor;
+
+    } // getScaleFactor
+
+    @Override
+    public void setLogicResolution(int w, int h){
+
+        _logicWidth = w;
+        _logicHeight = h;
+
+        setScaleFactor();
+        setInitialPos();
+
+    } // setLogicResolution
+
+    @Override
+    public void setPhysicResolution(int w, int h){
+
+        _physicWidth = w;
+        _physicHeight = h;
+
+        setScaleFactor();
+        setInitialPos();
+
+    } // setPhysicResolution
+
+    @Override
+    public void swapPhysicResolution(){
+
+        setPhysicResolution(_physicHeight, _physicWidth);
+
+    } // swapPhysicsResolution
+
+
+
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //        Métodos protegidos/privados (de AbstractGraphics)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     /**
      * Método que calcula el factor de escalado de la ventana lógica del juego según
@@ -182,31 +200,29 @@ public abstract class AbstractGraphics implements Graphics {
 
     } // setInitialPos
 
-    @Override
-    public int getWidth(){
-        return _physicWidth;
-    }
-
-    @Override
-    public int getHeight() {
-        return _physicHeight;
-    }
 
 
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    //        Atributos protegidos/privados (de AbstractGraphics)
+    //      Atributos protegidos/privados (de AbstractGraphics)
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    // Tamaño físico de la pantalla
     private int _physicWidth = 0;
     private int _physicHeight = 0;
+
+    // Resolución
     private int _logicWidth = 0;
     private int _logicHeight = 0;
 
+    // Centro de la pantalla en los ejes X e Y
     private int _midX = 0;
     private int _midY = 0;
 
+    // Factor de escalado
     private float _scaleFactor = 0;
+
+    // Posición (x, y) inicial de las coordenadas del juego
     private int _initialX = 0;
     private int _initialY = 0;
 

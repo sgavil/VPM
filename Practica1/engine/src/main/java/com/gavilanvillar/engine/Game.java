@@ -1,5 +1,8 @@
 package com.gavilanvillar.engine;
 
+/**
+ * Interfaz Game
+ */
 public interface Game {
     /**
      * Devuelve la instancia del "motor" gráfico

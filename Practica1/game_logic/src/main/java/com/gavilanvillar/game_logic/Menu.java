@@ -63,8 +63,6 @@ public class Menu extends AbstractGameState {
             tapAlpha -= (deltaAlpha * deltaTime);
         else if (fadeIn)
             tapAlpha += (deltaAlpha * deltaTime);
-
-        System.out.print(tapAlpha + "\n");
     }
 
     @Override

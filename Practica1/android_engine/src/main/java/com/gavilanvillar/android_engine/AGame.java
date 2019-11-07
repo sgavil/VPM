@@ -11,11 +11,22 @@ import com.gavilanvillar.engine.GameState;
 import com.gavilanvillar.engine.Graphics;
 import com.gavilanvillar.engine.Input;
 
+/**
+ * Clase AGame
+ *
+ * Clase que implementa el bucle principal del juego
+ */
 public class AGame implements Game, Runnable{
 
     public AGame(){
-    }
+    } // AGame
 
+    /**
+     * Inicializa AGame
+     *
+     * @param androidEntry
+     * @param gameState estado actual de la aplicación
+     */
     public void init(AppCompatActivity androidEntry, GameState gameState){
 
         androidEntry.getSupportActionBar().hide();
@@ -32,7 +43,8 @@ public class AGame implements Game, Runnable{
         this._graphics = new AGraphics(androidEntry.getAssets(), view, size);
         this._input = new AInput(view);
         this._gameState = gameState;
-    }
+
+    } // init
 
     /**
      * Método llamado para solicitar que se continue con el
@@ -134,13 +146,17 @@ public class AGame implements Game, Runnable{
 
     @Override
     public Graphics getGraphics() {
+
         return _graphics;
-    }
+
+    } // getGraphics
 
     @Override
     public Input getInput() {
+
         return _input;
-    }
+
+    } // getInput
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //        Atributos protegidos/privados (de AGame)

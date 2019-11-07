@@ -1,9 +1,7 @@
 package com.gavilanvillar.desktop_engine;
 
-import com.gavilanvillar.engine.AbstractGraphics;
 import com.gavilanvillar.engine.Graphics;
 
-import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.image.BufferStrategy;
@@ -66,7 +64,7 @@ public class PCWindow extends JFrame implements ComponentListener {
     }
 
     public void componentResized(ComponentEvent e) {
-        ((AbstractGraphics)_graphics).setPhysicResolution(getWidth(), getHeight());
+        _graphics.setPhysicResolution(getWidth(), getHeight());
     }
 
     public void componentShown(ComponentEvent e) {

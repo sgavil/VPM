@@ -11,7 +11,7 @@ public abstract class AbstractGameState implements GameState {
     public void init(ResourceManager resourceManager){
         this._resourceManager = resourceManager;
 
-        ((AbstractGraphics) _game.getGraphics()).setLogicResolution(WIDTH_RES, HEIGHT_RES);
+        _game.getGraphics().setLogicResolution(WIDTH_RES, HEIGHT_RES);
     }
 
     protected Game _game;

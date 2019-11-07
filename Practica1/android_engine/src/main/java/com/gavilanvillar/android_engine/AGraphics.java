@@ -22,69 +22,132 @@ import java.io.InputStream;
 /**
  * Clase AGraphics
  *
- * Heredada de la clase AbstractGraphics
+ * Hereda de AbstractGraphics
  */
 public class AGraphics extends AbstractGraphics {
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //    Constructora y métodos de inicialización (de PCGraphics)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     public AGraphics(AssetManager assetManager, SurfaceView surfaceView, Point windowSize) {
         this._assetManager = assetManager;
         this._surfaceView = surfaceView;
-        super.setPhysicResolution(windowSize.x, windowSize.y);
+
+        // Guarda el tamaño de físico de la pantalla
+        setPhysicResolution(windowSize.x, windowSize.y);
     }
 
-    @Override
-    public void setCanvasSize(int x, int y){
 
-    }
 
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //        Métodos reimplementados (de Graphics)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    // Crea un nuevo Bitmap y lo almacena en la clase AImage
     @Override
     public Image newImage(String name) {
-        Bitmap _sprite = null;
 
+        Bitmap image = null;
         InputStream _inputStream = null;
+
         try {
 
+            // Abre la lectura del archivo
             _inputStream = _assetManager.open(name);
-            _sprite = BitmapFactory.decodeStream(_inputStream);
-        } catch (IOException e) {
-            android.util.Log.e("AGraphics", "No se ha podido cargar el recurso: " + name);
-        } finally {
-            try {
-                _inputStream.close();
-            } catch (Exception io) {
 
+            // Codifica ese archivo a un Bitmap
+            image = BitmapFactory.decodeStream(_inputStream);
+
+        } catch (IOException e) {
+
+            android.util.Log.e("AGraphics", "No se ha podido cargar el recurso: " + name);
+
+        } finally {
+
+            try {
+
+                // Cierra la lectura del archivo
+                _inputStream.close();
+
+            } catch (Exception io) {
+                android.util.Log.e("AGraphics", "No se ha podido cerrar InputStream");
             }
+
         }
-        return new AImage(_sprite);
-    }
+
+        // Devuelve una nueva AImage
+        return new AImage(image);
+
+    } // newImage
 
     @Override
     public void clear(int color) {
+
+        // Pinta el canvas con un color determinado
         _canvas.drawColor(color);
-    }
 
-    public void lockCanvas(){
-        while(!_surfaceView.getHolder().getSurface().isValid());
-        _canvas = _surfaceView.getHolder().lockCanvas();
-    }
-
-    public void unlockCanvas(){
-        _surfaceView.getHolder().unlockCanvasAndPost(_canvas);
-    }
+    } // clear
 
     @Override
     public void drawImagePrivate(Image image, Rect srcRect, Rect destRect, float alpha) {
+
+        // Se comprueba que existe el objeto "image" para evitar fallos
         if(image != null) {
+
+             // Crea un rectángulo fuente de Java con la información que obtiene de "srcRect"
             android.graphics.Rect src = new android.graphics.Rect(srcRect._left, srcRect._top,
                     srcRect._right, srcRect._bottom);
+
+            // Crea un rectángulo destino de Java con la información que obtiene de "destRect"
             android.graphics.Rect dest = new android.graphics.Rect(destRect._left, destRect._top,
                     destRect._right, destRect._bottom);
 
+            // Crea un objeto Paint que almacenará el valor del alpha
             Paint alphaPaint = new Paint();
             alphaPaint.setAlpha((int)(alpha * 255));
+
+            // Pinta el Bitmap con los rectángulos fuente y destino, y el alpha
             _canvas.drawBitmap(((AImage)image).getImage(), src, dest, alphaPaint);
+
         }
-    }
+
+    } // drawImagePrivate
+
+
+
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //        Métodos protegidos/privados (de AGraphics)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    /**
+     * Crea una superficie en la que pintar. Bloquea el canvas, por lo este no podrá ser
+     * usado por ningún otro "código" hasta que se desbloquee".
+     */
+    public void lockCanvas(){
+
+        // Espera mientras que la superficie no sea válida
+        while(!_surfaceView.getHolder().getSurface().isValid());
+
+        // Crea una nueva superficie bloqueando el canvas
+        _canvas = _surfaceView.getHolder().lockHardwareCanvas();
+
+    } // lockCanvas
+
+    /**
+     * Desbloquea el canvas permitiendo a otros su uso.
+     */
+    public void unlockCanvas(){
+
+        // Desbloquea el canvas
+        _surfaceView.getHolder().unlockCanvasAndPost(_canvas);
+
+    } // unlockCanvas
+
+
+
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //        Atributos protegidos/privados (de AGraphics)
@@ -93,4 +156,5 @@ public class AGraphics extends AbstractGraphics {
     private AssetManager _assetManager = null;
     private SurfaceView _surfaceView = null;
     private Canvas _canvas = null;
-}
+
+} // class AGraphics
