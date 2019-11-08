@@ -26,21 +26,26 @@ public class SwitchDash extends AbstractGameState {
     public void init(ResourceManager resourceManager) {
         super.init(resourceManager);
 
-        int randomBackground = (int)Math.floor(Math.random() * _resourceManager.getBackgrounds().length);
+        int randomBackground = (int) Math.floor(Math.random() * _resourceManager.getBackgrounds().length);
 
         _actualBackground = _resourceManager.getBackgrounds()[randomBackground];
         _actualPlayer = _resourceManager.getWhitePlayer();
+
+        BALLS_MANAGER = new BallsManager(_resourceManager.getWhiteBall(),_resourceManager.getBlackBall(),PLAYER_POS_Y);
+
     }
 
-    public void swapPlayers(){
+    public void swapPlayers() {
         _actualPlayer = (_actualPlayer == _resourceManager.getWhitePlayer()) ?
                 _resourceManager.getBlackPlayer() : _resourceManager.getWhitePlayer();
     }
+
 
     @Override
     public void update(double deltaTime) {
 
         arrowsMovement(deltaTime);
+        BALLS_MANAGER.ballsUpdate(deltaTime,_ballsSpeed);
 
     }
 
@@ -51,15 +56,18 @@ public class SwitchDash extends AbstractGameState {
                 0, HEIGHT_RES), 1.0f);
         _arrowsBackground.drawCentered(_game.getGraphics(), _arrowsPosY_0, 0, 0.3f);
         _arrowsBackground.drawCentered(_game.getGraphics(), _arrowsPosY_1, 0, 0.3f);
-        //_blackBall.drawCentered(_game.getGraphics(), posY, 0, 1.0f);
-        _actualPlayer.drawCentered(_game.getGraphics(), 1200, 0, 1.0f);
+        _actualPlayer.drawCentered(_game.getGraphics(), PLAYER_POS_Y, 0, 1.0f);
+
+
+        //Balls Render
+        BALLS_MANAGER.ballsRenderer(_game.getGraphics());
     }
 
     @Override
     public void handleEvent() {
         List<TouchEvent> ev = _game.getInput().getTouchEvents();
 
-        for (TouchEvent e: ev){
+        for (TouchEvent e : ev) {
             if (e._type == EventType.PULSADO)
                 System.out.print("PULSADOOOOOOOOOOOOOOOOOO \n");
             else if (e._type == EventType.LIBERADO)
@@ -72,4 +80,9 @@ public class SwitchDash extends AbstractGameState {
 
     private Sprite _actualBackground = null;
     private Sprite _actualPlayer = null;
+
+    private int _ballsSpeed = 430;
+
+    private final int PLAYER_POS_Y = 1200;
+    private BallsManager BALLS_MANAGER;
 }

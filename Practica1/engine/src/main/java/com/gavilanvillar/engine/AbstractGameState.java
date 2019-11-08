@@ -54,7 +54,7 @@ public abstract class AbstractGameState implements GameState {
     protected Game _game;
     protected ResourceManager _resourceManager;
 
-    private float _arrowsVel = 750.0f;
+    private float _arrowsVel = 384f;
     protected int _arrowsPosY_0 = 0;
     protected int _arrowsPosY_1 = 0;
 

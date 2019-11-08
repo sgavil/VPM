@@ -124,6 +124,9 @@ public class ResourceManager {
     public Sprite getSwitchDashLogo() { return _switchDashLogo; }
     public Sprite getTapToPlay() { return _tapToPlay; }
 
+    public Sprite getWhiteBall() {return _whiteBall;}
+    public Sprite getBlackBall(){return _blackBall;}
+
     Game _game;
 
     private final int BACKGROUNDS_HORIZONTAL = 9;
