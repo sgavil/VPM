@@ -1,5 +1,7 @@
 package com.gavilanvillar.engine;
 
+import java.security.Principal;
+
 public abstract class AbstractGameState implements GameState {
     protected final int WIDTH_RES = 1080;
     protected final int HEIGHT_RES = 1920;
@@ -63,8 +65,8 @@ public abstract class AbstractGameState implements GameState {
     private boolean fadeIn = false;
     private boolean fadeOut = true;
 
-    protected Sprite _actualBackground = null;
-    protected Sprite _arrowsBackground = null;
+    protected Sprite _actualBackground;
+    protected Sprite _arrowsBackground;
 
-    protected Sprite _tapToPlay = null;
+    protected Sprite _tapToPlay;
 }

@@ -11,11 +11,12 @@ import com.gavilanvillar.engine.Input.TouchEvent;
 import com.gavilanvillar.engine.Rect;
 import com.gavilanvillar.engine.ResourceManager;
 import com.gavilanvillar.engine.Sprite;
+import com.gavilanvillar.game_logic.Ball.BALL_COLOR;
+import com.gavilanvillar.game_logic.Player.PLAYER_COLOR;
 
 import java.util.List;
 
 public class SwitchDash extends AbstractGameState {
-
 
     public SwitchDash(Game game) {
 
@@ -26,18 +27,17 @@ public class SwitchDash extends AbstractGameState {
     public void init(ResourceManager resourceManager) {
         super.init(resourceManager);
 
-        int randomBackground = (int) Math.floor(Math.random() * _resourceManager.getBackgrounds().length);
-
+        int randomBackground = (int)Math.floor(Math.random() * _resourceManager.getBackgrounds().length);
         _actualBackground = _resourceManager.getBackgrounds()[randomBackground];
         _actualPlayer = _resourceManager.getWhitePlayer();
 
-        BALLS_MANAGER = new BallsManager(_resourceManager.getWhiteBall(),_resourceManager.getBlackBall(),PLAYER_POS_Y);
+        _player = new Player(_resourceManager.getWhitePlayer(), _resourceManager.getBlackPlayer(), PLAYER_COLOR.WHITE);
+        _ballsManager = new BallsManager(_resourceManager.getWhiteBall(),_resourceManager.getBlackBall(), _player);
 
     }
 
     public void swapPlayers() {
-        _actualPlayer = (_actualPlayer == _resourceManager.getWhitePlayer()) ?
-                _resourceManager.getBlackPlayer() : _resourceManager.getWhitePlayer();
+        _player.swapColor();
     }
 
 
@@ -45,7 +45,7 @@ public class SwitchDash extends AbstractGameState {
     public void update(double deltaTime) {
 
         arrowsMovement(deltaTime);
-        BALLS_MANAGER.ballsUpdate(deltaTime,_ballsSpeed);
+        _ballsManager.update(deltaTime);
 
     }
 
@@ -56,11 +56,13 @@ public class SwitchDash extends AbstractGameState {
                 0, HEIGHT_RES), 1.0f);
         _arrowsBackground.drawCentered(_game.getGraphics(), _arrowsPosY_0, 0, 0.3f);
         _arrowsBackground.drawCentered(_game.getGraphics(), _arrowsPosY_1, 0, 0.3f);
-        _actualPlayer.drawCentered(_game.getGraphics(), PLAYER_POS_Y, 0, 1.0f);
 
+
+        _player.render(_game.getGraphics());
 
         //Balls Render
-        BALLS_MANAGER.ballsRenderer(_game.getGraphics());
+        _ballsManager.setPlayer(_player);
+        _ballsManager.render(_game.getGraphics());
     }
 
     @Override
@@ -83,6 +85,6 @@ public class SwitchDash extends AbstractGameState {
 
     private int _ballsSpeed = 430;
 
-    private final int PLAYER_POS_Y = 1200;
-    private BallsManager BALLS_MANAGER;
+    private Player _player = null;
+    private BallsManager _ballsManager = null;
 }

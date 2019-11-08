@@ -2,79 +2,123 @@ package com.gavilanvillar.game_logic;
 
 import com.gavilanvillar.engine.Graphics;
 import com.gavilanvillar.engine.Sprite;
+import com.gavilanvillar.game_logic.Ball.BALL_COLOR;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 
 public class BallsManager  {
+    final int BALL_SEPARATION = 395;
+    final int INITIAL_BALL_VEL = 430;
 
-    public BallsManager(Sprite whiteSprite,Sprite blackSprite, int playerCollisionY){
-        _whiteSprite = whiteSprite;
-        _blackSprite = blackSprite;
+    public BallsManager(Sprite whiteSprite, Sprite blackSprite, Player player){
+        this._whiteSprite = whiteSprite;
+        this._blackSprite = blackSprite;
 
-        _playerCollY = playerCollisionY;
+        setPlayer(player);
 
-        _objs = new ArrayList<>();
+        this._objs = new ArrayList<>();
 
-        _ball = getObject(Ball.BALL_COLOR.BLACK);
+        this._ball = getObject();
+
+        _ballVel = INITIAL_BALL_VEL;
+
     }
 
-    public Ball getObject(Ball.BALL_COLOR _bColor){
+    private BALL_COLOR getNextColor(int i){
+
+        BALL_COLOR bColor;
+
+        if (i < _objs.size() && !_objs.isEmpty()){
+            boolean preColorProbability = new Random().nextInt(70)==0;
+            BALL_COLOR differentColor = (_objs.get(_objs.size() - 1).getBallColor() == BALL_COLOR.BLACK)
+                    ? BALL_COLOR.WHITE : BALL_COLOR.BLACK;
+
+
+            bColor = (preColorProbability) ?
+                    _objs.get(_objs.size() - 1).getBallColor() : differentColor;
+        }
+        else{
+            int randomColor = (int)Math.floor(Math.random() * 2);
+            bColor = (randomColor == 0) ? BALL_COLOR.BLACK : BALL_COLOR.WHITE;
+        }
+
+        return bColor;
+    }
+
+    public Ball getObject(){
         int i = 0;
         while (i < _objs.size() && _objs.get(i).isActive()) {
             i++;
         }
 
-        Ball b = null;
-        if ( i >= _objs.size())
-        {
-            if(_bColor == Ball.BALL_COLOR.BLACK){
 
-                b = new Ball(_blackSprite,_bColor);
-            }
-            else b = new Ball(_whiteSprite,_bColor);
+        BALL_COLOR bColor = getNextColor(i);
+        Ball b = null;
+
+
+        if ( i >= _objs.size()) {
+
+            b = (bColor == BALL_COLOR.BLACK) ?
+                    new Ball(_blackSprite, bColor) : new Ball(_whiteSprite, bColor);
+
+
+            b.setActive(true);
 
             //initializeObject(a);
             _objs.add(b);
-        } else {
+        }
+        else {
+
             b = _objs.get(i);
-            Sprite s;
-            if(_bColor == Ball.BALL_COLOR.BLACK) s = _blackSprite;
-            else s = _whiteSprite;
-            b.setSprite(s);
+
+            b.setColor(bColor);
+
+            b.setSprite((bColor == BALL_COLOR.BLACK) ? _blackSprite: _whiteSprite);
             b.setActive(true);
+
         }
 
         return b;
     }
 
-
-    public void ballsUpdate(double deltaTime,int ballsVelocity)
-    {
+    private void generateBall(){
         _lastGeneratedY = _ball.getPosY();
 
-        if(_lastGeneratedY >= 395 )
+        if(_lastGeneratedY >= BALL_SEPARATION)
         {
-            _ball = getObject(Ball.BALL_COLOR.WHITE);
+            _ball = getObject();
             _ball.setPosY(0);
         }
+    }
 
-        for(Ball b : _objs){
-            if(b.isActive()){
-                int nextPos = b.getPosY();
-                nextPos += (ballsVelocity *deltaTime);
-                b.setPosY(nextPos);
+    public void update(double deltaTime)
+    {
 
-                if( b.checkCollisionWith(_playerCollY)){
-                    b.setActive(false);
+        generateBall();
+
+        for(int i = 0; i < _objs.size(); i++){
+
+            if(_objs.get(i).isActive()){
+
+                if( _objs.get(i).checkCollisionWith(_player)){
+                    _objs.get(i).setActive(false);
+                    System.out.print("HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + "\n");
                 }
+
+                int nextPos = _objs.get(i).getPosY();
+                nextPos += (_ballVel * deltaTime);
+                _objs.get(i).setPosY(nextPos);
+
             }
+
         }
 
-
-
     }
-    public void ballsRenderer(Graphics g)
+
+    public void render(Graphics g)
     {
         for(Ball b : _objs)
         {
@@ -84,13 +128,22 @@ public class BallsManager  {
         }
 
     }
+
+    public void setPlayer(Player p) {
+
+        this._player = p;
+
+     }
+
     private List<Ball> _objs;
     private Sprite _whiteSprite;
     private Sprite _blackSprite;
 
-    private int _playerCollY;
+    private Player _player;
+
+    private int _ballVel = 0;
 
     private int _lastGeneratedY;
 
-    Ball _ball;
+    private Ball _ball = null;
 }

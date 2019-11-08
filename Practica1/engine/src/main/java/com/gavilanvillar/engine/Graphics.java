@@ -38,51 +38,46 @@ public interface Graphics {
      * Pinta la imagen "image" en la posición (x, y) de la pantalla/ventana.
      * Mapea cada pixel de la imagen en el pixel de la pantalla.
      *
-     * @param image Imagen a pintar
-     * @param src Rectángulo fuente de la imagen
+     * @param sprite Objeto Sprite que contiene la imagen y los rectangulos fuente y destino
      * @param x Posición "x" en coordenadas del juego
      * @param y Posición "y" en coordenadas del juego
      */
-    void drawImage(Image image, Rect src, int x, int y, float alpha);
+    void drawImage(Sprite sprite, int x, int y, float alpha);
 
     /**
      * Pinta la imagen "image" en la posición (x, y) de la pantalla/ventana.
      * Mapea cada pixel de la imagen en el pixel de la pantalla.
      *
-     * @param image Imagen a pintar
-     * @param src Rectángulo fuente de la imagen
+     * @param sprite Objeto Sprite que contiene la imagen y los rectangulos fuente y destino
      * @param dest Rectángulo destino de la pantalla donde se pintará la imagen
      */
-    void drawImage(Image image, Rect src, Rect dest, float alpha);
+    void drawImage(Sprite sprite, Rect dest, float alpha);
 
     /**
      * Pinta la imagen "image" en el centro de la pantalla/ventana.
      * Mapea cada pixel de la imagen en el pixel de la pantalla.
      *
-     * @param image Imagen a pintar
-     * @param src Rectángulo fuente de la imagen
+     * @param sprite Objeto Sprite que contiene la imagen y los rectangulos fuente y destino
      */
-    void drawImageCentered(Image image, Rect src, float alpha);
+    void drawImageCentered(Sprite sprite, float alpha);
 
     /**
      * Pinta la imagen "image" en el centro del eje X de la pantalla/ventana.
      * Mapea cada pixel de la imagen en el pixel de la pantalla.
      *
-     * @param image Imagen a pintar
-     * @param src Rectángulo fuente de la imagen
+     * @param sprite Objeto Sprite que contiene la imagen y los rectangulos fuente y destino
      * @param y Posición "y" en coordenadas del juego
      */
-    void drawImageCenteredAxisX(Image image, Rect src, int y, float alpha);
+    void drawImageCenteredAxisX(Sprite sprite, int y, float alpha);
 
     /**
      * Pinta la imagen "image" en el centro del eje Y de la pantalla/ventana.
      * Mapea cada pixel de la imagen en el pixel de la pantalla.
      *
-     * @param image Imagen a pintar
-     * @param src Rectángulo fuente de la imagen
+     * @param sprite Objeto Sprite que contiene la imagen y los rectangulos fuente y destino
      * @param x Posición "x" en coordenadas del juego
      */
-    void drawImageCenteredAxisY(Image image, Rect src, int x, float alpha);
+    void drawImageCenteredAxisY(Sprite sprite, int x, float alpha);
 
     /**
      * Método vacío que se llamará para realizar el pintado de la imagen. Las clases que

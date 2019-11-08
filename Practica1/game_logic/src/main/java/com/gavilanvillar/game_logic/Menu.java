@@ -19,12 +19,11 @@ public class Menu extends AbstractGameState {
 
 
     public void init(ResourceManager resourceManager) {
+
         super.init(resourceManager);
 
         int randomBackground = (int)Math.floor(Math.random() * _resourceManager.getBackgrounds().length);
         _actualBackground = _resourceManager.getBackgrounds()[randomBackground];
-
-
         _switchDashLogo = _resourceManager.getSwitchDashLogo();
     }
 

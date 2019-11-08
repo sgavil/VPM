@@ -10,7 +10,8 @@ public class Sprite {
 
     public Sprite(Image image, Rect rect){
         this._image = image;
-        this._rect = rect;
+        this._srcRect = rect;
+        this._actualDestRect = rect;
     }
 
     /**
@@ -22,7 +23,7 @@ public class Sprite {
      */
     public void draw(Graphics g, int x, int y, float alpha){
 
-        g.drawImage(_image, _rect, x, y, alpha);
+        g.drawImage(this, x, y, alpha);
 
     }
 
@@ -34,7 +35,7 @@ public class Sprite {
      */
     public void draw(Graphics g, Rect dest, float alpha){
 
-        g.drawImage(_image, _rect, dest, alpha);
+        g.drawImage(this, dest, alpha);
     }
 
     /**
@@ -44,7 +45,7 @@ public class Sprite {
      */
     public void drawCentered(Graphics g, float alpha){
 
-        g.drawImageCentered(_image, _rect, alpha);
+        g.drawImageCentered(this, alpha);
 
     }
 
@@ -60,9 +61,9 @@ public class Sprite {
     public void drawCentered(Graphics g, int pos, int axis, float alpha){
 
         if (axis == 0)
-            g.drawImageCenteredAxisX(_image, _rect, pos, alpha);
+            g.drawImageCenteredAxisX(this, pos, alpha);
         else if (axis == 1){
-            g.drawImageCenteredAxisY(_image, _rect, pos, alpha);
+            g.drawImageCenteredAxisY(this, pos, alpha);
         }
 
     }
@@ -82,9 +83,12 @@ public class Sprite {
      *
      * @return Rectángulo fuente
      */
-    public Rect getRect(){
-        return _rect;
+    public Rect getSrcRect(){
+        return _srcRect;
     }
+
+    public void setDestRect(Rect r) { _actualDestRect = r; }
+    public Rect getDestRect() { return _actualDestRect; }
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //        Atributos protegidos/privados (de Sprite)
@@ -92,6 +96,7 @@ public class Sprite {
 
     private Image _image = null;
 
-    private Rect _rect = null;
+    private Rect _srcRect = null;
+    private Rect _actualDestRect = null;
 
 } // interface Sprite
