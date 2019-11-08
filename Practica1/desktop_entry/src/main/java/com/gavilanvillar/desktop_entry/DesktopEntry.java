@@ -3,7 +3,8 @@ package com.gavilanvillar.desktop_entry;
 import com.gavilanvillar.desktop_engine.PCGame;
 import com.gavilanvillar.desktop_engine.PCWindow;
 import com.gavilanvillar.engine.ResourceManager;
-import com.gavilanvillar.game_logic.SwitchDash;
+import com.gavilanvillar.game_logic.Menu;
+
 
 public class DesktopEntry {
     public static void main(String[]args){
@@ -13,7 +14,7 @@ public class DesktopEntry {
             return;
 
         PCGame game = new PCGame();
-        SwitchDash gameLogic = new SwitchDash(game);
+        Menu gameLogic = new Menu(game);
 
         game.init(window, gameLogic);
 

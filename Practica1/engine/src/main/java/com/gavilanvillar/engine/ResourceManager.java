@@ -123,6 +123,8 @@ public class ResourceManager {
     // Para el menú
     public Sprite getSwitchDashLogo() { return _switchDashLogo; }
     public Sprite getTapToPlay() { return _tapToPlay; }
+    public Sprite getHowToPlay() { return _howToPlay; }
+    public Sprite getInstructions() { return _instructions; }
 
     public Sprite getWhiteBall() {return _whiteBall;}
     public Sprite getBlackBall(){return _blackBall;}

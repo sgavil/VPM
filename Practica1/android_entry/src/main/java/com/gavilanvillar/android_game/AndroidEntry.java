@@ -100,7 +100,6 @@ public class AndroidEntry extends AppCompatActivity {
     } // init
 
     AGame _game = null;
-    GameStateManager _gameStateManager = null;
     Menu _gameLogic = null;
     ResourceManager _resourceManager = null;
 }

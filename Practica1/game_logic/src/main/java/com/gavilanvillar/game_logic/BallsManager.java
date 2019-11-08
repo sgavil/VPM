@@ -33,12 +33,12 @@ public class BallsManager  {
 
         if (i < _objs.size() && !_objs.isEmpty()){
             boolean preColorProbability = new Random().nextInt(70)==0;
-            BALL_COLOR differentColor = (_objs.get(_objs.size() - 1).getBallColor() == BALL_COLOR.BLACK)
+            BALL_COLOR differentColor = (_ball.getBallColor() == BALL_COLOR.BLACK)
                     ? BALL_COLOR.WHITE : BALL_COLOR.BLACK;
 
 
             bColor = (preColorProbability) ?
-                    _objs.get(_objs.size() - 1).getBallColor() : differentColor;
+                    _ball.getBallColor() : differentColor;
         }
         else{
             int randomColor = (int)Math.floor(Math.random() * 2);
@@ -105,7 +105,6 @@ public class BallsManager  {
 
                 if( _objs.get(i).checkCollisionWith(_player)){
                     _objs.get(i).setActive(false);
-                    System.out.print("HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + "\n");
                 }
 
                 int nextPos = _objs.get(i).getPosY();

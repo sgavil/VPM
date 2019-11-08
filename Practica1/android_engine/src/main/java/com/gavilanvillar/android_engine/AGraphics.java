@@ -27,7 +27,7 @@ import java.io.InputStream;
 public class AGraphics extends AbstractGraphics {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    //    Constructora y métodos de inicialización (de PCGraphics)
+    //    Constructora y métodos de inicialización (de AGraphics)
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     public AGraphics(AssetManager assetManager, SurfaceView surfaceView, Point windowSize) {
@@ -42,7 +42,7 @@ public class AGraphics extends AbstractGraphics {
 
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    //        Métodos reimplementados (de Graphics)
+    //           Métodos reimplementados (de Graphics)
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // Crea un nuevo Bitmap y lo almacena en la clase AImage

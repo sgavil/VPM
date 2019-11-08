@@ -19,6 +19,10 @@ import com.gavilanvillar.engine.Input;
  */
 public class AGame implements Game, Runnable{
 
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //    Constructora y métodos de inicialización (de AGame)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     public AGame(){
     } // AGame
 
@@ -68,8 +72,6 @@ public class AGame implements Game, Runnable{
 
     } // resume
 
-    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
     /**
      * Método llamado cuando el active rendering debe ser detenido.
      * Puede tardar un pequeño instante en volver, porque espera a que
@@ -97,6 +99,11 @@ public class AGame implements Game, Runnable{
 
     } // pause
 
+
+
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //           Métodos reimplementados (de Runnable)
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     /**
@@ -148,11 +155,12 @@ public class AGame implements Game, Runnable{
 
     } // run
 
-
     @Override
     public GameStateManager getGameStateManager(){
+
         return _gameStateManager;
-    }
+
+    } // getGameStateManager
 
     @Override
     public Graphics getGraphics() {
@@ -167,6 +175,9 @@ public class AGame implements Game, Runnable{
         return _input;
 
     } // getInput
+
+
+
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //        Atributos protegidos/privados (de AGame)

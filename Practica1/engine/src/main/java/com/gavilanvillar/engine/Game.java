@@ -6,19 +6,22 @@ package com.gavilanvillar.engine;
 public interface Game {
 
     /**
-     * Devuelve la instancia del gestor de estados
+     * Devuelve la instancia del gestor de estados.
+     *
      * @return GameStateManager
      */
     GameStateManager getGameStateManager();
 
     /**
-     * Devuelve la instancia del "motor" gráfico
+     * Devuelve la instancia del "motor" gráfico.
+     *
      * @return  Graphics
      */
     Graphics getGraphics();
 
     /**
-     * Devuelve la entrada del gestor de salida
+     * Devuelve la entrada del gestor de salida.
+     *
      * @return  Input
      */
     Input getInput();
