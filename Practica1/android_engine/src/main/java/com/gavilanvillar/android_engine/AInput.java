@@ -4,25 +4,32 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.gavilanvillar.engine.AbstractInput;
-import com.gavilanvillar.engine.Input;
 
 import java.util.ArrayList;
-import java.util.List;
 
+/**
+ * Clase que Hereda de AbstractInput y se encarga de transformar eventos de Android en
+ * TouchEvents y añadirlos a la lista de eventos
+ */
 public class AInput extends AbstractInput {
 
-    public AInput(View view){
+    public AInput(View view) {
 
         _touchEventList = new ArrayList<>();
 
+        //Se añade un listener a la vista
         view.setOnTouchListener(new View.OnTouchListener() {
+            //Metodo que se llamara automaticamente al generarse un evento
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 TouchEvent event = new TouchEvent();
-                event._x = (int)motionEvent.getX();
-                event._y = (int)motionEvent.getY();
+                event._x = (int) motionEvent.getX();
+                event._y = (int) motionEvent.getY();
 
-                switch (motionEvent.getAction()){
+                event._id = motionEvent.getPointerId(0);
+
+                //Se transforma la accion en un touchEvent
+                switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         event._type = EventType.PULSADO;
                         break;
@@ -35,11 +42,11 @@ public class AInput extends AbstractInput {
                     default:
                         break;
                 }
-                synchronized (this) {
-                    addEvent(event);
-                }
 
-                return  true;
+                addEvent(event);
+
+
+                return true;
             }
 
 

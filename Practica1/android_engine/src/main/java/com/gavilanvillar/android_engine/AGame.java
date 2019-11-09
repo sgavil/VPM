@@ -29,7 +29,7 @@ public class AGame implements Game, Runnable{
     /**
      * Inicializa AGame
      *
-     * @param androidEntry
+     * @param androidEntry Activity principal de la aplicación
      * @param gameState estado actual de la aplicación
      */
     public void init(AppCompatActivity androidEntry, GameState gameState){
@@ -100,8 +100,6 @@ public class AGame implements Game, Runnable{
     } // pause
 
 
-
-
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //           Métodos reimplementados (de Runnable)
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -157,6 +155,9 @@ public class AGame implements Game, Runnable{
 
     } // run
 
+    /**
+     * @return Manager de Estados
+     */
     @Override
     public GameStateManager getGameStateManager(){
 
@@ -164,6 +165,9 @@ public class AGame implements Game, Runnable{
 
     } // getGameStateManager
 
+    /**
+     * @return Graphics
+     */
     @Override
     public Graphics getGraphics() {
 
@@ -171,14 +175,15 @@ public class AGame implements Game, Runnable{
 
     } // getGraphics
 
+    /**
+     * @return Input
+     */
     @Override
     public Input getInput() {
 
         return _input;
 
     } // getInput
-
-
 
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

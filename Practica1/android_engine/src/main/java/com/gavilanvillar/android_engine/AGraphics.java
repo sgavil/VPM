@@ -39,8 +39,6 @@ public class AGraphics extends AbstractGraphics {
     }
 
 
-
-
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //           Métodos reimplementados (de Graphics)
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

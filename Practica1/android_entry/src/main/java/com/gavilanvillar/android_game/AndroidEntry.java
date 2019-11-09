@@ -6,14 +6,16 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.gavilanvillar.android_engine.AGame;
-import com.gavilanvillar.android_engine.AGraphics;
-import com.gavilanvillar.engine.GameStateManager;
 import com.gavilanvillar.engine.ResourceManager;
 import com.gavilanvillar.game_logic.Menu;
-import com.gavilanvillar.game_logic.SwitchDash;
 
 
-
+/**
+ *
+ * Punto de entrada de android, Activity principal de la aplicación
+ *
+ * Gestiona la inicialización del estado inicial, la creación del gestor de recursos y la creación del Game.
+ */
 public class AndroidEntry extends AppCompatActivity {
 
     /**
@@ -77,8 +79,7 @@ public class AndroidEntry extends AppCompatActivity {
 
 
     /**
-     * Método que inicializa el juego y la lógica. Por último llama al
-     * bucle del juego, el bucle principal.
+     * Método que inicializa el juego, el estado inicial y el manager de recursos
      */
     void init(){
 
@@ -86,20 +87,17 @@ public class AndroidEntry extends AppCompatActivity {
         _game = new AGame();
 
         // Inicializamos GameLogic
-        _gameLogic = new Menu(_game);
+        _menuState = new Menu(_game);
 
-        _game.init(this, _gameLogic);
+        _game.init(this, _menuState);
 
-        _resourceManager = new ResourceManager(_game);
+        ResourceManager _resourceManager = new ResourceManager(_game);
         _resourceManager.init();
 
-        _gameLogic.init(_resourceManager);
-
-        //_game.run();
+        _menuState.init(_resourceManager);
 
     } // init
 
-    AGame _game = null;
-    Menu _gameLogic = null;
-    ResourceManager _resourceManager = null;
+    private AGame _game = null;
+    private Menu _menuState = null;
 }

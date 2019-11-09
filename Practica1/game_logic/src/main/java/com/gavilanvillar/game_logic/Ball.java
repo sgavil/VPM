@@ -16,6 +16,9 @@ public class Ball
         BLACK, WHITE
     }
 
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //     Metodos de inicialización (de Ball)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     /**
      * Construye un objeto de tipo Ball
      * @param sprite Sprite de la bola que se quiere constuir
@@ -25,6 +28,13 @@ public class Ball
         _sprite = new Sprite(sprite.getImage(), sprite.getSrcRect());
         _ballColor = ballColor;
     }
+
+
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //    Getters y Setters (de Ball)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 
     /**
      * Actualiza la posicion en Y del objeto
@@ -51,29 +61,6 @@ public class Ball
     public Sprite getBallSprite() {
 
         return _sprite;
-    }
-
-    /**
-     * Comprueba si la bola ha "colisionado"
-     * @param player Objeto con el que se comprueba la colision
-     * @return true si ha colisionado y tienen el mismo color, false en caso de no haber colisionado o no tener el mismo color
-     */
-    public boolean checkCollisionWith(Player player){
-
-        return ((_sprite.getDestRect()._bottom >= player.getSprite().getDestRect()._top) &&
-                (_sprite.getDestRect()._bottom <= player.getSprite().getDestRect()._bottom) &&
-                ((player.getColor() == PLAYER_COLOR.BLACK && _ballColor == BALL_COLOR.BLACK) ||
-                        (player.getColor() == PLAYER_COLOR.WHITE && _ballColor == BALL_COLOR.WHITE)));
-
-    }
-
-    /**
-     *
-     * @return Devuelve true si el objeto esta activo
-     */
-    public boolean isActive(){
-
-        return _active;
     }
 
     /**
@@ -111,6 +98,43 @@ public class Ball
         return _ballColor;
 
     }
+
+    /**
+     *
+     * @return Devuelve true si el objeto esta activo
+     */
+    public boolean isActive(){
+
+        return _active;
+    }
+
+
+
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //     Metodos públicos (de Ball)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    /**
+     * Comprueba si la bola ha "colisionado"
+     * @param player Objeto con el que se comprueba la colision
+     * @return true si ha colisionado y tienen el mismo color, false en caso de no haber colisionado o no tener el mismo color
+     */
+    public boolean checkCollisionWith(Player player){
+
+        return ((_sprite.getDestRect()._bottom >= player.getSprite().getDestRect()._top) &&
+                (_sprite.getDestRect()._bottom <= player.getSprite().getDestRect()._bottom) &&
+                ((player.getColor() == PLAYER_COLOR.BLACK && _ballColor == BALL_COLOR.BLACK) ||
+                        (player.getColor() == PLAYER_COLOR.WHITE && _ballColor == BALL_COLOR.WHITE)));
+
+    }
+
+
+
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //    Atributos privados (de Ball)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     private Sprite _sprite;
     private BALL_COLOR _ballColor;

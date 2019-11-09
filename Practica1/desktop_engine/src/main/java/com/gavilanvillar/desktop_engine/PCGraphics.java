@@ -16,7 +16,7 @@ import javax.imageio.ImageIO;
 
 /**
  * Clase PCGraphics
- *
+ * <p>
  * Hereda de AbstractGraphics
  */
 public class PCGraphics extends AbstractGraphics implements ComponentListener {
@@ -25,14 +25,12 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
     //    Constructora y métodos de inicialización (de PCGraphics)
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    public PCGraphics(PCWindow window){
+    public PCGraphics(PCWindow window) {
 
         this._window = window;
         setPhysicResolution(window.getWidth(), window.getHeight());
 
     }
-
-
 
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -45,13 +43,12 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
 
         java.awt.Image image = null;
 
-        try{
+        try {
 
             // Crea una imagen de Java leyendo el archivo
             image = ImageIO.read(new java.io.File(name));
 
-        }
-        catch(IOException e) {
+        } catch (IOException e) {
 
             System.err.println("<PCGrapichs> No se ha podido cargar el recurso: " + name);
 
@@ -77,10 +74,10 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
     public void drawImagePrivate(Image image, Rect srcRect, Rect destRect, float alpha) {
 
         // Se comprueba que existe el objeto "image" para evitar fallos
-        if(image != null) {
+        if (image != null) {
 
             // Crea una variable Graphics2D que se usará para pintar la imagen con un "filtro"
-            Graphics2D g2d = (Graphics2D)_graphics;
+            Graphics2D g2d = (Graphics2D) _graphics;
 
             // Se le añade el "filtro" de transparencia
             g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
@@ -99,26 +96,27 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
     } // drawImagePrivate
 
 
-
-
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //              Getters y Setters (de PCGraphics)
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    public void setGraphics(java.awt.Graphics g){
+    public void setGraphics(java.awt.Graphics g) {
         this._graphics = g;
     }
 
+
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    //        Atributos protegidos/privados (de PCGraphics)
+    //              Metodos de ComponentListener (de PCGraphics)
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    private java.awt.Graphics _graphics;
-
+    /**
+     * Metodo que es llamado al ocurrir algun cambio de tamaño en la ventana de la aplicación
+     *
+     * @param componentEvent
+     */
     @Override
     public void componentResized(ComponentEvent componentEvent) {
-        System.out.println("CAMBIO GUAPO");
-       setPhysicResolution(_window.getWidth(), _window.getHeight());
+        setPhysicResolution(_window.getWidth(), _window.getHeight());
     }
 
     @Override
@@ -136,6 +134,12 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
 
     }
 
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //        Atributos protegidos/privados (de PCGraphics)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    private java.awt.Graphics _graphics;
     private PCWindow _window;
 }
 

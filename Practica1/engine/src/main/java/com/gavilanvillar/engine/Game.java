@@ -2,6 +2,8 @@ package com.gavilanvillar.engine;
 
 /**
  * Interfaz Game
+ *
+ * Mantiene las instancias de Graphics, Input y GameStateManager.
  */
 public interface Game {
 

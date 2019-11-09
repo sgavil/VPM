@@ -1,21 +1,26 @@
 package com.gavilanvillar.engine;
 
-import java.util.Dictionary;
-import java.util.Hashtable;
-
+/**
+ * Clase ResourceManager
+ *
+ * Carga los recursos que se encuentran en la carpeta "assets/sprites/"
+ *
+ * Si se quiere cargar un recurso nuevo se debe hacer su inicializacion y
+ * un getter.
+ */
 public class ResourceManager {
 
 
-    public ResourceManager(Game game){
+    public ResourceManager(Game game) {
         this._game = game;
     }
 
-    public void init(){
+    public void init() {
         loadResources();
     }
 
     /**
-     * Método que carga todos los recursos gráficos que encuentra en la carpeta "assets/sprites/"
+     * Método que carga todos los recursos gráficos
      */
     private void loadResources() {
 
@@ -30,13 +35,15 @@ public class ResourceManager {
         /*image = _game.getGraphics().newImage("sprites/buttons.png");
         //_buttons = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));*/
 
-
-
+        //TODO: cargar los botones ya la score
         /*image = _game.getGraphics().newImage("sprites/scoreFont.png");
         _scoreFont = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));*/
 
     }
 
+    /**
+     * Carga los fondos
+     */
     private void loadBGs() {
 
         Image image = _game.getGraphics().newImage("sprites/arrowsBackground.png");
@@ -66,11 +73,14 @@ public class ResourceManager {
         _greyBackground = new Sprite(image, new Rect((image.getWidth() / BACKGROUNDS_HORIZONTAL) * 8,
                 (image.getWidth() / BACKGROUNDS_HORIZONTAL) * 9, 0, image.getHeight()));
 
-        _backgrounds = new Sprite[] {_greenBackground, _emeraldBackground, _cyanBackground,
+        _backgrounds = new Sprite[]{_greenBackground, _emeraldBackground, _cyanBackground,
                 _blueBackground, _purpleBackground, _hardBlueBackground, _yellowBackground,
                 _redBackground, _greyBackground};
     }
 
+    /**
+     * Carga los players
+     */
     private void loadPlayers() {
 
         Image image = _game.getGraphics().newImage("sprites/players.png");
@@ -82,6 +92,9 @@ public class ResourceManager {
 
     }
 
+    /**
+     * Carga las imagenes de las pelotas
+     */
     private void loadBalls() {
         Image image = _game.getGraphics().newImage("sprites/balls.png");
 
@@ -91,6 +104,9 @@ public class ResourceManager {
                 image.getHeight() / BALLS_VERTICAL, image.getHeight()));
     }
 
+    /**
+     * Carga las imagenes relacionadas con los menus como el logo, imagen de instrucciones...
+     */
     private void loadMenuSprites() {
         Image image;
 
@@ -113,27 +129,71 @@ public class ResourceManager {
         _tapToPlay = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));
     }
 
-    public Sprite[] getBackgrounds(){ return _backgrounds; }
-    public Sprite getArrowsBackground() { return _arrowsBackground; }
-    public Sprite getWhite() { return _white; }
 
-    public Sprite getWhitePlayer() { return _whitePlayer; }
-    public Sprite getBlackPlayer() { return _blackPlayer; }
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //                          Getters
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    // Para el menú
-    public Sprite getSwitchDashLogo() { return _switchDashLogo; }
-    public Sprite getTapToPlay() { return _tapToPlay; }
-    public Sprite getHowToPlay() { return _howToPlay; }
-    public Sprite getInstructions() { return _instructions; }
+    public Sprite[] getBackgrounds() {
+        return _backgrounds;
+    }
 
-    public Sprite getWhiteBall() {return _whiteBall;}
-    public Sprite getBlackBall(){return _blackBall;}
+    public Sprite getArrowsBackground() {
+        return _arrowsBackground;
+    }
 
-    public Sprite getGameOver() {return _gameOver;}
-    public Sprite getPlayAgain() {return _playAgain;}
+    public Sprite getWhite() {
+        return _white;
+    }
 
-    Game _game;
+    public Sprite getWhitePlayer() {
+        return _whitePlayer;
+    }
 
+    public Sprite getBlackPlayer() {
+        return _blackPlayer;
+    }
+
+    public Sprite getSwitchDashLogo() {
+        return _switchDashLogo;
+    }
+
+    public Sprite getTapToPlay() {
+        return _tapToPlay;
+    }
+
+    public Sprite getHowToPlay() {
+        return _howToPlay;
+    }
+
+    public Sprite getInstructions() {
+        return _instructions;
+    }
+
+    public Sprite getWhiteBall() {
+        return _whiteBall;
+    }
+
+    public Sprite getBlackBall() {
+        return _blackBall;
+    }
+
+    public Sprite getGameOver() {
+        return _gameOver;
+    }
+
+    public Sprite getPlayAgain() {
+        return _playAgain;
+    }
+
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //              Atributos privados
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    private Game _game;
+
+    //Numero de celdas que tiene cada imagen
     private final int BACKGROUNDS_HORIZONTAL = 9;
 
     private final int BALLS_HORIZONTAL = 10;
@@ -143,7 +203,7 @@ public class ResourceManager {
 
     private final int PLAYERS_VERTICAL = 2;
 
-    //Backgrounds
+    //Fondos
     private Sprite[] _backgrounds = null;
     private Sprite _greenBackground;
     private Sprite _emeraldBackground = null;
@@ -158,7 +218,7 @@ public class ResourceManager {
     private Sprite _arrowsBackground = null;
     private Sprite _white = null;
 
-    //Balls
+    //Bolas
     private Sprite _whiteBall = null;
     private Sprite _blackBall = null;
 

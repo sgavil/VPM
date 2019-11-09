@@ -14,12 +14,20 @@ import java.util.List;
  */
 public class Tutorial extends GenericGameState {
 
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //   Atributos constantes (de Tutorial)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     //Posiciones de los Sprites
     private final int TAP_TO_PLAY_POS_Y = 1464;
     private final int HOW_TO_PLAY_POS_Y = 290;
     private final int INSTRUCTIONS_POS_Y = 768;
 
 
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //   Métodos de inicialización (de Tutorial)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     public Tutorial(Game game) {
 
         super(game);
@@ -40,6 +48,11 @@ public class Tutorial extends GenericGameState {
     }
 
 
+
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //   Métodos públicos (de Tutorial)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     /**
      * Realiza la renderizacion de los Sprites del GameState
      */
@@ -77,6 +90,10 @@ public class Tutorial extends GenericGameState {
         }
     }
 
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //   Atributos privados (de Tutorial)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     private Sprite _howToPlay = null;
     private Sprite _instructions = null;
 }

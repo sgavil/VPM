@@ -9,11 +9,20 @@ import com.gavilanvillar.engine.Sprite;
  * Se encarga de su propio renderizado
  */
 public class Player {
-    private final int PLAYER_POS_Y = 1200;
 
     public enum PLAYER_COLOR {
         BLACK, WHITE
     }
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //   Atributos constantes (de Player)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    private final int PLAYER_POS_Y = 1200;
+
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //   Métodos de inicialización  (de Player)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     /**
      * @param whiteSprite Sprite blanco de la pala
@@ -28,42 +37,57 @@ public class Player {
                 this._blackSprite : this._whiteSprite;
     }
 
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //   Métodos públicos (de Player)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     /**
      * Renderizado del sprite del jugador
+     *
      * @param g Graphics para poder realizar el pintado
      */
-    public void render(Graphics g){
+    public void render(Graphics g) {
         _sprite.drawCentered(g, PLAYER_POS_Y, 0, 1.0f);
     }
 
     /**
      * Cambio de color y sprite del jugador
      */
-    public void swapColor(){
+    public void swapColor() {
         if (this._playerColor == PLAYER_COLOR.BLACK) {
             this._playerColor = PLAYER_COLOR.WHITE;
             this._sprite = _whiteSprite;
-        }
-        else{
+        } else {
             this._playerColor = PLAYER_COLOR.BLACK;
             this._sprite = _blackSprite;
         }
     }
 
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //   Getters y Setters  (de Player)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     /**
      * @return Devuelve el sprite actual del jugador
      */
-    public Sprite getSprite(){
+    public Sprite getSprite() {
         return _sprite;
     }
 
     /**
      * @return Devuelve el color actual del jugador
      */
-    public PLAYER_COLOR getColor(){
+    public PLAYER_COLOR getColor() {
         return _playerColor;
     }
 
+
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //   Atributos privados (de Player)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     private Sprite _sprite;
 
     private Sprite _whiteSprite;

@@ -2,13 +2,13 @@ package com.gavilanvillar.engine;
 
 /**
  * Clase Sprite
- *
+ * <p>
  * Contiene la información sobre "Image" y "Rect" de una imagen, y los métodos básicos para llamar
  * a los métodos que realizan el pintado de la clase Graphics.
  */
 public class Sprite {
 
-    public Sprite(Image image, Rect rect){
+    public Sprite(Image image, Rect rect) {
         this._image = image;
         this._srcRect = rect;
         this._actualDestRect = rect;
@@ -17,11 +17,12 @@ public class Sprite {
     /**
      * Método para llamar a "drawImage" de Graphics.
      *
-     * @param g Graphics
-     * @param x Posición "x" en coordenadas del juego
-     * @param y Posición "y" en coordenadas del juego
+     * @param g     Graphics
+     * @param x     Posición "x" en coordenadas del juego
+     * @param y     Posición "y" en coordenadas del juego
+     * @param alpha Valor de la transparencia que toma el Sprite
      */
-    public void draw(Graphics g, int x, int y, float alpha){
+    public void draw(Graphics g, int x, int y, float alpha) {
 
         g.drawImage(this, x, y, alpha);
 
@@ -30,39 +31,31 @@ public class Sprite {
     /**
      * Método para llamar a "drawImage" de Graphics
      *
-     * @param g Graphics
-     * @param dest Rectángulo destino de la pantalla donde se pintará la imagen
+     * @param g     Graphics
+     * @param dest  Rectángulo destino de la pantalla donde se pintará la imagen
+     * @param alpha Valor de la transparencia que toma el Sprite
      */
-    public void draw(Graphics g, Rect dest, float alpha){
+    public void draw(Graphics g, Rect dest, float alpha) {
 
         g.drawImage(this, dest, alpha);
     }
 
-    /**
-     * Método para llamar a "drawImageCentered" de Graphics
-     *
-     * @param g Graphics
-     */
-    public void drawCentered(Graphics g, float alpha){
-
-        g.drawImageCentered(this, alpha);
-
-    }
 
     /**
-     * Método para pintar centrado en alguno de los dos ejes, X o Y
+     * Método para pintar centrado en alguno de los dos ejes, X o Y con transparencia
      *
-     * @param g Graphics
-     * @param pos Posición en la X o la Y que se quiere colocar la imagen
+     * @param g     Graphics
+     * @param pos   Posición en la X o la Y que se quiere colocar la imagen
      * @param axis  Eje en el que se centrará la imagen:
      *              axis == 0 eje X
      *              axis == 1 eje Y
+     * @param alpha Valor de la transparencia que toma el Sprite
      */
-    public void drawCentered(Graphics g, int pos, int axis, float alpha){
+    public void drawCentered(Graphics g, int pos, int axis, float alpha) {
 
         if (axis == 0)
             g.drawImageCenteredAxisX(this, pos, alpha);
-        else if (axis == 1){
+        else if (axis == 1) {
             g.drawImageCenteredAxisY(this, pos, alpha);
         }
 
@@ -73,7 +66,7 @@ public class Sprite {
      *
      * @return Imagen
      */
-    public Image getImage(){
+    public Image getImage() {
         return _image;
     }
 
@@ -83,12 +76,17 @@ public class Sprite {
      *
      * @return Rectángulo fuente
      */
-    public Rect getSrcRect(){
+    public Rect getSrcRect() {
         return _srcRect;
     }
 
-    public void setDestRect(Rect r) { _actualDestRect = r; }
-    public Rect getDestRect() { return _actualDestRect; }
+    public void setDestRect(Rect r) {
+        _actualDestRect = r;
+    }
+
+    public Rect getDestRect() {
+        return _actualDestRect;
+    }
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //        Atributos protegidos/privados (de Sprite)

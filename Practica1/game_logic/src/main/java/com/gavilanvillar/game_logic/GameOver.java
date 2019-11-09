@@ -14,10 +14,19 @@ import java.util.List;
  */
 public class GameOver extends GenericGameState {
 
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //   Atributos constantes (de GameOver)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //Posiciones de los Sprites
     private final int PLAY_AGAIN_POSY = 1396;
     private final int GAME_OVER_POSY = 364;
 
+
+
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //  Métodos de inicialización (de GameOver)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     /**
      * Construtor del estado GameOver
      * @param game Referencia al juego para poder obtener los "singleton" graphics,input y el stateManager
@@ -44,6 +53,9 @@ public class GameOver extends GenericGameState {
     }
 
 
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //   Métodos públicos (de GameOver)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     /**
      * Realiza la renderizacion de los Sprites del GameState
     **/
@@ -77,8 +89,10 @@ public class GameOver extends GenericGameState {
 
     }
 
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //   Atributos privados (de GameOver)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    //Sprites del estado
     private Sprite _gameOver = null;
     private Sprite _playAgain = null;
 

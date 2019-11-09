@@ -1,21 +1,26 @@
 package com.gavilanvillar.desktop_engine;
 
 import com.gavilanvillar.engine.Graphics;
-
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.image.BufferStrategy;
-
 import javax.swing.JFrame;
 
+/**
+ * Clase PCWindow
+ *
+ * Inicializa la ventana de JFrame y obtiene el bufferStrategy
+ */
 public class PCWindow extends JFrame {
 
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //      Métodos de inicialización (de PCWindow)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     public PCWindow(String title) {
         super(title);
     }
 
+    //Devuelve false si no se ha iniciado correctamente
     public boolean init() {
-        setSize(1080, 1920);
+        setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setIgnoreRepaint(true);
@@ -45,6 +50,9 @@ public class PCWindow extends JFrame {
         return true;
     }
 
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //      Getters y Setters (de PCWindow)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     public BufferStrategy getStrategy() {
         return _strategy;
     }
@@ -54,7 +62,12 @@ public class PCWindow extends JFrame {
         this.addComponentListener((PCGraphics) g);
     }
 
-
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //     Atributos privados (de PCWindow)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     private BufferStrategy _strategy = null;
     private Graphics _graphics = null;
+
+    private final int WINDOW_WIDTH = 1080;
+    private final int WINDOW_HEIGHT = 1920;
 }

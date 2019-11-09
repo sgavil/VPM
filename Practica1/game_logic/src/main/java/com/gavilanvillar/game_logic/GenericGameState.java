@@ -6,11 +6,14 @@ import com.gavilanvillar.engine.ResourceManager;
 import com.gavilanvillar.engine.Sprite;
 
 /**
- * Clase abstracta que sirve como estado generico del juego ya que comparte una gran funcionalidad de
- * los estados.
+ * Clase abstracta que sirve como estado generico del juego ya que comparte parte de la funcionalidad
+ * entre estados.
  */
 public abstract class GenericGameState implements GameState {
 
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //   Atributos constantes (de GenericGameState)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //Tamaño logico del juego
     protected final int WIDTH_RES = 1080;
     protected final int HEIGHT_RES = 1920;
@@ -18,10 +21,13 @@ public abstract class GenericGameState implements GameState {
     //Velocidad a la que incrementan las flechas al subir de nivel
     private final int ARROWS_VEL_INCR = 90;
 
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //  Métodos de inicialización (de GenericGameState)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     public GenericGameState(Game game) {
         this._game = game;
     }
-
 
     /**
      * Metodo que inicializa el estado, generando un fondo aleatorio y obtiene los Sprites necesarios
@@ -43,6 +49,11 @@ public abstract class GenericGameState implements GameState {
         this._tapToPlay = _resourceManager.getTapToPlay();
     }
 
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //   Métodos públicos (de GenericGameState)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     /**
      * Actualiza la posicion de las flechas y realiza una transicion de alpha para la imagen de playAgain
      *
@@ -53,8 +64,17 @@ public abstract class GenericGameState implements GameState {
 
         fadeInFadeOutAlpha(deltaTime);
         arrowsMovement(deltaTime);
-
     }
+
+
+    public void speedUpArrows() {
+        _arrowsVel += ARROWS_VEL_INCR;
+    }
+
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //   Métodos protegidos (de GenericGameState)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     /**
      * Realiza la animación del fondo de flechas
@@ -105,10 +125,11 @@ public abstract class GenericGameState implements GameState {
     /**
      * Aumenta la velocidad de las flechas cuando se aumenta de nivel
      */
-    public void speedUpArrows() {
-        _arrowsVel += ARROWS_VEL_INCR;
-    }
 
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //   Atributos privados/protegidos  (de GenericGameState)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     protected Game _game;
     protected ResourceManager _resourceManager;
 
@@ -125,7 +146,6 @@ public abstract class GenericGameState implements GameState {
 
     private boolean fadeIn = false;
     private boolean fadeOut = true;
-
 
     protected Sprite _actualBackground;
     protected Sprite _arrowsBackground;

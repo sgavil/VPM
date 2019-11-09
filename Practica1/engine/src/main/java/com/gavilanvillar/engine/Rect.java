@@ -7,6 +7,12 @@ package com.gavilanvillar.engine;
  */
 public class Rect {
 
+    /**
+     * @param _left Posicion izquierda del rectángulo
+     * @param _right Posicion derecha del rectángulo
+     * @param _top Posición superior del rectángulo
+     * @param _bottom Posición inferior del rectángulo
+     */
     public Rect(int _left, int _right, int _top, int _bottom) {
         this._left = _left;
         this._right = _right;

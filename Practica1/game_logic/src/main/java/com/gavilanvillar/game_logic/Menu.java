@@ -15,10 +15,14 @@ import java.util.List;
  */
 public class Menu extends GenericGameState {
 
-    public Menu(Game game){
-        super(game);
-    }
 
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //   Métodos de inicialización (de Menu)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    public Menu(Game game) {
+        super(game);
+
+    }
 
     /**
      * Se llama al init de GenericGameState y se obtienen los sprites específicos de este estado
@@ -32,6 +36,11 @@ public class Menu extends GenericGameState {
         _switchDashLogo = _resourceManager.getSwitchDashLogo();
     }
 
+
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //   Métodos de públicos (de Menu)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     /**
      * Realiza la renderizacion de los Sprites del GameState
      **/
@@ -55,20 +64,22 @@ public class Menu extends GenericGameState {
 
         List<TouchEvent> ev = _game.getInput().getTouchEvents();
 
-        for (TouchEvent e: ev){
+        for (TouchEvent e : ev) {
             if (e._type == EventType.PULSADO)
                 System.out.print("PULSADOOOOOOOOOOOOOOOOOO \n");
             else if (e._type == EventType.LIBERADO) {
                 Tutorial s = new Tutorial(_game);
                 s.init(_resourceManager);
                 _game.getGameStateManager().setState(s);
-            }
-            else if (e._type == EventType.DESPLAZADO)
+            } else if (e._type == EventType.DESPLAZADO)
                 System.out.print("DESPLAZADOOOOOOOOOOOOOO \n");
         }
 
     }
 
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //   Atributos privados (de Menu)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     private Sprite _switchDashLogo = null;
 
 }

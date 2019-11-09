@@ -13,7 +13,7 @@ import com.gavilanvillar.engine.Image;
 public class AImage implements Image {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    //    Constructora y métodos de inicialización (de AGame)
+    //    Constructora y métodos de inicialización (de AImage)
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     public AImage(Bitmap image) {
@@ -21,8 +21,6 @@ public class AImage implements Image {
         this._image = image;
 
     }
-
-
 
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -39,8 +37,6 @@ public class AImage implements Image {
         return _image;
 
     }
-
-
 
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -60,9 +56,6 @@ public class AImage implements Image {
         return _image.getHeight();
 
     }
-
-
-
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //        Atributos protegidos/privados (de AImage)

@@ -16,6 +16,9 @@ import java.util.List;
  */
 public class SwitchDash extends GenericGameState {
 
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //   Métodos de inicialización (de SwitchDash)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     public SwitchDash(Game game) {
 
         super(game);
@@ -38,6 +41,11 @@ public class SwitchDash extends GenericGameState {
 
     }
 
+
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //   Métodos públicos (de SwitchDash)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     /**
      * Intercambia el color de la pala del jugador
      */
@@ -112,6 +120,10 @@ public class SwitchDash extends GenericGameState {
     }
 
 
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //   Atributos privados (de SwitchDash)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     private Player _player = null;
     private BallsManager _ballsManager = null;
 

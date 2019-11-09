@@ -16,6 +16,10 @@ import java.util.Random;
  * Este manager realiza Object Pooling a la hora de gestionar las bolas de cara a un mejor rendimiento
  */
 public class BallsManager {
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //     Atributos Constantes (de BallManager)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //Distancia de separación (en pixeles ) entre cada instanciacion de las bolas
     private final int BALL_SEPARATION = 395;
 
@@ -31,6 +35,11 @@ public class BallsManager {
     //Incremento de la velocidad vertical de las bolas al conseguir SCORE_TO_LEVEL_UP puntos mas
     private int BALLS_SPEED_INCR = 90;
 
+
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //    Métodos de inicialización (de BallManager)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     /**
      * Inicializacion de BallsManager
@@ -80,6 +89,32 @@ public class BallsManager {
         return bColor;
     }
 
+
+
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //    Getter y Setters  (de BallManager)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    /**
+     * Setter de la pala del jugador
+     *
+     * @param p Referencia al jugador ( la pala )
+     */
+    public void setPlayer(Player p) {
+
+        this._player = p;
+
+    }
+
+    /**
+     * Setter de la clase SwitchDash
+     *
+     * @param s Referencia al objecto SwitchDash
+     */
+    public void setSwitchDash(SwitchDash s) {
+        _switchDash = s;
+    }
+
     /**
      * Metodo encargado del Object Pooling, si la lista _objs esta vacia o no hay ningun elemento desactivado crea una bola nueva.
      * En caso contrario, activa el elemento encontrado y cambia su color si es necesario.
@@ -120,6 +155,10 @@ public class BallsManager {
         return b;
     }
 
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //    Métodos privados/públicos (de BallManager)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     /**
      * Se encarga de generar una bola si la ultima bola generada esta a una distancia de BALL_SEPARATION pixeles
      */
@@ -183,17 +222,6 @@ public class BallsManager {
     }
 
     /**
-     * Setter de la pala del jugador
-     *
-     * @param p Referencia al jugador ( la pala )
-     */
-    public void setPlayer(Player p) {
-
-        this._player = p;
-
-    }
-
-    /**
      * Si se han conseguido SCORE_TO_LEVEL_UP puntos más se incrementa la velocidad de la bola y del fondo
      */
     private void levelUpBalls() {
@@ -204,14 +232,9 @@ public class BallsManager {
         }
     }
 
-    /**
-     * Setter de la clase SwitchDash
-     *
-     * @param s Referencia al objecto SwitchDash
-     */
-    public void setSwitchDash(SwitchDash s) {
-        _switchDash = s;
-    }
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //    Atributos privados  (de BallManager)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     //Lista de objetos para hacer el pooling
     private List<Ball> _objs;

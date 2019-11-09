@@ -1,21 +1,31 @@
 package com.gavilanvillar.desktop_engine;
 
-import javax.swing.JFrame;
-
 import com.gavilanvillar.engine.Game;
 import com.gavilanvillar.engine.GameState;
 import com.gavilanvillar.engine.GameStateManager;
 import com.gavilanvillar.engine.Graphics;
 import com.gavilanvillar.engine.Input;
 
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentListener;
 
+/**
+ * Clase PCGame
+ *
+ * Clase que implementa el bucle principal del juego
+ */
 public class PCGame implements Game {
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //        Métodos de inicialización (PCGame)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     public PCGame(){
 
     }
 
+    /**
+     * Inicializacion del PCGame
+     * @param window Ventana donde se va a pintar la aplicación
+     * @param gameState Estado que se va a ejecutar
+     */
     public void init(PCWindow window, GameState gameState){
         this._window = window;
 
@@ -28,12 +38,17 @@ public class PCGame implements Game {
 
         this._input = new PCInput();
         this._input.init();
+
+        //Se añaden los listener del ratón
         this._window.getContentPane().addMouseListener(this._input.getMouseController());
         this._window.getContentPane().addMouseMotionListener(this._input.getMouseController());
 
 
     }
 
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //        Getters y Setters ( de PCGame)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     @Override
     public GameStateManager getGameStateManager() {
         return _gameStateManager;
@@ -56,6 +71,8 @@ public class PCGame implements Game {
 
         long informePrevio = lastFrameTime; // Informes de FPS
         int frames = 0;
+
+
         // Bucle principal
         while(true) {
             long currentTime = System.nanoTime();
@@ -92,6 +109,10 @@ public class PCGame implements Game {
     }
 
 
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //        Atributos protegidos/privados (de PCGame)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     private static PCWindow _window = null;
     private static GameStateManager _gameStateManager = null;

@@ -3,6 +3,12 @@ package com.gavilanvillar.engine;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase AbstractInput
+ *
+ * Implementa la interfaz input y se encarga de añadir eventos a la lista de TouchEvents ademas de
+ * devolver la lista manteniendo la concurrencia en la aplicación al realizar ambas acciones
+ */
 public abstract class AbstractInput implements Input {
 
     @Override
