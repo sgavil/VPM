@@ -129,6 +129,9 @@ public class ResourceManager {
     public Sprite getWhiteBall() {return _whiteBall;}
     public Sprite getBlackBall(){return _blackBall;}
 
+    public Sprite getGameOver() {return _gameOver;}
+    public Sprite getPlayAgain() {return _playAgain;}
+
     Game _game;
 
     private final int BACKGROUNDS_HORIZONTAL = 9;

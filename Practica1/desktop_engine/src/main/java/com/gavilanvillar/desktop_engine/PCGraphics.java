@@ -8,6 +8,8 @@ import com.gavilanvillar.engine.Rect;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -17,15 +19,16 @@ import javax.imageio.ImageIO;
  *
  * Hereda de AbstractGraphics
  */
-public class PCGraphics extends AbstractGraphics {
+public class PCGraphics extends AbstractGraphics implements ComponentListener {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //    Constructora y métodos de inicialización (de PCGraphics)
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    public PCGraphics(int windowWidth, int windowHeight){
+    public PCGraphics(PCWindow window){
 
-        setPhysicResolution(windowWidth, windowHeight);
+        this._window = window;
+        setPhysicResolution(window.getWidth(), window.getHeight());
 
     }
 
@@ -103,13 +106,8 @@ public class PCGraphics extends AbstractGraphics {
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     public void setGraphics(java.awt.Graphics g){
-
         this._graphics = g;
-
     }
-
-
-
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //        Atributos protegidos/privados (de PCGraphics)
@@ -117,5 +115,27 @@ public class PCGraphics extends AbstractGraphics {
 
     private java.awt.Graphics _graphics;
 
+    @Override
+    public void componentResized(ComponentEvent componentEvent) {
+        System.out.println("CAMBIO GUAPO");
+       setPhysicResolution(_window.getWidth(), _window.getHeight());
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent componentEvent) {
+
+    }
+
+    @Override
+    public void componentShown(ComponentEvent componentEvent) {
+
+    }
+
+    @Override
+    public void componentHidden(ComponentEvent componentEvent) {
+
+    }
+
+    private PCWindow _window;
 }
 

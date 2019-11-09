@@ -134,8 +134,10 @@ public class AGame implements Game, Runnable{
             lastFrameTime = currentTime;
             double elapsedTime = (double) nanoElapsedTime / 1.0E9;
 
-            _gameStateManager.getActualState().update(elapsedTime);
-            _gameStateManager.getActualState().handleEvent();
+            GameState actualState = _gameStateManager.getActualState();
+
+            actualState.update(elapsedTime);
+            actualState.handleEvent();
 
             // Informe de FPS
             if (currentTime - informePrevio > 1000000000l) {
@@ -148,7 +150,7 @@ public class AGame implements Game, Runnable{
 
             // Pintamos el frame
             _graphics.lockCanvas();
-            _gameStateManager.getActualState().render();
+            actualState.render();
             _graphics.unlockCanvas();
 
         }

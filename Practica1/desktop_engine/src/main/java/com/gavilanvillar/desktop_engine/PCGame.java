@@ -23,13 +23,15 @@ public class PCGame implements Game {
         this._gameStateManager.setState(gameState);
 
 
-        this._graphics = new PCGraphics(this._window.getWidth(), this._window.getHeight());
+        this._graphics = new PCGraphics(window);
         this._window.setGraphics(this._graphics);
 
         this._input = new PCInput();
         this._input.init();
         this._window.getContentPane().addMouseListener(this._input.getMouseController());
         this._window.getContentPane().addMouseMotionListener(this._input.getMouseController());
+
+
     }
 
     @Override
@@ -86,13 +88,6 @@ public class PCGame implements Game {
                 } while(_window.getStrategy().contentsRestored());
                 _window.getStrategy().show();
             } while(_window.getStrategy().contentsLost());
-			/*
-			// Posibilidad: cedemos algo de tiempo. es una medida conflictiva...
-			try {
-				Thread.sleep(1);
-			}
-			catch(Exception e) {}
-			*/
         } // while
     }
 

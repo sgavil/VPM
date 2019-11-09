@@ -1,6 +1,5 @@
 package com.gavilanvillar.game_logic;
 
-import com.gavilanvillar.engine.AbstractGameState;
 import com.gavilanvillar.engine.Game;
 import com.gavilanvillar.engine.Input.EventType;
 import com.gavilanvillar.engine.Input.TouchEvent;
@@ -10,39 +9,42 @@ import com.gavilanvillar.engine.Sprite;
 
 import java.util.List;
 
-public class Tutorial extends AbstractGameState {
+/**
+ * Estado del juego donde se encuentran las instrucciones y los controles para jugar
+ */
+public class Tutorial extends GenericGameState {
+
+    //Posiciones de los Sprites
     private final int TAP_TO_PLAY_POS_Y = 1464;
     private final int HOW_TO_PLAY_POS_Y = 290;
     private final int INSTRUCTIONS_POS_Y = 768;
 
-    public Tutorial (Game game){
+
+    public Tutorial(Game game) {
 
         super(game);
 
     }
 
-    public void init(ResourceManager resourceManager){
+    /**
+     * Se llama al init de GenericGameState y se obtienen los sprites específicos de este estado
+     *
+     * @param resourceManager Gestor de recursos para poder obtener los sprites
+     */
+    public void init(ResourceManager resourceManager) {
 
         super.init(resourceManager);
-
-        int randomBackground = (int)Math.floor(Math.random() * _resourceManager.getBackgrounds().length);
-        _actualBackground = _resourceManager.getBackgrounds()[randomBackground];
-        _arrowsBackground = _resourceManager.getArrowsBackground();
 
         _howToPlay = _resourceManager.getHowToPlay();
         _instructions = _resourceManager.getInstructions();
     }
 
+
+    /**
+     * Realiza la renderizacion de los Sprites del GameState
+     */
     @Override
-    public void update(double deltaTime){
-
-        fadeInFadeOutTap(deltaTime);
-        arrowsMovement(deltaTime);
-
-    }
-
-    @Override
-    public void render(){
+    public void render() {
 
         _actualBackground.draw(_game.getGraphics(), new Rect(0, WIDTH_RES,
                 0, HEIGHT_RES), 1.0f);
@@ -53,23 +55,24 @@ public class Tutorial extends AbstractGameState {
         _howToPlay.drawCentered(_game.getGraphics(), HOW_TO_PLAY_POS_Y, 0, 1);
         _instructions.drawCentered(_game.getGraphics(), INSTRUCTIONS_POS_Y, 0, 1);
 
-        _tapToPlay.drawCentered(_game.getGraphics(), 1464, 0, tapAlpha);
+        _tapToPlay.drawCentered(_game.getGraphics(), TAP_TO_PLAY_POS_Y, 0, fadeInOutAlpha);
     }
 
+    /**
+     * Gestiona la pulsacion en la ventana
+     */
     @Override
     public void handleEvent() {
         List<TouchEvent> ev = _game.getInput().getTouchEvents();
 
-        for (TouchEvent e: ev){
+        for (TouchEvent e : ev) {
             if (e._type == EventType.PULSADO)
                 System.out.print("PULSADOOOOOOOOOOOOOOOOOO \n");
-            else if (e._type == EventType.LIBERADO)
-            {
+            else if (e._type == EventType.LIBERADO) {
                 SwitchDash s = new SwitchDash(_game);
                 s.init(_resourceManager);
                 _game.getGameStateManager().setState(s);
-            }
-            else if (e._type == EventType.DESPLAZADO)
+            } else if (e._type == EventType.DESPLAZADO)
                 System.out.print("DESPLAZADOOOOOOOOOOOOOO \n");
         }
     }

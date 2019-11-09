@@ -8,14 +8,14 @@ import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 
-public class PCWindow extends JFrame implements ComponentListener {
+public class PCWindow extends JFrame {
 
-    public PCWindow(String title){
+    public PCWindow(String title) {
         super(title);
     }
 
-    public boolean init(){
-        setSize(1080,1920);
+    public boolean init() {
+        setSize(1080, 1920);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setIgnoreRepaint(true);
@@ -24,19 +24,17 @@ public class PCWindow extends JFrame implements ComponentListener {
 
         // Intentamos crear el buffer strategy con 2 buffers.
         int intentos = 100;
-        while(intentos-- > 0) {
+        while (intentos-- > 0) {
             try {
                 createBufferStrategy(2);
                 break;
-            }
-            catch(Exception e) {
+            } catch (Exception e) {
             }
         } // while pidiendo la creación de la buffeStrategy
         if (intentos == 0) {
             System.err.println("No pude crear la BufferStrategy");
             return false;
-        }
-        else {
+        } else {
             // En "modo debug" podríamos querer escribir esto.
             //System.out.println("BufferStrategy tras " + (100 - intentos) + " intentos.");
         }
@@ -44,32 +42,18 @@ public class PCWindow extends JFrame implements ComponentListener {
         // Obtenemos el Buffer Strategy que se supone acaba de crearse.
         _strategy = getBufferStrategy();
 
-        this.addComponentListener(this);
-
         return true;
     }
 
-    public BufferStrategy getStrategy(){
+    public BufferStrategy getStrategy() {
         return _strategy;
     }
 
-    public void setGraphics(Graphics g){ this._graphics = g; }
-
-    public void componentHidden(ComponentEvent e) {
-
+    public void setGraphics(Graphics g) {
+        this._graphics = g;
+        this.addComponentListener((PCGraphics) g);
     }
 
-    public void componentMoved(ComponentEvent e) {
-
-    }
-
-    public void componentResized(ComponentEvent e) {
-        _graphics.setPhysicResolution(getWidth(), getHeight());
-    }
-
-    public void componentShown(ComponentEvent e) {
-
-    }
 
     private BufferStrategy _strategy = null;
     private Graphics _graphics = null;
