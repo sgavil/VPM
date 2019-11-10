@@ -1,5 +1,6 @@
 package com.gavilanvillar.game_logic;
 
+import com.gavilanvillar.engine.Rect;
 import com.gavilanvillar.engine.Sprite;
 import com.gavilanvillar.game_logic.Player.PLAYER_COLOR;
 
@@ -122,7 +123,9 @@ public class Ball
      */
     public boolean checkCollisionWith(Player player){
 
-        return ((_sprite.getDestRect()._bottom >= player.getSprite().getDestRect()._top) &&
+        int diff = player.getSprite().getDestRect()._top - player.getSprite().getDestRect()._bottom;
+        //(_sprite.getDestRect()._bottom >= player.getSprite().getDestRect()._top)
+       return ( _posY >= player.getPosY()+diff &&
                  ((player.getColor() == PLAYER_COLOR.BLACK && _ballColor == BALL_COLOR.BLACK) ||
                         (player.getColor() == PLAYER_COLOR.WHITE && _ballColor == BALL_COLOR.WHITE)));
 

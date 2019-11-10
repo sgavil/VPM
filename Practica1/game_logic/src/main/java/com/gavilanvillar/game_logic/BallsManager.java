@@ -183,12 +183,14 @@ public class BallsManager {
         //Por cada bola activa se aumenta su posicion en Y, se comprueba si ha colisionado con la pala, se incrementa la puntuacion
         // y en caso de haber sobrepasado la pala se llama al gameOver
         for (int i = 0; i < _objs.size(); i++) {
+            //System.out.println("La bola [" + i + "] esta " + _objs.get(i).isActive() );
+            System.out.println("POS: " + _objs.get(i).getPosY());
+            System.out.println("DEST" + _objs.get(i).getBallSprite().getDestRect()._top);
             if (_objs.get(i).isActive())
             {
-
                 //En el checkcollisionWith se comprueba si son del mismo color
                 if (_objs.get(i).checkCollisionWith(_player)) {
-                    _objs.get(i).setActive(false);
+                   _objs.get(i).setActive(false);
                     _ballLevelUpScore++;
                     _switchDash.addScore();
                 }
@@ -199,7 +201,7 @@ public class BallsManager {
 
                 //La bola ha sobrepasado la pala del jugador
                 if (_objs.get(i).getBallSprite().getDestRect()._top > _player.getSprite().getDestRect()._bottom) {
-                    _switchDash.gameOver();
+                    //_switchDash.gameOver();
                 }
 
             }

@@ -36,6 +36,7 @@ public class SwitchDash extends GenericGameState {
 
         _mainTheme = resourceManager.getTecnhoLoop();
         _player = new Player(_resourceManager.getWhitePlayer(), _resourceManager.getBlackPlayer(), PLAYER_COLOR.WHITE);
+        _player.setPosY(PLAYER_POS_Y);
         _collisionSound = resourceManager.getDisparo();
 
         _ballsManager = new BallsManager(_resourceManager.getWhiteBall(), _resourceManager.getBlackBall(), _player);
@@ -147,6 +148,9 @@ public class SwitchDash extends GenericGameState {
     private Sound _mainTheme;
 
     private  boolean alreadyPlayed = false;
+
+    private final int PLAYER_POS_Y = 1200;
+
 
 
 }

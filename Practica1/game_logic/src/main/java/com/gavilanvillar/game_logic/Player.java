@@ -10,6 +10,8 @@ import com.gavilanvillar.engine.Sprite;
  */
 public class Player {
 
+
+
     public enum PLAYER_COLOR {
         BLACK, WHITE
     }
@@ -17,7 +19,6 @@ public class Player {
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //   Atributos constantes (de Player)
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    private final int PLAYER_POS_Y = 1200;
 
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -48,7 +49,7 @@ public class Player {
      * @param g Graphics para poder realizar el pintado
      */
     public void render(Graphics g) {
-        _sprite.drawCentered(g, PLAYER_POS_Y, 0, 1.0f);
+        _sprite.drawCentered(g, posY, 0, 1.0f);
     }
 
     /**
@@ -83,7 +84,13 @@ public class Player {
         return _playerColor;
     }
 
+    public int getPosY() {
+        return posY;
+    }
 
+    public void setPosY(int posY) {
+        this.posY = posY;
+    }
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //   Atributos privados (de Player)
@@ -94,4 +101,6 @@ public class Player {
     private Sprite _blackSprite;
 
     private PLAYER_COLOR _playerColor;
+
+    private int posY;
 }
