@@ -1,5 +1,6 @@
 package com.gavilanvillar.desktop_engine;
 
+import com.gavilanvillar.engine.Audio;
 import com.gavilanvillar.engine.Game;
 import com.gavilanvillar.engine.GameState;
 import com.gavilanvillar.engine.GameStateManager;
@@ -39,6 +40,8 @@ public class PCGame implements Game {
         this._input = new PCInput();
         this._input.init();
 
+        this._audio = new PCAudio();
+
         //Se añaden los listener del ratón
         this._window.getContentPane().addMouseListener(this._input.getMouseController());
         this._window.getContentPane().addMouseMotionListener(this._input.getMouseController());
@@ -62,6 +65,11 @@ public class PCGame implements Game {
     @Override
     public Input getInput() {
         return _input;
+    }
+
+    @Override
+    public Audio getAudio() {
+        return _audio;
     }
 
     //@Override
@@ -117,5 +125,6 @@ public class PCGame implements Game {
     private static PCWindow _window = null;
     private static GameStateManager _gameStateManager = null;
     private static PCGraphics _graphics = null;
+    private static PCAudio _audio = null;
     private static PCInput _input = null;
 }

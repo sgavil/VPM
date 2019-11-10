@@ -1,7 +1,6 @@
 package com.gavilanvillar.android_game;
 
 import android.content.res.Configuration;
-import android.media.AudioManager;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -95,7 +94,7 @@ public class AndroidEntry extends AppCompatActivity {
         ResourceManager _resourceManager = new ResourceManager(_game);
         _resourceManager.init();
 
-        setVolumeControlStream(AudioManager.STREAM_MUSIC);
+        //setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
         _menuState.init(_resourceManager);
 

@@ -4,4 +4,6 @@ public interface Audio {
 
     Sound newSound(String name);
 
+    void muteAll();
+
 }

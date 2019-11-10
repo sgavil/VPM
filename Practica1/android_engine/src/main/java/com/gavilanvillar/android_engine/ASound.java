@@ -30,6 +30,15 @@ public class ASound implements Sound {
         _loop = loopActive ? 1 : 0;
     }
 
+    @Override
+    public void mute() {
+        _pool.setVolume(_soundID,0.0f,0.0f);
+    }
+
+    @Override
+    public void unMute() {
+        _pool.setVolume(_soundID,1.0f,1.0f);
+    }
 
     private int _soundID;
     private SoundPool _pool;

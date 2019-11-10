@@ -10,6 +10,8 @@ import com.gavilanvillar.engine.Audio;
 import com.gavilanvillar.engine.Sound;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AAudio implements Audio
 {
@@ -19,7 +21,7 @@ public class AAudio implements Audio
 
         this._soundPool = new SoundPool(20, AudioManager.STREAM_MUSIC, 0);
 
-
+        _soundList = new ArrayList<>();
     }
 
     @Override
@@ -35,11 +37,24 @@ public class AAudio implements Audio
         }
         int soundID = _soundPool.load(descriptor, 1);
 
-        return new ASound(soundID,_soundPool);
+        Sound s = new ASound(soundID,_soundPool);
+        _soundList.add(s);
+        return s;
     }
 
+    @Override
+    public void muteAll() {
+        for(Sound s : _soundList){
+            s.mute();
+        }
+    }
 
+    public void unMuteAll(){
+
+    }
     private AppCompatActivity _appContext;
     private AssetManager _assetManager;
     private SoundPool _soundPool;
+
+    private List<Sound> _soundList;
 }

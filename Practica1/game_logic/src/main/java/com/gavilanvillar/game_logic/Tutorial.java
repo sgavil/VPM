@@ -45,6 +45,8 @@ public class Tutorial extends GenericGameState {
 
         _howToPlay = _resourceManager.getHowToPlay();
         _instructions = _resourceManager.getInstructions();
+
+        _game.getAudio().muteAll();
     }
 
 

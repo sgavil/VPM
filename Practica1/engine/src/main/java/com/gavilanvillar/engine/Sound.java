@@ -6,4 +6,8 @@ public interface Sound{
     void release();
 
     void setLoop(boolean loopActive);
+
+    void mute();
+
+    void unMute();
 }

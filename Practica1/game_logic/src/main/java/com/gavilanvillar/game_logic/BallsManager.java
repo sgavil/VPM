@@ -183,8 +183,8 @@ public class BallsManager {
         //Por cada bola activa se aumenta su posicion en Y, se comprueba si ha colisionado con la pala, se incrementa la puntuacion
         // y en caso de haber sobrepasado la pala se llama al gameOver
         for (int i = 0; i < _objs.size(); i++) {
-
-            if (_objs.get(i).isActive()) {
+            if (_objs.get(i).isActive())
+            {
 
                 //En el checkcollisionWith se comprueba si son del mismo color
                 if (_objs.get(i).checkCollisionWith(_player)) {
@@ -205,6 +205,9 @@ public class BallsManager {
             }
 
         }
+        System.out.println("TAM = " + _objs.size());
+
+
     }
 
     /**

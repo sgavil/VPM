@@ -34,8 +34,10 @@ public class ResourceManager {
 
         loadSounds();
 
-        /*image = _game.getGraphics().newImage("sprites/buttons.png");
-        //_buttons = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));*/
+        loadMusic();
+
+        loadButtons();
+
 
         //TODO: cargar los botones ya la score
         /*image = _game.getGraphics().newImage("sprites/scoreFont.png");
@@ -43,12 +45,28 @@ public class ResourceManager {
 
     }
 
+    private void loadButtons(){
+        Image image = _game.getGraphics().newImage("sprites/buttons.png");
+
+        _soundNotMuted = new Sprite(image, new Rect((image.getWidth() / BUTTONS_HORIZONTAL) * 2,
+                (image.getWidth() / BUTTONS_HORIZONTAL) * 3, 0, image.getHeight()));
+       _soundMuted = new Sprite(image, new Rect((image.getWidth() / BUTTONS_HORIZONTAL) * 3,
+               (image.getWidth() / BUTTONS_HORIZONTAL) * 4, 0, image.getHeight()));
+    }
     /**
      * Carga los sonidos de la carpeta sounds
      */
     private void loadSounds() {
-        _disparoSound = _game.getAudio().newSound("sounds/disparo.ogg");
-        _gotaSound = _game.getAudio().newSound("sounds/gota.ogg");
+        _disparoSound = _game.getAudio().newSound("sounds/disparo.wav");
+        _gotaSound = _game.getAudio().newSound("sounds/gota.wav");
+
+    }
+
+    /**
+     * Carga la musica de la carpeta music
+     */
+    private void loadMusic(){
+        _mainMusic = _game.getAudio().newSound("music/mainTheme.wav");
     }
 
     /**
@@ -196,10 +214,17 @@ public class ResourceManager {
         return _playAgain;
     }
 
+   public Sprite getMutedIcon(){return _soundMuted;}
+    public Sprite getNotMutedIcon() {return  _soundNotMuted;}
 
     //Getters Sonidos
     public Sound getDisparo() {return _disparoSound;}
     public Sound getGota() {return _gotaSound;}
+
+    //Getters musica
+    public Sound getTecnhoLoop() {
+        return _mainMusic;
+    }
 
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -239,6 +264,9 @@ public class ResourceManager {
 
     //Buttons TODO:Seleccionar los que hacen falta ( no son todos )
 
+    private Sprite _soundMuted;
+    private Sprite _soundNotMuted;
+
     //Menus
     private Sprite _gameOver = null;
     private Sprite _howToPlay = null;
@@ -255,5 +283,9 @@ public class ResourceManager {
     //Sonidos
     private Sound _disparoSound = null;
     private Sound _gotaSound = null;
+
+    //Musica
+    private Sound _mainMusic;
+
 
 }
