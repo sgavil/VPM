@@ -5,6 +5,7 @@ import com.gavilanvillar.engine.Input.EventType;
 import com.gavilanvillar.engine.Input.TouchEvent;
 import com.gavilanvillar.engine.Rect;
 import com.gavilanvillar.engine.ResourceManager;
+import com.gavilanvillar.engine.Sound;
 import com.gavilanvillar.engine.Sprite;
 
 import java.util.List;
@@ -34,6 +35,7 @@ public class Menu extends GenericGameState {
         super.init(resourceManager);
 
         _switchDashLogo = _resourceManager.getSwitchDashLogo();
+
     }
 
 
@@ -68,6 +70,8 @@ public class Menu extends GenericGameState {
             if (e._type == EventType.PULSADO)
                 System.out.print("PULSADOOOOOOOOOOOOOOOOOO \n");
             else if (e._type == EventType.LIBERADO) {
+                _changeStateSound.play();
+
                 Tutorial s = new Tutorial(_game);
                 s.init(_resourceManager);
                 _game.getGameStateManager().setState(s);

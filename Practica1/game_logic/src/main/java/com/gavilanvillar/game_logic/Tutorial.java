@@ -82,6 +82,8 @@ public class Tutorial extends GenericGameState {
             if (e._type == EventType.PULSADO)
                 System.out.print("PULSADOOOOOOOOOOOOOOOOOO \n");
             else if (e._type == EventType.LIBERADO) {
+                _changeStateSound.play();
+
                 SwitchDash s = new SwitchDash(_game);
                 s.init(_resourceManager);
                 _game.getGameStateManager().setState(s);

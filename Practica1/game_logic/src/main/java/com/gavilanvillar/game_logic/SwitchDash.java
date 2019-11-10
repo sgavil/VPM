@@ -5,6 +5,7 @@ import com.gavilanvillar.engine.Input.EventType;
 import com.gavilanvillar.engine.Input.TouchEvent;
 import com.gavilanvillar.engine.Rect;
 import com.gavilanvillar.engine.ResourceManager;
+import com.gavilanvillar.engine.Sound;
 import com.gavilanvillar.engine.Sprite;
 import com.gavilanvillar.game_logic.Player.PLAYER_COLOR;
 
@@ -34,10 +35,14 @@ public class SwitchDash extends GenericGameState {
         super.init(resourceManager);
 
         _player = new Player(_resourceManager.getWhitePlayer(), _resourceManager.getBlackPlayer(), PLAYER_COLOR.WHITE);
+        _collisionSound = resourceManager.getDisparo();
+
         _ballsManager = new BallsManager(_resourceManager.getWhiteBall(), _resourceManager.getBlackBall(), _player);
 
         _ballsManager.setPlayer(_player);
         _ballsManager.setSwitchDash(this);
+
+
 
     }
 
@@ -50,7 +55,9 @@ public class SwitchDash extends GenericGameState {
      * Intercambia el color de la pala del jugador
      */
     public void swapPlayers() {
+
         _player.swapColor();
+        _collisionSound.play();
     }
 
 
@@ -129,6 +136,8 @@ public class SwitchDash extends GenericGameState {
 
     //Puntuacion actual del jugador
     private int _score = 0;
+
+    private Sound _collisionSound ;
 
 
 }

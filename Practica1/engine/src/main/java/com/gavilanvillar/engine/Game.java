@@ -28,5 +28,10 @@ public interface Game {
      */
     Input getInput();
 
-    //void run();
+    /**
+     * Devuelve la instancia del gestor de audio.
+     *
+     * @return Audio
+     */
+    Audio getAudio();
 }

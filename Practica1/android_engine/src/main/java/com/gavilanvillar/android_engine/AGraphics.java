@@ -1,20 +1,16 @@
 package com.gavilanvillar.android_engine;
 
 import android.content.res.AssetManager;
-import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.view.SurfaceView;
-import android.view.Window;
 
 import com.gavilanvillar.engine.AbstractGraphics;
-import com.gavilanvillar.engine.Graphics;
 import com.gavilanvillar.engine.Image;
 import com.gavilanvillar.engine.Rect;
-import com.gavilanvillar.engine.Sprite;
 
 import java.io.IOException;
 import java.io.InputStream;

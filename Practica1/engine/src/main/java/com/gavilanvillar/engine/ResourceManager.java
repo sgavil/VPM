@@ -3,7 +3,7 @@ package com.gavilanvillar.engine;
 /**
  * Clase ResourceManager
  *
- * Carga los recursos que se encuentran en la carpeta "assets/sprites/"
+ * Carga los recursos que se encuentran en la carpeta "assets"
  *
  * Si se quiere cargar un recurso nuevo se debe hacer su inicializacion y
  * un getter.
@@ -32,6 +32,8 @@ public class ResourceManager {
 
         loadMenuSprites();
 
+        loadSounds();
+
         /*image = _game.getGraphics().newImage("sprites/buttons.png");
         //_buttons = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));*/
 
@@ -39,6 +41,14 @@ public class ResourceManager {
         /*image = _game.getGraphics().newImage("sprites/scoreFont.png");
         _scoreFont = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));*/
 
+    }
+
+    /**
+     * Carga los sonidos de la carpeta sounds
+     */
+    private void loadSounds() {
+        _disparoSound = _game.getAudio().newSound("sounds/disparo.ogg");
+        _gotaSound = _game.getAudio().newSound("sounds/gota.ogg");
     }
 
     /**
@@ -187,6 +197,11 @@ public class ResourceManager {
     }
 
 
+    //Getters Sonidos
+    public Sound getDisparo() {return _disparoSound;}
+    public Sound getGota() {return _gotaSound;}
+
+
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //              Atributos privados
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -235,5 +250,10 @@ public class ResourceManager {
     //Players
     private Sprite _whitePlayer = null;
     private Sprite _blackPlayer = null;
+
+
+    //Sonidos
+    private Sound _disparoSound = null;
+    private Sound _gotaSound = null;
 
 }

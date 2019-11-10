@@ -3,6 +3,7 @@ package com.gavilanvillar.game_logic;
 import com.gavilanvillar.engine.Game;
 import com.gavilanvillar.engine.GameState;
 import com.gavilanvillar.engine.ResourceManager;
+import com.gavilanvillar.engine.Sound;
 import com.gavilanvillar.engine.Sprite;
 
 /**
@@ -38,6 +39,9 @@ public abstract class GenericGameState implements GameState {
         this._resourceManager = resourceManager;
 
         this._game.getGraphics().setLogicResolution(WIDTH_RES, HEIGHT_RES);
+
+        _changeStateSound = resourceManager.getGota();
+
 
         int randomBackground = (int) Math.floor(Math.random() * _resourceManager.getBackgrounds().length);
         this._actualBackground = _resourceManager.getBackgrounds()[randomBackground];
@@ -151,6 +155,9 @@ public abstract class GenericGameState implements GameState {
     protected Sprite _arrowsBackground;
 
     protected Sprite _tapToPlay;
+
+    protected Sound _changeStateSound;
+
 
 
 }

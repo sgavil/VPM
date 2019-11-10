@@ -6,11 +6,13 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.gavilanvillar.engine.Audio;
 import com.gavilanvillar.engine.Game;
 import com.gavilanvillar.engine.GameState;
 import com.gavilanvillar.engine.GameStateManager;
 import com.gavilanvillar.engine.Graphics;
 import com.gavilanvillar.engine.Input;
+import com.gavilanvillar.engine.ResourceManager;
 
 /**
  * Clase AGame
@@ -47,6 +49,8 @@ public class AGame implements Game, Runnable{
 
         this._graphics = new AGraphics(androidEntry.getAssets(), view, size);
         this._input = new AInput(view);
+        this._audio = new AAudio(androidEntry.getAssets(),androidEntry);
+
         this._gameStateManager = new GameStateManager();
         this._gameStateManager.setState(gameState);
 
@@ -185,6 +189,11 @@ public class AGame implements Game, Runnable{
 
     } // getInput
 
+    @Override
+    public Audio getAudio() {
+        return _audio;
+    }
+
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //        Atributos protegidos/privados (de AGame)
@@ -209,6 +218,7 @@ public class AGame implements Game, Runnable{
 
     private static AGraphics _graphics = null;
     private static AInput _input = null;
+    private static AAudio _audio = null;
     private static GameStateManager _gameStateManager = null;
 
 } // class AGame
