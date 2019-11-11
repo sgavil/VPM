@@ -8,6 +8,7 @@ import com.gavilanvillar.engine.ResourceManager;
 import com.gavilanvillar.engine.Sprite;
 
 import java.util.List;
+import java.util.logging.Level;
 
 /**
  * Estado del juego al que se llega al perder ( una bola sobrepasa la pala del jugador )
@@ -21,6 +22,11 @@ public class GameOver extends GenericGameState {
     private final int PLAY_AGAIN_POSY = 1396;
     private final int GAME_OVER_POSY = 364;
 
+    private final int SCORE_POS_Y = 500;
+    private final int POINTS_POS_Y = 1100;
+    private final float SCORE_SCALE = 1.5f;
+    private final float POINTS_SCALE = 0.5f;
+    private final int NUMBER_OF_LETTERS_POINTS = 6;
 
 
 
@@ -50,6 +56,9 @@ public class GameOver extends GenericGameState {
         _gameOver = _resourceManager.getGameOver();
         _playAgain = resourceManager.getPlayAgain();
 
+        _numbers = resourceManager.getNumbers();
+        _letters = resourceManager.getLetters();
+
     }
 
 
@@ -69,6 +78,8 @@ public class GameOver extends GenericGameState {
 
         _playAgain.drawCentered(_game.getGraphics(), PLAY_AGAIN_POSY, 0, fadeInOutAlpha);
         _gameOver.drawCentered(_game.getGraphics(), GAME_OVER_POSY, 0, 1.0f);
+
+        renderFinalScore();
     }
 
     /**
@@ -89,6 +100,37 @@ public class GameOver extends GenericGameState {
 
     }
 
+    public void renderFinalScore(){
+        renderScore();
+        renderPoints();
+    }
+
+    private void renderScore(){
+
+    }
+
+    private void renderPoints(){
+
+        int initX  = (int)(_game.getGraphics().getWidth() / 2) -
+                (int)(((_letters[0].getSrcRect()._width * NUMBER_OF_LETTERS_POINTS) * POINTS_SCALE) / 2);
+
+
+        int letterWidth = (int)(_letters[0].getSrcRect()._width * POINTS_SCALE);
+        int letterHeight = (int)(_letters[0].getSrcRect()._height * POINTS_SCALE);
+
+        for(int i = 0; i < _pointsLetters.length; i++){
+            _letters[_pointsLetters[i]].draw(_game.getGraphics(), new Rect(initX, initX + letterWidth,
+                    POINTS_POS_Y, POINTS_POS_Y + letterHeight), 1.0f);
+
+            initX = initX + letterWidth;
+        }
+
+    }
+
+    public void setScore(int s){
+        _score = s;
+    }
+
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //   Atributos privados (de GameOver)
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -96,5 +138,10 @@ public class GameOver extends GenericGameState {
     private Sprite _gameOver = null;
     private Sprite _playAgain = null;
 
+    private int _score = 0;
+    private Sprite[] _numbers = null;
+    private Sprite[] _letters = null;
+
+    private int[] _pointsLetters = { 15, 14, 8, 13, 19, 18 };
 
 }

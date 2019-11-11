@@ -73,8 +73,9 @@ public class ResourceManager {
      * Carga los fondos
      */
     private void loadBGs() {
+        Image image = null;
 
-        Image image = _game.getGraphics().newImage("sprites/arrowsBackground.png");
+        image = _game.getGraphics().newImage("sprites/arrowsBackground.png");
         _arrowsBackground = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));
 
         image = _game.getGraphics().newImage("sprites/white.png");
