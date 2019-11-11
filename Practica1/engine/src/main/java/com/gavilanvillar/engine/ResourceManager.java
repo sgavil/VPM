@@ -38,10 +38,10 @@ public class ResourceManager {
 
         loadButtons();
 
+        loadFont();
+
 
         //TODO: cargar los botones ya la score
-        /*image = _game.getGraphics().newImage("sprites/scoreFont.png");
-        _scoreFont = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));*/
 
     }
 
@@ -127,9 +127,9 @@ public class ResourceManager {
         Image image = _game.getGraphics().newImage("sprites/balls.png");
 
         _whiteBall = new Sprite(image, new Rect(0, image.getWidth() / BALLS_HORIZONTAL,
-                0, image.getHeight() / BALLS_VERTICAL));
+                BALL_SIZE - BALL_REAL_SIZE, image.getHeight() / BALLS_VERTICAL));
         _blackBall = new Sprite(image, new Rect(0, image.getWidth() / BALLS_HORIZONTAL,
-                image.getHeight() / BALLS_VERTICAL, image.getHeight()));
+                (image.getHeight() / BALLS_VERTICAL) + BALL_SIZE - BALL_REAL_SIZE, image.getHeight()));
     }
 
     /**
@@ -158,6 +158,58 @@ public class ResourceManager {
     }
 
 
+    private void loadFont(){
+
+        Image image;
+
+        image = _game.getGraphics().newImage("sprites/scoreFont.png");
+        _scoreFont = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));
+
+        _letters = new Sprite[26];
+        _numbers = new Sprite[10];
+        _punctuationSign = new Sprite[30];
+
+        int numX = 15;
+        int numY = 7;
+
+        int diffX = (GLIFO_WIDTH - GLIFO_REAL_WIDTH) / 2;
+        int diffY = (GLIFO_HEIGHT - GLIFO_REAL_HEIGHT) / 2;
+
+        int m = 0;
+        int letter = 0;
+        int number = 0;
+        int punct = 0;
+
+        for(int y = 0; y < numY && m < 92; y++){
+            for(int x = 0; x < numX && m < 92; x ++){
+                if (m < 26){
+                    _letters[letter] = new Sprite(image, new Rect((x * GLIFO_WIDTH) + diffX,
+                            (x * GLIFO_WIDTH) + GLIFO_WIDTH - diffX,
+                            (y * GLIFO_HEIGHT) + diffY,
+                            (y * GLIFO_HEIGHT) + GLIFO_HEIGHT));
+                    letter++;
+                }
+                else if (m >= 26 * 2 && m < (26 * 2) + 10){
+                    _numbers[number] = new Sprite(image, new Rect((x * GLIFO_WIDTH) + diffX,
+                            (x * GLIFO_WIDTH) + GLIFO_WIDTH - diffX,
+                            (y * GLIFO_HEIGHT) + diffY,
+                            (y * GLIFO_HEIGHT) + GLIFO_HEIGHT));
+                    number++;
+                }
+                else if (m >= (26 * 2) + 10){
+                    _punctuationSign[punct] = new Sprite(image, new Rect((x * GLIFO_WIDTH) + diffX,
+                            (x * GLIFO_WIDTH) + GLIFO_WIDTH - diffX,
+                            (y * GLIFO_HEIGHT) + diffY,
+                            (y * GLIFO_HEIGHT) + GLIFO_HEIGHT));
+                    punct++;
+                }
+                m++;
+            }
+        }
+
+    }
+
+
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                          Getters
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -177,7 +229,6 @@ public class ResourceManager {
     public Sprite getWhitePlayer() {
         return _whitePlayer;
     }
-
     public Sprite getBlackPlayer() {
         return _blackPlayer;
     }
@@ -201,7 +252,6 @@ public class ResourceManager {
     public Sprite getWhiteBall() {
         return _whiteBall;
     }
-
     public Sprite getBlackBall() {
         return _blackBall;
     }
@@ -214,8 +264,12 @@ public class ResourceManager {
         return _playAgain;
     }
 
-   public Sprite getMutedIcon(){return _soundMuted;}
+    public Sprite getMutedIcon(){return _soundMuted;}
     public Sprite getNotMutedIcon() {return  _soundNotMuted;}
+
+    public Sprite[] getNumbers() { return _numbers; }
+    public Sprite[] getLetters() { return _letters; }
+    public Sprite[] getPunctuationSign() { return _punctuationSign; }
 
     //Getters Sonidos
     public Sound getDisparo() {return _disparoSound;}
@@ -238,10 +292,20 @@ public class ResourceManager {
 
     private final int BALLS_HORIZONTAL = 10;
     private final int BALLS_VERTICAL = 2;
+    private final int BALL_SIZE = 128;
+    private final int BALL_REAL_SIZE = 128;
 
     private final int BUTTONS_HORIZONTAL = 10;
 
     private final int PLAYERS_VERTICAL = 2;
+
+    private final int LETTERS = 26;
+    private final int NUMBERS = 10;
+    private final int PUNCTUATIONS_SIGN = 30;
+    private final int GLIFO_WIDTH = 125;
+    private final int GLIFO_HEIGHT = 160;
+    private final int GLIFO_REAL_WIDTH = 93;
+    private final int GLIFO_REAL_HEIGHT = 112;
 
     //Fondos
     private Sprite[] _backgrounds = null;
@@ -274,6 +338,12 @@ public class ResourceManager {
     private Sprite _playAgain = null;
     private Sprite _switchDashLogo = null;
     private Sprite _tapToPlay = null;
+
+    //Font
+    private Sprite _scoreFont = null;
+    private Sprite[] _numbers = null;
+    private Sprite[] _letters = null;
+    private Sprite[] _punctuationSign = null;
 
     //Players
     private Sprite _whitePlayer = null;

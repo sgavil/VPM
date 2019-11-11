@@ -123,9 +123,8 @@ public class Ball
      */
     public boolean checkCollisionWith(Player player){
 
-        int diff = player.getSprite().getDestRect()._top - player.getSprite().getDestRect()._bottom;
-        //(_sprite.getDestRect()._bottom >= player.getSprite().getDestRect()._top)
-       return ( _posY >= player.getPosY()+diff &&
+        return ( (_posY + getBallSprite().getSrcRect()._height >= player.getPosY() &&
+                _posY <= player.getPosY() + player.getSprite().getDestRect()._height) &&
                  ((player.getColor() == PLAYER_COLOR.BLACK && _ballColor == BALL_COLOR.BLACK) ||
                         (player.getColor() == PLAYER_COLOR.WHITE && _ballColor == BALL_COLOR.WHITE)));
 

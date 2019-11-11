@@ -44,7 +44,8 @@ public class SwitchDash extends GenericGameState {
         _ballsManager.setPlayer(_player);
         _ballsManager.setSwitchDash(this);
 
-
+        _numbers = resourceManager.getNumbers();
+        _scoreScale = 1.0f;
 
     }
 
@@ -96,6 +97,32 @@ public class SwitchDash extends GenericGameState {
 
         //Balls Render
         _ballsManager.render(_game.getGraphics());
+
+        renderScore();
+    }
+
+    /**
+     * Pinta la puntuación actual
+     */
+    public void renderScore(){
+
+        int m = 0;
+        int separation = (int)(NUMBERS_SEPARATION * _scoreScale);
+
+        boolean zeroScore = false;
+
+        int newScore = _score;
+        while(newScore > 0 || (newScore == 0 && !zeroScore)){
+            int n = newScore % 10;
+            _numbers[n].draw(_game.getGraphics(), new Rect(SCORE_POS_X - (separation * m),
+                    SCORE_POS_X - (separation * m) + (int)(_scoreScale * _numbers[n].getSrcRect()._width),
+                    SCORE_POS_Y,
+                    SCORE_POS_Y + (int)(_scoreScale * _numbers[n].getSrcRect()._height)), 1.0f);
+            newScore /= 10;
+            m++;
+            if (newScore == 0) zeroScore = true;
+        }
+
     }
 
     /**
@@ -143,6 +170,11 @@ public class SwitchDash extends GenericGameState {
 
     //Puntuacion actual del jugador
     private int _score = 0;
+    private float _scoreScale = 0;
+    private Sprite[] _numbers = null;
+    private final int NUMBERS_SEPARATION = 90;
+    private final int SCORE_POS_X = 950;
+    private final int SCORE_POS_Y = 150;
 
     private Sound _collisionSound ;
     private Sound _mainTheme;
