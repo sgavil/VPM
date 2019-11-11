@@ -103,16 +103,20 @@ public abstract class AbstractGraphics implements Graphics {
         // Calculo de la posición inicial (centrada en el eje X) en coordenadas del juego
         // donde se pintará la imagen
         int newX = _midX - (int)((src._width * _scaleFactor) / 2);
-        int newY = _initialY + (int)(y * _scaleFactor);
+        int newY = (y < 0) ? _initialY : _initialY + (int)(y * _scaleFactor);
+
+        Rect srcRect = new Rect(src._left, src._right,
+                (y < 0) ? src._top - y : src._top,
+                (y + src._height > _logicHeight) ? src._top + (_logicHeight - y) : src._bottom);
 
         // Crea un nuevo rectángulo destino
-        Rect destRect = new Rect(newX, (int)(src._width * _scaleFactor) + newX,
-                newY, (int)(src._height * _scaleFactor) + newY);
+        Rect destRect = new Rect(newX, (int)(srcRect._width * _scaleFactor) + newX,
+                newY, (int)(srcRect._height * _scaleFactor) + newY);
 
         sprite.setDestRect(destRect);
 
         // Llama al "drawImagePrivate" con la imagen a pintar y los rectángulos fuente y destino
-        drawImagePrivate(sprite.getImage(), src, destRect, alpha);
+        drawImagePrivate(sprite.getImage(), srcRect, destRect, alpha);
 
     } // drawImageCenteredAxisX
 

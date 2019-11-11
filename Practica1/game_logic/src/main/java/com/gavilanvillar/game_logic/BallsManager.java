@@ -199,7 +199,7 @@ public class BallsManager {
 
                 //La bola ha sobrepasado la pala del jugador
                 if (_objs.get(i).getBallSprite().getDestRect()._top > _player.getSprite().getDestRect()._bottom) {
-                    //_switchDash.gameOver();
+                    _switchDash.gameOver();
                 }
 
             }
