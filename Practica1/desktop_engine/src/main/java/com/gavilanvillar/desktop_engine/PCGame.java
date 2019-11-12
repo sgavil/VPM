@@ -46,6 +46,11 @@ public class PCGame implements Game {
         this._window.getContentPane().addMouseListener(this._input.getMouseController());
         this._window.getContentPane().addMouseMotionListener(this._input.getMouseController());
 
+        // Se añade el listener del teclado
+        this._window.getContentPane().addKeyListener(this._input.getKeyboardController());
+
+        this._running = true;
+
 
     }
 
@@ -72,6 +77,11 @@ public class PCGame implements Game {
         return _audio;
     }
 
+    @Override
+    public void setRunning(boolean b) {
+        _running = b;
+    }
+
     //@Override
     public void run() {
         // Vamos allá.
@@ -82,7 +92,7 @@ public class PCGame implements Game {
 
 
         // Bucle principal
-        while(true) {
+        while(_running) {
             long currentTime = System.nanoTime();
             long nanoElapsedTime = currentTime - lastFrameTime;
             lastFrameTime = currentTime;
@@ -127,4 +137,6 @@ public class PCGame implements Game {
     private static PCGraphics _graphics = null;
     private static PCAudio _audio = null;
     private static PCInput _input = null;
+
+    private boolean _running = false;
 }

@@ -55,6 +55,9 @@ public class Menu extends GenericGameState {
         _questionIcon = resourceManager.getQuestionIcon();
         _instructionsButton = new Button(_questionIcon);
 
+        _closeIcon = resourceManager.getCloseIcon();
+        _closeButton = new Button(_closeIcon);
+
     }
 
 
@@ -62,9 +65,7 @@ public class Menu extends GenericGameState {
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //   Métodos de públicos (de Menu)
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    /**
-     * Realiza la renderizacion de los Sprites del GameState
-     **/
+
     @Override
     public void render() {
 
@@ -81,11 +82,11 @@ public class Menu extends GenericGameState {
 
         _soundButton.getSprite().draw(_game.getGraphics(), SOUND_ICON_POS_X, ICON_POS_Y,1.0f);
         _instructionsButton.getSprite().draw(_game.getGraphics(), QUESTION_ICON_POS_X, ICON_POS_Y, 1.0f);
+        _closeButton.getSprite().draw(_game.getGraphics(), SOUND_ICON_POS_X, 1750, 1.0f);
     }
 
-    /**
-     * Gestiona la pulsacion en la ventana para empezar a jugar, quitar el volumen o ir a las instrucciones
-     */
+
+
     @Override
     public void handleEvent() {
 
@@ -111,6 +112,11 @@ public class Menu extends GenericGameState {
                     _game.getGameStateManager().setState(s);
 
                 }
+                // Se ha hecho click en el botón de cerrar
+                else if (_closeButton.isClicked(e._x, e._y)){
+                    System.exit(0);
+                    //_game.setRunning(false);
+                }
                 // Se ha hecho click en la pantalla
                 else {
                     _changeStateSound.play();
@@ -131,11 +137,15 @@ public class Menu extends GenericGameState {
     // Botones
     private Button _soundButton = null;
     private Button _instructionsButton = null;
+    private Button _closeButton = null;
 
     private Sprite _soundMutedIcon = null;
     private Sprite _soundUnMutedIcon = null;
 
     private Sprite _questionIcon = null;
 
+    private Sprite _closeIcon = null;
+
     private boolean _isSoundMuted = false;
+
 }

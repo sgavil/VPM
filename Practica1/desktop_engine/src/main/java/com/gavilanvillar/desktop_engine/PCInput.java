@@ -18,11 +18,14 @@ public class PCInput extends AbstractInput {
         _touchEventList = new ArrayList<>();
 
         _mouseController = new MouseController();
+        _keyboardController = new KeyboardController();
 
     }
 
     public void init(){
+
         _mouseController.init(this);
+        _keyboardController.init(this);
     }
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -34,10 +37,17 @@ public class PCInput extends AbstractInput {
     }
 
 
+    public KeyboardController getKeyboardController() {
+        return _keyboardController;
+    }
+
+
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //       Atributos protegidos/privados (de PCInput)
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-   private MouseController _mouseController = null;
+
+    private MouseController _mouseController = null;
+    private KeyboardController _keyboardController = null;
 
 
 }

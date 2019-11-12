@@ -194,6 +194,10 @@ public class AGame implements Game, Runnable{
         return _audio;
     }
 
+    @Override
+    public void setRunning(boolean b) {
+        _running = b;
+    }
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //        Atributos protegidos/privados (de AGame)

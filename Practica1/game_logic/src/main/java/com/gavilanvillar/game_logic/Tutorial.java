@@ -52,8 +52,8 @@ public class Tutorial extends GenericGameState {
 
         _game.getAudio().muteAll();
 
-        _closeIcon = resourceManager.getCloseIcon();
-        _closeButton = new Button(_closeIcon);
+        _homeIcon = resourceManager.getHomeIcon();
+        _homeButton = new Button(_homeIcon);
     }
 
 
@@ -81,7 +81,7 @@ public class Tutorial extends GenericGameState {
 
         _tapToPlay.drawCentered(_game.getGraphics(), TAP_TO_PLAY_POS_Y, 0, fadeInOutAlpha);
 
-        _closeButton.getSprite().draw(_game.getGraphics(), CLOSE_ICON_POS_X, ICON_POS_Y, 1.0f);
+        _homeButton.getSprite().draw(_game.getGraphics(), CLOSE_ICON_POS_X, ICON_POS_Y, 1.0f);
     }
 
     /**
@@ -94,7 +94,7 @@ public class Tutorial extends GenericGameState {
         for (TouchEvent e : ev) {
              if (e._type == EventType.LIBERADO) {
                 // Si hace click en el botón de cerrar
-                if(_closeButton.isClicked(e._x, e._y)){
+                if(_homeButton.isClicked(e._x, e._y)){
                     _changeStateSound.play();
                     Menu s = new Menu(_game);
                     s.init(_resourceManager);
@@ -120,6 +120,6 @@ public class Tutorial extends GenericGameState {
     private Sprite _instructions = null;
 
     // Botones
-    private Sprite _closeIcon = null;
-    private Button _closeButton = null;
+    private Sprite _homeIcon = null;
+    private Button _homeButton = null;
 }

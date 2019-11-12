@@ -61,6 +61,9 @@ public class ResourceManager {
         _soundMutedIcon = new Sprite(image, new Rect(buttonWidth * 3,
                 buttonWidth * 4, 0, image.getHeight()));
 
+        _homeIcon = new Sprite(image, new Rect(buttonWidth * 4,
+                buttonWidth * 5, 0, image.getHeight()));
+
     }
     /**
      * Carga los sonidos de la carpeta sounds
@@ -278,6 +281,7 @@ public class ResourceManager {
     public Sprite getNotMutedIcon() {return  _soundNotMutedIcon;}
     public Sprite getQuestionIcon() { return _questionIcon; }
     public Sprite getCloseIcon() { return _closeIcon; }
+    public Sprite getHomeIcon() { return _homeIcon; }
 
     public Sprite[] getNumbers() { return _numbers; }
     public Sprite[] getLetters() { return _letters; }
@@ -344,6 +348,7 @@ public class ResourceManager {
     private Sprite _soundNotMutedIcon = null;
     private Sprite _closeIcon = null;
     private Sprite _questionIcon = null;
+    private Sprite _homeIcon = null;
 
     //Menus
     private Sprite _gameOver = null;

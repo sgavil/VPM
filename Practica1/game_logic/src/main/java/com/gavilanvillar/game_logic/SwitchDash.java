@@ -181,7 +181,6 @@ public class SwitchDash extends GenericGameState {
     private int _score = 0;
     private Sprite[] _numbers = null;
 
-
     private Sound _collisionSound ;
     private Sound _mainTheme;
 

@@ -34,4 +34,6 @@ public interface Game {
      * @return Audio
      */
     Audio getAudio();
+
+    void setRunning(boolean b);
 }

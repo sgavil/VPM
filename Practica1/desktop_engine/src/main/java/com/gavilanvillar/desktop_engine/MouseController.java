@@ -34,7 +34,9 @@ public class MouseController implements MouseListener, MouseMotionListener {
     }
 
     public void init(PCInput input) {
+
         this._input = input;
+
     }
     // MouseListener
 
@@ -48,6 +50,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
      *
      * @param e Evento generado
      */
+    @Override
     public void mouseClicked(MouseEvent e) {
         TouchEvent event = new TouchEvent();
         event._x = e.getX();
@@ -59,7 +62,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
         _input.addEvent(event);
     }
 
-
+    @Override
     public void mousePressed(MouseEvent e) {
 
     }
@@ -69,6 +72,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
      *
      * @param e Evento generado
      */
+    @Override
     public void mouseReleased(MouseEvent e) {
         TouchEvent event = new TouchEvent();
         event._x = e.getX();
@@ -80,10 +84,12 @@ public class MouseController implements MouseListener, MouseMotionListener {
         _input.addEvent(event);
     }
 
+    @Override
     public void mouseEntered(MouseEvent e) {
 
     }
 
+    @Override
     public void mouseExited(MouseEvent e) {
 
     }
@@ -94,6 +100,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
      *
      * @param e Evento generado
      */
+    @Override
     public void mouseDragged(MouseEvent e) {
         TouchEvent event = new TouchEvent();
         event._x = e.getX();
@@ -105,6 +112,7 @@ public class MouseController implements MouseListener, MouseMotionListener {
         _input.addEvent(event);
     }
 
+    @Override
     public void mouseMoved(MouseEvent e) {
 
     }
