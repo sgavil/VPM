@@ -48,10 +48,19 @@ public class ResourceManager {
     private void loadButtons(){
         Image image = _game.getGraphics().newImage("sprites/buttons.png");
 
-        _soundNotMuted = new Sprite(image, new Rect((image.getWidth() / BUTTONS_HORIZONTAL) * 2,
-                (image.getWidth() / BUTTONS_HORIZONTAL) * 3, 0, image.getHeight()));
-       _soundMuted = new Sprite(image, new Rect((image.getWidth() / BUTTONS_HORIZONTAL) * 3,
-               (image.getWidth() / BUTTONS_HORIZONTAL) * 4, 0, image.getHeight()));
+        int buttonWidth = image.getWidth() / BUTTONS_HORIZONTAL;
+
+        _questionIcon = new Sprite(image, new Rect(0, buttonWidth,
+                0, image.getHeight()));
+
+        _closeIcon = new Sprite(image, new Rect(buttonWidth, buttonWidth * 2,
+                0, image.getHeight()));
+
+        _soundNotMutedIcon = new Sprite(image, new Rect(buttonWidth * 2,
+                buttonWidth * 3, 0, image.getHeight()));
+        _soundMutedIcon = new Sprite(image, new Rect(buttonWidth * 3,
+                buttonWidth * 4, 0, image.getHeight()));
+
     }
     /**
      * Carga los sonidos de la carpeta sounds
@@ -265,8 +274,10 @@ public class ResourceManager {
         return _playAgain;
     }
 
-    public Sprite getMutedIcon(){return _soundMuted;}
-    public Sprite getNotMutedIcon() {return  _soundNotMuted;}
+    public Sprite getMutedIcon(){return _soundMutedIcon;}
+    public Sprite getNotMutedIcon() {return  _soundNotMutedIcon;}
+    public Sprite getQuestionIcon() { return _questionIcon; }
+    public Sprite getCloseIcon() { return _closeIcon; }
 
     public Sprite[] getNumbers() { return _numbers; }
     public Sprite[] getLetters() { return _letters; }
@@ -329,8 +340,10 @@ public class ResourceManager {
 
     //Buttons TODO:Seleccionar los que hacen falta ( no son todos )
 
-    private Sprite _soundMuted;
-    private Sprite _soundNotMuted;
+    private Sprite _soundMutedIcon = null;
+    private Sprite _soundNotMutedIcon = null;
+    private Sprite _closeIcon = null;
+    private Sprite _questionIcon = null;
 
     //Menus
     private Sprite _gameOver = null;

@@ -1,5 +1,6 @@
 package com.gavilanvillar.game_logic;
 
+import com.gavilanvillar.engine.Button;
 import com.gavilanvillar.engine.Game;
 import com.gavilanvillar.engine.Input.EventType;
 import com.gavilanvillar.engine.Input.TouchEvent;
@@ -22,6 +23,9 @@ public class Tutorial extends GenericGameState {
     private final int TAP_TO_PLAY_POS_Y = 1464;
     private final int HOW_TO_PLAY_POS_Y = 290;
     private final int INSTRUCTIONS_POS_Y = 768;
+
+    private final int CLOSE_ICON_POS_X = 910;
+    private final int ICON_POS_Y = 30;
 
 
 
@@ -47,6 +51,9 @@ public class Tutorial extends GenericGameState {
         _instructions = _resourceManager.getInstructions();
 
         _game.getAudio().muteAll();
+
+        _closeIcon = resourceManager.getCloseIcon();
+        _closeButton = new Button(_closeIcon);
     }
 
 
@@ -73,6 +80,8 @@ public class Tutorial extends GenericGameState {
         _instructions.drawCentered(_game.getGraphics(), INSTRUCTIONS_POS_Y, 0, 1);
 
         _tapToPlay.drawCentered(_game.getGraphics(), TAP_TO_PLAY_POS_Y, 0, fadeInOutAlpha);
+
+        _closeButton.getSprite().draw(_game.getGraphics(), CLOSE_ICON_POS_X, ICON_POS_Y, 1.0f);
     }
 
     /**
@@ -83,16 +92,22 @@ public class Tutorial extends GenericGameState {
         List<TouchEvent> ev = _game.getInput().getTouchEvents();
 
         for (TouchEvent e : ev) {
-            if (e._type == EventType.PULSADO)
-                System.out.print("PULSADOOOOOOOOOOOOOOOOOO \n");
-            else if (e._type == EventType.LIBERADO) {
-                _changeStateSound.play();
-
-                SwitchDash s = new SwitchDash(_game);
-                s.init(_resourceManager);
-                _game.getGameStateManager().setState(s);
-            } else if (e._type == EventType.DESPLAZADO)
-                System.out.print("DESPLAZADOOOOOOOOOOOOOO \n");
+             if (e._type == EventType.LIBERADO) {
+                // Si hace click en el botón de cerrar
+                if(_closeButton.isClicked(e._x, e._y)){
+                    _changeStateSound.play();
+                    Menu s = new Menu(_game);
+                    s.init(_resourceManager);
+                    _game.getGameStateManager().setState(s);
+                }
+                // Si hace click por la pantalla
+                else {
+                    _changeStateSound.play();
+                    SwitchDash s = new SwitchDash(_game);
+                    s.init(_resourceManager);
+                    _game.getGameStateManager().setState(s);
+                }
+            }
         }
     }
 
@@ -100,6 +115,11 @@ public class Tutorial extends GenericGameState {
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //   Atributos privados (de Tutorial)
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     private Sprite _howToPlay = null;
     private Sprite _instructions = null;
+
+    // Botones
+    private Sprite _closeIcon = null;
+    private Button _closeButton = null;
 }

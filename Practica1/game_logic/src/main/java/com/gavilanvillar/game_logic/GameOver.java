@@ -1,5 +1,6 @@
 package com.gavilanvillar.game_logic;
 
+import com.gavilanvillar.engine.Button;
 import com.gavilanvillar.engine.Game;
 import com.gavilanvillar.engine.Input.EventType;
 import com.gavilanvillar.engine.Input.TouchEvent;
@@ -27,6 +28,10 @@ public class GameOver extends GenericGameState {
     private final float SCORE_SCALE = 1.5f;
     private final float POINTS_SCALE = 0.5f;
     private final int NUMBER_OF_LETTERS_POINTS = 6;
+
+    private final int SOUND_ICON_POS_X = 30;
+    private final int QUESTION_ICON_POS_X = 910;
+    private final int ICON_POS_Y = 30;
 
 
 
@@ -59,6 +64,13 @@ public class GameOver extends GenericGameState {
         _numbers = resourceManager.getNumbers();
         _letters = resourceManager.getLetters();
 
+        _soundMutedIcon = resourceManager.getMutedIcon();
+        _soundUnMutedIcon = resourceManager.getNotMutedIcon();
+        _soundButton = new Button(_soundUnMutedIcon);
+
+        _questionIcon = resourceManager.getQuestionIcon();
+        _instructionsButton = new Button(_questionIcon);
+
     }
 
 
@@ -81,6 +93,9 @@ public class GameOver extends GenericGameState {
         _playAgain.drawCentered(_game.getGraphics(), PLAY_AGAIN_POSY, 0, fadeInOutAlpha);
         _gameOver.drawCentered(_game.getGraphics(), GAME_OVER_POSY, 0, 1.0f);
 
+        _soundButton.getSprite().draw(_game.getGraphics(), SOUND_ICON_POS_X, ICON_POS_Y,1.0f);
+        _instructionsButton.getSprite().draw(_game.getGraphics(), QUESTION_ICON_POS_X, ICON_POS_Y, 1.0f);
+
         renderFinalScore();
     }
 
@@ -94,9 +109,30 @@ public class GameOver extends GenericGameState {
 
         for (TouchEvent e: ev){
              if (e._type == EventType.LIBERADO) {
-                SwitchDash s = new SwitchDash(_game);
-                s.init(_resourceManager);
-                _game.getGameStateManager().setState(s);
+                 // Se ha hecho click en el botón de sonido
+                 if(_soundButton.isClicked(e._x,e._y))
+                 {
+                     if(_isSoundMuted) _soundButton.changeSprite(_soundUnMutedIcon);
+                     else _soundButton.changeSprite(_soundMutedIcon);
+
+                     _isSoundMuted = !_isSoundMuted;
+                 }
+                 // Se ha hecho click en el botón de instrucciones
+                 else if(_instructionsButton.isClicked(e._x, e._y)){
+
+                     _changeStateSound.play();
+                     Tutorial s = new Tutorial(_game);
+                     s.init(_resourceManager);
+                     _game.getGameStateManager().setState(s);
+
+                 }
+                 // Se ha hecho click en la pantalla
+                 else {
+                     _changeStateSound.play();
+                     SwitchDash s = new SwitchDash(_game);
+                     s.init(_resourceManager);
+                     _game.getGameStateManager().setState(s);
+                 }
             }
         }
 
@@ -185,10 +221,22 @@ public class GameOver extends GenericGameState {
     private Sprite _gameOver = null;
     private Sprite _playAgain = null;
 
+    // Puntuación
     private int _score = 0;
     private Sprite[] _numbers = null;
     private Sprite[] _letters = null;
 
     private int[] _pointsLetters = { 15, 14, 8, 13, 19, 18 };
+
+    // Botones
+    private Button _soundButton = null;
+    private Button _instructionsButton = null;
+
+    private Sprite _soundMutedIcon = null;
+    private Sprite _soundUnMutedIcon = null;
+
+    private Sprite _questionIcon = null;
+
+    private boolean _isSoundMuted = false;
 
 }

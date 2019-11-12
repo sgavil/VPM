@@ -18,6 +18,20 @@ import java.util.List;
 public class SwitchDash extends GenericGameState {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //   Atributos constantes (de SwitchDash)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    private final int PLAYER_POS_Y = 1200;
+
+    private final int NUMBERS_SEPARATION = 90;
+    private final int SCORE_POS_X = 950;
+    private final int SCORE_POS_Y = 30;
+    private final float SCORE_SCALE = 1.0f;
+
+
+
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //   Métodos de inicialización (de SwitchDash)
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     public SwitchDash(Game game) {
@@ -45,8 +59,6 @@ public class SwitchDash extends GenericGameState {
         _ballsManager.setSwitchDash(this);
 
         _numbers = resourceManager.getNumbers();
-        _scoreScale = 1.0f;
-
     }
 
 
@@ -107,7 +119,7 @@ public class SwitchDash extends GenericGameState {
     public void renderScore(){
 
         int m = 0;
-        int separation = (int)(NUMBERS_SEPARATION * _scoreScale);
+        int separation = (int)(NUMBERS_SEPARATION * SCORE_SCALE);
 
         boolean zeroScore = false;
 
@@ -115,9 +127,9 @@ public class SwitchDash extends GenericGameState {
         while(newScore > 0 || (newScore == 0 && !zeroScore)){
             int n = newScore % 10;
             _numbers[n].draw(_game.getGraphics(), new Rect(SCORE_POS_X - (separation * m),
-                    SCORE_POS_X - (separation * m) + (int)(_scoreScale * _numbers[n].getSrcRect()._width),
+                    SCORE_POS_X - (separation * m) + (int)(SCORE_SCALE * _numbers[n].getSrcRect()._width),
                     SCORE_POS_Y,
-                    SCORE_POS_Y + (int)(_scoreScale * _numbers[n].getSrcRect()._height)), 1.0f);
+                    SCORE_POS_Y + (int)(SCORE_SCALE * _numbers[n].getSrcRect()._height)), 1.0f);
             newScore /= 10;
             m++;
             if (newScore == 0) zeroScore = true;
@@ -145,12 +157,8 @@ public class SwitchDash extends GenericGameState {
         List<TouchEvent> ev = _game.getInput().getTouchEvents();
 
         for (TouchEvent e : ev) {
-            if (e._type == EventType.PULSADO)
-                System.out.print("PULSADOOOOOOOOOOOOOOOOOO \n");
-            else if (e._type == EventType.LIBERADO)
+            if (e._type == EventType.LIBERADO)
                 swapPlayers();
-            else if (e._type == EventType.DESPLAZADO)
-                System.out.print("DESPLAZADOOOOOOOOOOOOOO \n");
         }
     }
 
@@ -171,19 +179,13 @@ public class SwitchDash extends GenericGameState {
 
     //Puntuacion actual del jugador
     private int _score = 0;
-    private float _scoreScale = 0;
     private Sprite[] _numbers = null;
-    private final int NUMBERS_SEPARATION = 90;
-    private final int SCORE_POS_X = 950;
-    private final int SCORE_POS_Y = 150;
+
 
     private Sound _collisionSound ;
     private Sound _mainTheme;
 
     private  boolean alreadyPlayed = false;
-
-    private final int PLAYER_POS_Y = 1200;
-
 
 
 }

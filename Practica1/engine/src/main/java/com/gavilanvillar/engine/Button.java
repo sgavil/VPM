@@ -22,7 +22,9 @@ public class Button
     }
 
     /**
-     * Devuelve true si las coordenadas pasadas como parametro estan dentro de la imagen de destino del sprite
+     * Devuelve true si las coordenadas pasadas como parametro estan dentro de la
+     * imagen de destino del sprite
+     *
      * @param x Posicion x donde se ha pulsado
      * @param y Posicion y donde se ha pulsado
      * @return true si se ha pulsado el boton
@@ -30,8 +32,8 @@ public class Button
    public boolean isClicked(int x,int y)
     {
         Rect buttonArea = _sprite.getDestRect();
-      return (x> buttonArea._left) && (x>buttonArea._right)
-              && (y > buttonArea._top) && (y < buttonArea._bottom);
+        return (x > buttonArea._left) && (x < buttonArea._right)
+                && (y > buttonArea._top) && (y < buttonArea._bottom);
     }
 
     public Sprite getSprite(){
