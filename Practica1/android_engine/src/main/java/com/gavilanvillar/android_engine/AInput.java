@@ -23,13 +23,16 @@ public class AInput extends AbstractInput {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 TouchEvent event = new TouchEvent();
+
+                final int actionPermorfed = motionEvent.getAction();
+
                 event._x = (int) motionEvent.getX();
                 event._y = (int) motionEvent.getY();
 
-                event._id = motionEvent.getPointerId(0);
+                event._id = motionEvent.getActionIndex();
 
                 //Se transforma la accion en un touchEvent
-                switch (motionEvent.getAction()) {
+                switch (motionEvent.getActionMasked()) {
                     case MotionEvent.ACTION_DOWN:
                         event._type = EventType.PULSADO;
                         break;
@@ -39,16 +42,19 @@ public class AInput extends AbstractInput {
                     case MotionEvent.ACTION_MOVE:
                         event._type = EventType.DESPLAZADO;
                         break;
+                    case MotionEvent.ACTION_POINTER_DOWN:
+                        event._type = EventType.PULSADO;
+                        break;
+                    case MotionEvent.ACTION_POINTER_UP:
+                        event._type = EventType.LIBERADO;
+                        break;
                     default:
                         break;
                 }
 
                 addEvent(event);
-
-
                 return true;
             }
-
 
         });
     }
