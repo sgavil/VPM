@@ -34,8 +34,6 @@ public class ResourceManager {
 
         loadSounds();
 
-        loadMusic();
-
         loadButtons();
 
         loadFont();
@@ -71,14 +69,8 @@ public class ResourceManager {
     private void loadSounds() {
         _disparoSound = _game.getAudio().newSound("sounds/disparo.wav");
         _gotaSound = _game.getAudio().newSound("sounds/gota.wav");
+        _mainMusic = _game.getAudio().newSound("sounds/mainTheme.wav");
 
-    }
-
-    /**
-     * Carga la musica de la carpeta music
-     */
-    private void loadMusic(){
-        _mainMusic = _game.getAudio().newSound("music/mainTheme.wav");
     }
 
     /**

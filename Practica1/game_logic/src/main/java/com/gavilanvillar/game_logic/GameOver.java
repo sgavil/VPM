@@ -177,8 +177,6 @@ public class GameOver extends GenericGameState {
                 (int)(((_numbers[0].getSrcRect()._width * numCont) * SCORE_SCALE) / 2)) -
                 (int)(_numbers[0].getSrcRect()._width * SCORE_SCALE);
 
-        System.out.println(initX);
-
         // Se guardan los valores del ancho y el alto de cada número
         int numberWidth = (int)(_numbers[0].getSrcRect()._width * SCORE_SCALE);
         int numberHeight = (int)(_numbers[0].getSrcRect()._height * SCORE_SCALE);
