@@ -98,10 +98,18 @@ public class Menu extends GenericGameState {
                 // Se ha hecho click en el botón de sonido
                 if(_soundButton.isClicked(e._x,e._y))
                 {
-                    if(_isSoundMuted) _soundButton.changeSprite(_soundUnMutedIcon);
-                    else _soundButton.changeSprite(_soundMutedIcon);
+                    if(_isSoundMuted){
+                        _soundButton.changeSprite(_soundUnMutedIcon);
+                        _game.getAudio().unMuteAll();
+                    }
+                    else{
+                        _soundButton.changeSprite(_soundMutedIcon);
+                        _game.getAudio().muteAll();
+                    }
 
                     _isSoundMuted = !_isSoundMuted;
+
+
                 }
                 // Se ha hecho click en el botón de instrucciones
                 else if(_instructionsButton.isClicked(e._x, e._y)){

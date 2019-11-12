@@ -50,7 +50,9 @@ public class AAudio implements Audio
     }
 
     public void unMuteAll(){
-
+        for(Sound s : _soundList){
+            s.unMute();
+        }
     }
     private AppCompatActivity _appContext;
     private AssetManager _assetManager;

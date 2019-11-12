@@ -60,5 +60,13 @@ public class PCAudio implements Audio {
         }
     }
 
+    @Override
+    public void unMuteAll() {
+        for(PCSound s : _soundsList)
+        {
+            s.unMute();
+        }
+    }
+
     private List<PCSound> _soundsList;
 }
