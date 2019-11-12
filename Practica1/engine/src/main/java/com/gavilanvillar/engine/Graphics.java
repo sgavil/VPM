@@ -113,13 +113,19 @@ public interface Graphics {
      */
     int getHeight();
 
-     int getInitialX();
+    /**
+     * Devuelve el ancho de la resolución.
+     *
+     * @return ancho
+     */
+    int getResolutionWidth();
 
     /**
-     * @return Coordenada inicial Y del juego
+     * Devuelve el alto de la resolución.
+     *
+     * @return alto
      */
-     int getInitialY();
-
+    int getResolutionHeight();
 
     /**
      * Devuelve el factor de escala necesario para mantener la resolución

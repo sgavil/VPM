@@ -22,8 +22,8 @@ public class GameOver extends GenericGameState {
     private final int PLAY_AGAIN_POSY = 1396;
     private final int GAME_OVER_POSY = 364;
 
-    private final int SCORE_POS_Y = 500;
-    private final int POINTS_POS_Y = 1100;
+    private final int SCORE_POS_Y = 800;
+    private final int POINTS_POS_Y = 1050;
     private final float SCORE_SCALE = 1.5f;
     private final float POINTS_SCALE = 0.5f;
     private final int NUMBER_OF_LETTERS_POINTS = 6;
@@ -70,6 +70,8 @@ public class GameOver extends GenericGameState {
     **/
     @Override
     public void render() {
+        _game.getGraphics().clear(0xFF000000);
+
         _actualBackground.draw(_game.getGraphics(), new Rect(0, WIDTH_RES,
                 0, HEIGHT_RES), 1.0f);
 
@@ -100,24 +102,69 @@ public class GameOver extends GenericGameState {
 
     }
 
+    /**
+     * Pinta la información sobre la puntuación final.
+     */
     public void renderFinalScore(){
         renderScore();
         renderPoints();
     }
 
+    /**
+     * Pinta la puntuación.
+     */
     private void renderScore(){
+
+        int newScore = _score;
+        boolean zeroScore = false;
+        // Se calcula el cantidad de números que tiene "score" para poder centrarlo en pantalla
+        int numCont = 0;
+        while (newScore > 0 || (newScore == 0 && !zeroScore)){
+            numCont++;
+            newScore /= 10;
+            if (newScore == 0) zeroScore = true;
+        }
+
+        // Se calcula la posición inicial del número
+        int initX  = ((int)(_game.getGraphics().getResolutionWidth() / 2) +
+                (int)(((_numbers[0].getSrcRect()._width * numCont) * SCORE_SCALE) / 2)) -
+                (int)(_numbers[0].getSrcRect()._width * SCORE_SCALE);
+
+        System.out.println(initX);
+
+        // Se guardan los valores del ancho y el alto de cada número
+        int numberWidth = (int)(_numbers[0].getSrcRect()._width * SCORE_SCALE);
+        int numberHeight = (int)(_numbers[0].getSrcRect()._height * SCORE_SCALE);
+
+        // Pinta los números
+        newScore = _score;
+        for(int i = 0; i < numCont; i++){
+            int n = newScore % 10;
+
+            _numbers[n].draw(_game.getGraphics(), new Rect(initX, initX + numberWidth,
+                    SCORE_POS_Y, SCORE_POS_Y + numberHeight), 1.0f);
+
+            initX = initX - numberWidth;
+
+            newScore /= 10;
+        }
 
     }
 
+    /**
+     * Pinta la palabra, en este caso, POINTS
+     */
     private void renderPoints(){
 
-        int initX  = (int)(_game.getGraphics().getWidth() / 2) -
+        // Calcula la posición inicial de la palabra
+        int initX  = (int)(_game.getGraphics().getResolutionWidth() / 2) -
                 (int)(((_letters[0].getSrcRect()._width * NUMBER_OF_LETTERS_POINTS) * POINTS_SCALE) / 2);
 
-
+        // Se guardan los valores del ancho y el alto de cada letra
         int letterWidth = (int)(_letters[0].getSrcRect()._width * POINTS_SCALE);
         int letterHeight = (int)(_letters[0].getSrcRect()._height * POINTS_SCALE);
 
+        // Pinta las letras de POINTS
         for(int i = 0; i < _pointsLetters.length; i++){
             _letters[_pointsLetters[i]].draw(_game.getGraphics(), new Rect(initX, initX + letterWidth,
                     POINTS_POS_Y, POINTS_POS_Y + letterHeight), 1.0f);

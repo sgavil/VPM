@@ -61,6 +61,8 @@ public class Tutorial extends GenericGameState {
     @Override
     public void render() {
 
+        _game.getGraphics().clear(0xFF000000);
+
         _actualBackground.draw(_game.getGraphics(), new Rect(0, WIDTH_RES,
                 0, HEIGHT_RES), 1.0f);
 

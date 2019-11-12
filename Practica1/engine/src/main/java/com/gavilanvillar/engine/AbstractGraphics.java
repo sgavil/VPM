@@ -11,13 +11,6 @@ public abstract class AbstractGraphics implements Graphics {
     //            Métodos reimplementados (de Graphics)
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    /**
-     * Dibuja una imagen en x,y con una transparencia alpha
-     * @param sprite Objeto Sprite que contiene la imagen y los rectangulos fuente y destino
-     * @param x Posición "x" en coordenadas del juego
-     * @param y Posición "y" en coordenadas del juego
-     * @param alpha valor de la transparencia de la imagen
-     */
     @Override
     public void drawImage(Sprite sprite, int x, int y, float alpha){
 
@@ -38,12 +31,6 @@ public abstract class AbstractGraphics implements Graphics {
 
     } // drawImage
 
-    /**
-     * Dibuja una imagen en las posiciones dadas en el rectangulo dest con transparencia
-     * @param sprite Objeto Sprite que contiene la imagen y los rectangulos fuente y destino
-     * @param dest Rectángulo destino de la pantalla donde se pintará la imagen
-     * @param alpha valor que toma la transparencia de la imagen
-     */
     @Override
     public void drawImage(Sprite sprite, Rect dest, float alpha){
 
@@ -64,11 +51,6 @@ public abstract class AbstractGraphics implements Graphics {
 
     } // drawImage
 
-    /**
-     * Dibuja una imagen centrada en la pantalla
-     * @param sprite Objeto Sprite que contiene la imagen y los rectangulos fuente y destino
-     * @param alpha Valor de la transparencia de la imagen
-     */
     @Override
     public void drawImageCentered(Sprite sprite, float alpha){
 
@@ -89,12 +71,6 @@ public abstract class AbstractGraphics implements Graphics {
 
     } // drawImageCentered
 
-    /**
-     * Dibuja una imagen centrada en el eje X de la ventana
-     * @param sprite Objeto Sprite que contiene la imagen y los rectangulos fuente y destino
-     * @param y Posición "y" en coordenadas del juego
-     * @param alpha Valor de la transparencia de la imagen
-     */
     @Override
     public void drawImageCenteredAxisX(Sprite sprite, int y, float alpha){
 
@@ -120,12 +96,6 @@ public abstract class AbstractGraphics implements Graphics {
 
     } // drawImageCenteredAxisX
 
-    /**
-     * Dibuja una imagen centrada en el eje Y de la ventana
-     * @param sprite Objeto Sprite que contiene la imagen y los rectangulos fuente y destino
-     * @param x Posición "x" en coordenadas del juego
-     * @param alpha Valor de la transparencia de la imagen
-     */
     @Override
     public void drawImageCenteredAxisY(Sprite sprite, int x, float alpha){
 
@@ -147,9 +117,6 @@ public abstract class AbstractGraphics implements Graphics {
 
     } // drawImageCenteredAxisY
 
-    /**
-     * @return Ancho fisico del dispositivo
-     */
     @Override
     public int getWidth(){
 
@@ -157,9 +124,6 @@ public abstract class AbstractGraphics implements Graphics {
 
     } // getWidth
 
-    /**
-     * @return Alto fisico del dispositivo
-     */
     @Override
     public int getHeight() {
 
@@ -167,31 +131,16 @@ public abstract class AbstractGraphics implements Graphics {
 
     } // getHeight
 
-    /**
-     * @return Coordenada inicial X del juego
-     */
     @Override
-    public int getInitialX(){
+    public int getResolutionWidth() {
+        return _logicWidth;
+    }
 
-        return _initialX;
-
-    } // getInitialX
-
-    /**
-     * @return Coordenada inicial Y del juego
-     */
     @Override
-    public int getInitialY(){
+    public int getResolutionHeight() {
+        return _logicHeight;
+    }
 
-        return _initialY;
-
-    } // getInitialY
-
-    /**
-     * Devuelve el factor de escala necesario para mantener la resolución
-     *
-     * @return factor de escala
-     */
     @Override
     public float getScaleFactor(){
 
@@ -199,16 +148,6 @@ public abstract class AbstractGraphics implements Graphics {
 
     } // getScaleFactor
 
-    /**
-     * Método que guarda los valores de la resolución que se mantendrá durante la ejecución.
-     * Por ejemplo, 1920x1080.
-     *
-     * Llama a métodos que calculan el factor de escalado según la orientación de la
-     * pantalla y calculan la posición inicial.
-     *
-     * @param w Ancho de la resolución
-     * @param h Alto de la resolución
-     */
     @Override
     public void setLogicResolution(int w, int h){
 
@@ -220,15 +159,6 @@ public abstract class AbstractGraphics implements Graphics {
 
     } // setLogicResolution
 
-    /**
-     * Método que guarda el tamaño de la físico de la pantalla. Por ejemplo, 2060x1080
-     *
-     * Además llama a los métodos que se encargan de calcular el nuevo factor de escala y
-     * la nueva posición inicial.
-     *
-     * @param w Ancho de la pantalla
-     * @param h Alto de la pantalla
-     */
     @Override
     public void setPhysicResolution(int w, int h){
 
@@ -240,10 +170,6 @@ public abstract class AbstractGraphics implements Graphics {
 
     } // setPhysicResolution
 
-    /**
-     * Método para modificar los valores del tamaño físico cuando cambia la orientación de la
-     * pantalla. Intercambia los valores de alto y ancho de la pantalla respectivamente.
-     */
     @Override
     public void swapPhysicResolution(){
 

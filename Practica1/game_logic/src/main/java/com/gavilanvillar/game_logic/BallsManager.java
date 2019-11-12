@@ -205,8 +205,6 @@ public class BallsManager {
             }
 
         }
-        System.out.println("TAM = " + _objs.size());
-
 
     }
 
