@@ -36,6 +36,7 @@ public class KeyboardController implements KeyListener {
         TouchEvent event = new TouchEvent();
         event._type = EventType.PULSADO;
 
+        System.out.println(ke.getKeyCode());
         event._id = ke.getKeyCode();
 
         _input.addEvent(event);

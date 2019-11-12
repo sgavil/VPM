@@ -26,6 +26,7 @@ public class Menu extends GenericGameState {
     private final int QUESTION_ICON_POS_X = 910;
     private final int ICON_POS_Y = 30;
 
+    private final int FULLSCREEN_KEYCODE = 70; // f
 
 
 
@@ -117,6 +118,10 @@ public class Menu extends GenericGameState {
                     System.exit(0);
                     //_game.setRunning(false);
                 }
+                else if (e._id == FULLSCREEN_KEYCODE){
+                    _fullscreen = !_fullscreen;
+                    _game.setFullscreen(_fullscreen);
+                }
                 // Se ha hecho click en la pantalla
                 else {
                     _changeStateSound.play();
@@ -148,4 +153,5 @@ public class Menu extends GenericGameState {
 
     private boolean _isSoundMuted = false;
 
+    private boolean _fullscreen = false;
 }

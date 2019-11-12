@@ -195,6 +195,11 @@ public class AGame implements Game, Runnable{
     }
 
     @Override
+    public void setFullscreen(boolean b) {
+
+    }
+
+    @Override
     public void setRunning(boolean b) {
         _running = b;
     }

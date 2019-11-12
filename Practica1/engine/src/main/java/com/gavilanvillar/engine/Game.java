@@ -35,5 +35,14 @@ public interface Game {
      */
     Audio getAudio();
 
+    /**
+     * (Solo funcional en PC)
+     *
+     * Pone el juego en pantalla completa si el booleano es true, y en modo ventana si es false
+     *
+     * @param b
+     */
+    void setFullscreen(boolean b);
+
     void setRunning(boolean b);
 }

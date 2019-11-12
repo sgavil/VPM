@@ -28,7 +28,7 @@ public class SwitchDash extends GenericGameState {
     private final int SCORE_POS_Y = 30;
     private final float SCORE_SCALE = 1.0f;
 
-
+    private final int FULLSCREEN_KEYCODE = 70; // f
 
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -157,8 +157,16 @@ public class SwitchDash extends GenericGameState {
         List<TouchEvent> ev = _game.getInput().getTouchEvents();
 
         for (TouchEvent e : ev) {
-            if (e._type == EventType.LIBERADO)
-                swapPlayers();
+            if (e._type == EventType.LIBERADO) {
+                if (e._id == FULLSCREEN_KEYCODE){
+                    _fullscreen = !_fullscreen;
+                    _game.setFullscreen(_fullscreen);
+                }
+                else {
+                    swapPlayers();
+                }
+
+            }
         }
     }
 
@@ -185,6 +193,7 @@ public class SwitchDash extends GenericGameState {
     private Sound _mainTheme;
 
     private  boolean alreadyPlayed = false;
+    private boolean _fullscreen = false;
 
 
 }
