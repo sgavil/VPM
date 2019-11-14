@@ -6,4 +6,6 @@ public interface Audio {
 
     void muteAll();
 
+    void unMuteAll();
+
 }
