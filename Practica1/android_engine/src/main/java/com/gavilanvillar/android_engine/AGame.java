@@ -36,10 +36,7 @@ public class AGame implements Game, Runnable{
      */
     public void init(AppCompatActivity androidEntry, GameState gameState){
 
-        androidEntry.getSupportActionBar().hide();
-
-        androidEntry.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+f
 
         Point size = new Point();
         androidEntry.getWindowManager().getDefaultDisplay().getSize(size);
