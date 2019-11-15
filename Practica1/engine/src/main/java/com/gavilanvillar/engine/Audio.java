@@ -10,4 +10,8 @@ public interface Audio {
 
     Music newMusic(String name);
 
+    void stopAll();
+
+    void resumeAll();
+
 }

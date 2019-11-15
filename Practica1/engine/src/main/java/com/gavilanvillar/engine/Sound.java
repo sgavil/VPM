@@ -12,4 +12,6 @@ public interface Sound{
     void unMute();
 
     void stop();
+
+    void resume();
 }

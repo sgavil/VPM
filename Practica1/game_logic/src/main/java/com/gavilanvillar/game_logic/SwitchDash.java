@@ -49,17 +49,23 @@ public class SwitchDash extends GenericGameState {
     public void init(ResourceManager resourceManager) {
         super.init(resourceManager);
 
-        _mainTheme = resourceManager.getMainTheme();
+        _gameTheme = resourceManager.getSwitchDashTheme();
         _player = new Player(_resourceManager.getWhitePlayer(), _resourceManager.getBlackPlayer(), PLAYER_COLOR.WHITE);
         _player.setPosY(PLAYER_POS_Y);
-        _collisionSound = resourceManager.getDisparo();
+        _changePlayer = resourceManager.getChangePlayer();
+
 
         _ballsManager = new BallsManager(_resourceManager.getWhiteBall(), _resourceManager.getBlackBall(), _player);
 
+        _ballsManager.setCollSound(resourceManager.getTakeBall());
         _ballsManager.setPlayer(_player);
         _ballsManager.setSwitchDash(this);
 
         _numbers = resourceManager.getNumbers();
+
+        _gameTheme.setLoop(true);
+        _gameTheme.play();
+
     }
 
 
@@ -73,7 +79,7 @@ public class SwitchDash extends GenericGameState {
     public void swapPlayers() {
 
         _player.swapColor();
-        _collisionSound.play();
+        _changePlayer.play();
     }
 
 
@@ -89,7 +95,7 @@ public class SwitchDash extends GenericGameState {
         _ballsManager.update(deltaTime);
 
         if(!alreadyPlayed){
-            _mainTheme.play();
+            _gameTheme.play();
             alreadyPlayed = true;
         }
 
@@ -146,6 +152,7 @@ public class SwitchDash extends GenericGameState {
         GameOver gameOverState = new GameOver(_game,_arrowsVel);
         gameOverState.init(_resourceManager);
         gameOverState.setScore(_score);
+        _gameTheme.stop();
         _game.getGameStateManager().setState(gameOverState);
     }
 
@@ -190,8 +197,9 @@ public class SwitchDash extends GenericGameState {
     private int _score = 0;
     private Sprite[] _numbers = null;
 
-    private Sound _collisionSound ;
-    private Music _mainTheme;
+    private Sound _changePlayer ;
+
+    private Music _gameTheme;
 
     private  boolean alreadyPlayed = false;
     private boolean _fullscreen = false;

@@ -23,6 +23,7 @@ public class AAudio implements Audio
         this._soundPool = new SoundPool(20, AudioManager.STREAM_MUSIC, 0);
 
         _soundList = new ArrayList<>();
+        _musicList = new ArrayList<>();
     }
 
     @Override
@@ -49,11 +50,17 @@ public class AAudio implements Audio
         for(Sound s : _soundList){
             s.mute();
         }
+        for(Music m : _musicList){
+            m.mute();
+        }
     }
 
     public void unMuteAll(){
         for(Sound s : _soundList){
             s.unMute();
+        }
+        for(Music m : _musicList){
+            m.unMute();
         }
     }
 
@@ -92,13 +99,33 @@ public class AAudio implements Audio
 
             }
         }
-        return new AMusic(mediaPlayer);
+        Music m = new AMusic(mediaPlayer);
+        _musicList.add(m);
+        return m;
     }
 
+    public void stopAll(){
+        for(Sound s : _soundList){
+            s.stop();
+        }
+        for(Music m : _musicList){
+            m.stop();
+        }
+    }
+
+    public void resumeAll(){
+        for(Sound s : _soundList){
+            s.resume();
+        }
+        for(Music m : _musicList){
+            m.resume();
+        }
+    }
     private AppCompatActivity _appContext;
     private AssetManager _assetManager;
     private SoundPool _soundPool;
 
     private List<Sound> _soundList;
+    private List<Music> _musicList;
 
 }

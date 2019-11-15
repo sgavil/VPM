@@ -4,6 +4,7 @@ import com.gavilanvillar.engine.Button;
 import com.gavilanvillar.engine.Game;
 import com.gavilanvillar.engine.Input.EventType;
 import com.gavilanvillar.engine.Input.TouchEvent;
+import com.gavilanvillar.engine.Music;
 import com.gavilanvillar.engine.Rect;
 import com.gavilanvillar.engine.ResourceManager;
 import com.gavilanvillar.engine.Sprite;
@@ -52,10 +53,15 @@ public class Tutorial extends GenericGameState {
         _howToPlay = _resourceManager.getHowToPlay();
         _instructions = _resourceManager.getInstructions();
 
-        _game.getAudio().muteAll();
-
         _homeIcon = resourceManager.getHomeIcon();
         _homeButton = new Button(_homeIcon);
+
+        _tutorialTheme = resourceManager.getTutorialTheme();
+
+        _tutorialTheme.setLoop(true);
+        _tutorialTheme.play();
+
+
     }
 
 
@@ -98,6 +104,7 @@ public class Tutorial extends GenericGameState {
                 // Si hace click en el botón de cerrar
                 if(_homeButton.isClicked(e._x, e._y)){
                     _changeStateSound.play();
+                    _tutorialTheme.stop();
                     Menu s = new Menu(_game);
                     s.init(_resourceManager);
                     _game.getGameStateManager().setState(s);
@@ -110,6 +117,7 @@ public class Tutorial extends GenericGameState {
                 else {
                     System.out.println(e._id);
                     _changeStateSound.play();
+                    _tutorialTheme.stop();
                     SwitchDash s = new SwitchDash(_game);
                     s.init(_resourceManager);
                     _game.getGameStateManager().setState(s);
@@ -131,4 +139,6 @@ public class Tutorial extends GenericGameState {
     // Botones
     private Sprite _homeIcon = null;
     private Button _homeButton = null;
+
+    private Music _tutorialTheme;
 }

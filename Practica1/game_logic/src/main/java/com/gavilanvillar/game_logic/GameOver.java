@@ -4,6 +4,7 @@ import com.gavilanvillar.engine.Button;
 import com.gavilanvillar.engine.Game;
 import com.gavilanvillar.engine.Input.EventType;
 import com.gavilanvillar.engine.Input.TouchEvent;
+import com.gavilanvillar.engine.Music;
 import com.gavilanvillar.engine.Rect;
 import com.gavilanvillar.engine.ResourceManager;
 import com.gavilanvillar.engine.Sprite;
@@ -72,6 +73,11 @@ public class GameOver extends GenericGameState {
         _questionIcon = resourceManager.getQuestionIcon();
         _instructionsButton = new Button(_questionIcon);
 
+        _gameOverTheme = resourceManager.getGameOverTheme();
+
+        _gameOverTheme.setLoop(true);
+        _gameOverTheme.play();
+
     }
 
 
@@ -133,6 +139,7 @@ public class GameOver extends GenericGameState {
                  else if(_instructionsButton.isClicked(e._x, e._y)){
 
                      _changeStateSound.play();
+                     _gameOverTheme.stop();
                      Tutorial s = new Tutorial(_game);
                      s.init(_resourceManager);
                      _game.getGameStateManager().setState(s);
@@ -145,6 +152,7 @@ public class GameOver extends GenericGameState {
                  // Se ha hecho click en la pantalla
                  else {
                      _changeStateSound.play();
+                     _gameOverTheme.stop();
                      SwitchDash s = new SwitchDash(_game);
                      s.init(_resourceManager);
                      _game.getGameStateManager().setState(s);
@@ -254,5 +262,7 @@ public class GameOver extends GenericGameState {
     private boolean _isSoundMuted = false;
 
     private boolean _fullscreen = false;
+
+    private Music _gameOverTheme;
 
 }

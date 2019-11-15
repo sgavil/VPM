@@ -67,6 +67,7 @@ public class AGame implements Game, Runnable{
             // (programación defensiva, nunca se sabe quién va a
             // usarnos...)
             _running = true;
+            _audio.unMuteAll();
             // Lanzamos la ejecución de nuestro método run()
             // en una hebra nueva.
             _gameThread = new Thread(this);
@@ -89,6 +90,7 @@ public class AGame implements Game, Runnable{
 
         if (_running) {
             _running = false;
+            _audio.muteAll();
             while (true) {
                 try {
                     _gameThread.join();

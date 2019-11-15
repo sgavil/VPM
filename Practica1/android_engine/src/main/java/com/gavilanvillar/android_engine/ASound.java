@@ -13,7 +13,7 @@ public class ASound implements Sound {
     @Override
     public void play() {
         if(_soundID != -1){
-            _pool.play(_soundID, 1.0f, 1.0f, 0, _loop, 1);
+            _pool.play(_soundID, _leftVolume, _rightVolume, 0, _loop, 1);
         }
         else{
             System.out.print("No se ha podido reproducir el sonido");
@@ -32,22 +32,30 @@ public class ASound implements Sound {
 
     @Override
     public void mute() {
-        _pool.setVolume(_soundID,0.0f,0.0f);
+        _leftVolume = 0f;
+        _rightVolume = 0f;
         _pool.stop(_soundID);
     }
 
     @Override
     public void unMute() {
-        _pool.setVolume(_soundID,1.0f,1.0f);
+        _leftVolume = 1.0f;
+        _rightVolume = 1.0f;
 
     }
 
     @Override
     public void stop() {
-
+        _pool.stop(_soundID);
     }
 
+    @Override
+    public void resume(){
+        _pool.resume(_soundID);
+    }
     private int _soundID;
     private SoundPool _pool;
     private int _loop;
+    private float _leftVolume = 1.0f;
+    private float _rightVolume = 1.0f;
 }

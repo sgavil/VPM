@@ -40,7 +40,7 @@ public abstract class GenericGameState implements GameState {
 
         this._game.getGraphics().setLogicResolution(WIDTH_RES, HEIGHT_RES);
 
-        _changeStateSound = resourceManager.getGota();
+        this._changeStateSound = resourceManager.getChangeState();
 
 
         int randomBackground = (int) Math.floor(Math.random() * _resourceManager.getBackgrounds().length);

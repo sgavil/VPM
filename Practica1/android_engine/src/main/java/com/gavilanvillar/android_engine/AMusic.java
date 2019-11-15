@@ -29,19 +29,25 @@ public class AMusic implements Music {
     @Override
     public void mute() {
         _mediaPlayer.setVolume(0.0f, 0.0f);
-        _mediaPlayer.stop();
     }
 
     @Override
     public void unMute() {
+
         _mediaPlayer.setVolume(1.0f, 1.0f);
     }
 
     @Override
+    public void resume(){
+        _mediaPlayer.start();
+    }
+
+    @Override
     public void stop() {
-        _mediaPlayer.stop();
+        _mediaPlayer.pause();
     }
 
     private MediaPlayer _mediaPlayer;
+
 
 }

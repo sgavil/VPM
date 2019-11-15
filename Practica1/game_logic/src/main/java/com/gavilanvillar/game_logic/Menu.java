@@ -4,6 +4,7 @@ import com.gavilanvillar.engine.Button;
 import com.gavilanvillar.engine.Game;
 import com.gavilanvillar.engine.Input.EventType;
 import com.gavilanvillar.engine.Input.TouchEvent;
+import com.gavilanvillar.engine.Music;
 import com.gavilanvillar.engine.Rect;
 import com.gavilanvillar.engine.ResourceManager;
 import com.gavilanvillar.engine.Sound;
@@ -55,6 +56,11 @@ public class Menu extends GenericGameState {
 
         _questionIcon = resourceManager.getQuestionIcon();
         _instructionsButton = new Button(_questionIcon);
+
+        _menuTheme = resourceManager.getMenuTheme();
+
+        _menuTheme.setLoop(true);
+        _menuTheme.play();
 
     }
 
@@ -113,6 +119,7 @@ public class Menu extends GenericGameState {
                 else if(_instructionsButton.isClicked(e._x, e._y)){
 
                     _changeStateSound.play();
+                    _menuTheme.stop();
                     Tutorial s = new Tutorial(_game);
                     s.init(_resourceManager);
                     _game.getGameStateManager().setState(s);
@@ -127,6 +134,7 @@ public class Menu extends GenericGameState {
                 // Se ha hecho click en la pantalla
                 else {
                     _changeStateSound.play();
+                    _menuTheme.stop();
                     SwitchDash s = new SwitchDash(_game);
                     s.init(_resourceManager);
                     _game.getGameStateManager().setState(s);
@@ -154,4 +162,6 @@ public class Menu extends GenericGameState {
     private boolean _isSoundMuted = false;
 
     private boolean _fullscreen = false;
+
+    private Music _menuTheme;
 }

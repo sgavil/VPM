@@ -1,6 +1,7 @@
 package com.gavilanvillar.game_logic;
 
 import com.gavilanvillar.engine.Graphics;
+import com.gavilanvillar.engine.Sound;
 import com.gavilanvillar.engine.Sprite;
 import com.gavilanvillar.game_logic.Ball.BALL_COLOR;
 
@@ -34,7 +35,6 @@ public class BallsManager {
 
     //Incremento de la velocidad vertical de las bolas al conseguir SCORE_TO_LEVEL_UP puntos mas
     private int BALLS_SPEED_INCR = 90;
-
 
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -90,11 +90,10 @@ public class BallsManager {
     }
 
 
-
-
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //    Getter y Setters  (de BallManager)
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     /**
      * Setter de la pala del jugador
      *
@@ -159,6 +158,7 @@ public class BallsManager {
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //    Métodos privados/públicos (de BallManager)
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     /**
      * Se encarga de generar una bola si la ultima bola generada esta a una distancia de BALL_SEPARATION pixeles
      */
@@ -184,13 +184,13 @@ public class BallsManager {
         // y en caso de haber sobrepasado la pala se llama al gameOver
         for (int i = 0; i < _objs.size(); i++) {
             //System.out.println("La bola [" + i + "] esta " + _objs.get(i).isActive() );
-            if (_objs.get(i).isActive())
-            {
+            if (_objs.get(i).isActive()) {
                 //En el checkcollisionWith se comprueba si son del mismo color
                 if (_objs.get(i).checkCollisionWith(_player)) {
-                   _objs.get(i).setActive(false);
+                    _objs.get(i).setActive(false);
                     _ballLevelUpScore++;
                     _switchDash.addScore();
+                    _takeBall.play();
                 }
 
                 int nextPos = _objs.get(i).getPosY();
@@ -233,6 +233,12 @@ public class BallsManager {
         }
     }
 
+    /**
+     * Metodo para asignar un sonido a la colision de la bola con la pala
+     */
+    public void setCollSound(Sound s) {
+        _takeBall = s;
+    }
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //    Atributos privados  (de BallManager)
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -255,5 +261,9 @@ public class BallsManager {
 
     private SwitchDash _switchDash;
     private Player _player;
+
+    //Ball Collsion sound
+    private Sound _takeBall;
+
 
 }

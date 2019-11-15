@@ -66,8 +66,10 @@ public class ResourceManager {
      * Carga los sonidos de la carpeta sounds
      */
     private void loadSounds() {
-        _disparoSound = _game.getAudio().newSound("sounds/disparo.wav");
-        _gotaSound = _game.getAudio().newSound("sounds/gota.wav");
+        _changePlayer = _game.getAudio().newSound("sounds/changePlayer.wav");
+        _changeState = _game.getAudio().newSound("sounds/changeState.wav");
+        _takeBall = _game.getAudio().newSound("sounds/takeBall.wav");
+
 
     }
 
@@ -76,7 +78,12 @@ public class ResourceManager {
      *
      */
     private void loadMusic(){
-        _mainMusic = _game.getAudio().newMusic("music/mainTheme.mp3");
+        _menuTheme = _game.getAudio().newMusic("music/menuTheme.mp3");
+        _gameOverTheme = _game.getAudio().newMusic("music/gameOverTheme.wav");
+        _switchDashTheme = _game.getAudio().newMusic("music/switchDashTheme.wav");
+        _tutorialTheme = _game.getAudio().newMusic("music/tutorialTheme.wav");
+
+
     }
 
     /**
@@ -286,13 +293,18 @@ public class ResourceManager {
     public Sprite[] getPunctuationSign() { return _punctuationSign; }
 
     //Getters Sonidos
-    public Sound getDisparo() {return _disparoSound;}
-    public Sound getGota() {return _gotaSound;}
+    public Sound getTakeBall() {return _takeBall;}
+    public Sound getChangeState() {return _changeState;}
+    public Sound getChangePlayer() {return _changePlayer;}
+
 
     //Getters musica
-    public Music getMainTheme() {
-        return _mainMusic;
+    public Music getMenuTheme() {
+        return _menuTheme;
     }
+    public Music getSwitchDashTheme(){return _switchDashTheme;}
+    public Music getGameOverTheme(){return _gameOverTheme;}
+    public Music getTutorialTheme() {return  _tutorialTheme;}
 
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -368,11 +380,17 @@ public class ResourceManager {
 
 
     //Sonidos
-    private Sound _disparoSound = null;
-    private Sound _gotaSound = null;
+    private Sound _changeState = null;
+    private Sound _changePlayer = null;
+    private Sound _takeBall = null;
+
 
     //Musica
-    private Music _mainMusic;
+    private Music _menuTheme;
+    private Music _switchDashTheme;
+    private Music _gameOverTheme;
+    private Music _tutorialTheme;
+
 
 
 }
