@@ -1,6 +1,7 @@
 package com.gavilanvillar.desktop_engine;
 
 import com.gavilanvillar.engine.Audio;
+import com.gavilanvillar.engine.Music;
 import com.gavilanvillar.engine.Sound;
 
 import java.io.File;
@@ -66,6 +67,11 @@ public class PCAudio implements Audio {
         {
             s.unMute();
         }
+    }
+
+    @Override
+    public Music newMusic(String name) {
+        return null;
     }
 
     private List<PCSound> _soundsList;

@@ -8,4 +8,6 @@ public interface Audio {
 
     void unMuteAll();
 
+    Music newMusic(String name);
+
 }

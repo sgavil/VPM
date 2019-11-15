@@ -33,11 +33,18 @@ public class ASound implements Sound {
     @Override
     public void mute() {
         _pool.setVolume(_soundID,0.0f,0.0f);
+        _pool.stop(_soundID);
     }
 
     @Override
     public void unMute() {
         _pool.setVolume(_soundID,1.0f,1.0f);
+
+    }
+
+    @Override
+    public void stop() {
+
     }
 
     private int _soundID;

@@ -3,6 +3,7 @@ package com.gavilanvillar.game_logic;
 import com.gavilanvillar.engine.Game;
 import com.gavilanvillar.engine.Input.EventType;
 import com.gavilanvillar.engine.Input.TouchEvent;
+import com.gavilanvillar.engine.Music;
 import com.gavilanvillar.engine.Rect;
 import com.gavilanvillar.engine.ResourceManager;
 import com.gavilanvillar.engine.Sound;
@@ -48,7 +49,7 @@ public class SwitchDash extends GenericGameState {
     public void init(ResourceManager resourceManager) {
         super.init(resourceManager);
 
-        _mainTheme = resourceManager.getTecnhoLoop();
+        _mainTheme = resourceManager.getMainTheme();
         _player = new Player(_resourceManager.getWhitePlayer(), _resourceManager.getBlackPlayer(), PLAYER_COLOR.WHITE);
         _player.setPosY(PLAYER_POS_Y);
         _collisionSound = resourceManager.getDisparo();
@@ -182,7 +183,7 @@ public class SwitchDash extends GenericGameState {
     private Sprite[] _numbers = null;
 
     private Sound _collisionSound ;
-    private Sound _mainTheme;
+    private Music _mainTheme;
 
     private  boolean alreadyPlayed = false;
 

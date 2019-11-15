@@ -1,5 +1,29 @@
 apply plugin: 'com.android.library'
 
+task copyPNGs(type: Copy){
+    description = "Copying images into assets folder..."
+    from(rootDir){
+        include "sprites/**"
+    }
+    into "src/main/assets"
+}
+
+task copySounds(type: Copy){
+    description = "Copying sounds into assets folder..."
+    from(rootDir){
+        include "sounds/**"
+    }
+    into "src/main/assets"
+}
+
+task copyMusic(type: Copy){
+    description = "Copying music into assets folder..."
+    from(rootDir){
+        include "music/**"
+    }
+    into "src/main/assets"
+}
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.0"

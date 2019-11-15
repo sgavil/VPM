@@ -38,8 +38,7 @@ public class ResourceManager {
 
         loadFont();
 
-
-        //TODO: cargar los botones ya la score
+        loadMusic();
 
     }
 
@@ -69,8 +68,15 @@ public class ResourceManager {
     private void loadSounds() {
         _disparoSound = _game.getAudio().newSound("sounds/disparo.wav");
         _gotaSound = _game.getAudio().newSound("sounds/gota.wav");
-        _mainMusic = _game.getAudio().newSound("sounds/mainTheme.wav");
 
+    }
+
+    /**
+     * Carga la musica de la carpeta music
+     *
+     */
+    private void loadMusic(){
+        _mainMusic = _game.getAudio().newMusic("music/mainTheme.mp3");
     }
 
     /**
@@ -284,7 +290,7 @@ public class ResourceManager {
     public Sound getGota() {return _gotaSound;}
 
     //Getters musica
-    public Sound getTecnhoLoop() {
+    public Music getMainTheme() {
         return _mainMusic;
     }
 
@@ -366,7 +372,7 @@ public class ResourceManager {
     private Sound _gotaSound = null;
 
     //Musica
-    private Sound _mainMusic;
+    private Music _mainMusic;
 
 
 }

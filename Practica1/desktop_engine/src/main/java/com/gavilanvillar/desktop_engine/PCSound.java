@@ -8,10 +8,11 @@ public class PCSound implements Sound {
 
     public PCSound(Clip clip){
         _clip= clip;
-         _clipVolume = (FloatControl) _clip.getControl(FloatControl.Type.MASTER_GAIN);
+        _clipVolume = (FloatControl) _clip.getControl(FloatControl.Type.MASTER_GAIN);
     }
     @Override
     public void play() {
+        _clip.setMicrosecondPosition(0);
         _clip.start();
     }
 
@@ -33,6 +34,11 @@ public class PCSound implements Sound {
     @Override
     public void unMute() {
         _clipVolume.setValue(1.0f);
+    }
+
+    @Override
+    public void stop() {
+
     }
 
     private Clip _clip;

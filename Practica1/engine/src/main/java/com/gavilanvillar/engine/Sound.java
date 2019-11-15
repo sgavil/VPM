@@ -10,4 +10,6 @@ public interface Sound{
     void mute();
 
     void unMute();
+
+    void stop();
 }
