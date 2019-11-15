@@ -3,6 +3,7 @@ package com.gavilanvillar.android_engine;
 import android.graphics.Point;
 import android.view.SurfaceView;
 import android.view.WindowManager;
+import android.view.WindowManager.LayoutParams;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -37,9 +38,7 @@ public class AGame implements Game, Runnable{
     public void init(AppCompatActivity androidEntry, GameState gameState){
 
         androidEntry.getSupportActionBar().hide();
-
-        androidEntry.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        androidEntry.getWindow().setFlags(LayoutParams.FLAG_FULLSCREEN, LayoutParams.FLAG_FULLSCREEN);
 
         Point size = new Point();
         androidEntry.getWindowManager().getDefaultDisplay().getSize(size);
@@ -192,6 +191,11 @@ public class AGame implements Game, Runnable{
     @Override
     public Audio getAudio() {
         return _audio;
+    }
+
+    @Override
+    public void setFullscreen(boolean b) {
+
     }
 
     @Override

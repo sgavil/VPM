@@ -25,8 +25,6 @@ public class PCWindow extends JFrame {
 
         setIgnoreRepaint(true);
 
-        //setExtendedState(JFrame.MAXIMIZED_BOTH);
-        //setUndecorated(true);
         getContentPane().setFocusable(true);
         setVisible(true);
 

@@ -7,6 +7,8 @@ import com.gavilanvillar.engine.GameStateManager;
 import com.gavilanvillar.engine.Graphics;
 import com.gavilanvillar.engine.Input;
 
+import javax.swing.JFrame;
+
 
 /**
  * Clase PCGame
@@ -75,6 +77,20 @@ public class PCGame implements Game {
     @Override
     public Audio getAudio() {
         return _audio;
+    }
+
+    @Override
+    public void setFullscreen(boolean b) {
+        if (b){
+            _window.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        }
+        else{
+            _window.setExtendedState(JFrame.NORMAL);
+        }
+
+        _window.dispose();
+        _window.setUndecorated(b);
+        _window.setVisible(true);
     }
 
     @Override

@@ -27,6 +27,8 @@ public class Tutorial extends GenericGameState {
     private final int CLOSE_ICON_POS_X = 910;
     private final int ICON_POS_Y = 30;
 
+    private final int FULLSCREEN_KEYCODE = 70; // f
+
 
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -100,8 +102,13 @@ public class Tutorial extends GenericGameState {
                     s.init(_resourceManager);
                     _game.getGameStateManager().setState(s);
                 }
+                else if (e._id == FULLSCREEN_KEYCODE){
+                    _fullscreen = !_fullscreen;
+                    _game.setFullscreen(_fullscreen);
+                }
                 // Si hace click por la pantalla
                 else {
+                    System.out.println(e._id);
                     _changeStateSound.play();
                     SwitchDash s = new SwitchDash(_game);
                     s.init(_resourceManager);
@@ -118,6 +125,8 @@ public class Tutorial extends GenericGameState {
 
     private Sprite _howToPlay = null;
     private Sprite _instructions = null;
+
+    private boolean _fullscreen = false;
 
     // Botones
     private Sprite _homeIcon = null;

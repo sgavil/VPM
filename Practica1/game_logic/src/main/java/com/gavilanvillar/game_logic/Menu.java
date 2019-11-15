@@ -26,6 +26,7 @@ public class Menu extends GenericGameState {
     private final int QUESTION_ICON_POS_X = 910;
     private final int ICON_POS_Y = 30;
 
+    private final int FULLSCREEN_KEYCODE = 70; // f
 
 
 
@@ -55,9 +56,6 @@ public class Menu extends GenericGameState {
         _questionIcon = resourceManager.getQuestionIcon();
         _instructionsButton = new Button(_questionIcon);
 
-        _closeIcon = resourceManager.getCloseIcon();
-        _closeButton = new Button(_closeIcon);
-
     }
 
 
@@ -82,7 +80,7 @@ public class Menu extends GenericGameState {
 
         _soundButton.getSprite().draw(_game.getGraphics(), SOUND_ICON_POS_X, ICON_POS_Y,1.0f);
         _instructionsButton.getSprite().draw(_game.getGraphics(), QUESTION_ICON_POS_X, ICON_POS_Y, 1.0f);
-        _closeButton.getSprite().draw(_game.getGraphics(), SOUND_ICON_POS_X, 1750, 1.0f);
+
     }
 
 
@@ -120,10 +118,11 @@ public class Menu extends GenericGameState {
                     _game.getGameStateManager().setState(s);
 
                 }
-                // Se ha hecho click en el botón de cerrar
-                else if (_closeButton.isClicked(e._x, e._y)){
-                    System.exit(0);
-                    //_game.setRunning(false);
+                // Se ha pulsado la tecla "F" en teclado para cambiar entre pantalla completa
+                // y modo ventana
+                else if (e._id == FULLSCREEN_KEYCODE){
+                    _fullscreen = !_fullscreen;
+                    _game.setFullscreen(_fullscreen);
                 }
                 // Se ha hecho click en la pantalla
                 else {
@@ -145,15 +144,14 @@ public class Menu extends GenericGameState {
     // Botones
     private Button _soundButton = null;
     private Button _instructionsButton = null;
-    private Button _closeButton = null;
 
     private Sprite _soundMutedIcon = null;
     private Sprite _soundUnMutedIcon = null;
 
     private Sprite _questionIcon = null;
 
-    private Sprite _closeIcon = null;
 
     private boolean _isSoundMuted = false;
 
+    private boolean _fullscreen = false;
 }
