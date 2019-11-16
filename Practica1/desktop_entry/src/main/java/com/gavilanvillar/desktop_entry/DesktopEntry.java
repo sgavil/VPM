@@ -1,6 +1,7 @@
 package com.gavilanvillar.desktop_entry;
 
 import com.gavilanvillar.desktop_engine.PCGame;
+import com.gavilanvillar.desktop_engine.PCImage;
 import com.gavilanvillar.desktop_engine.PCWindow;
 import com.gavilanvillar.engine.ResourceManager;
 import com.gavilanvillar.game_logic.Menu;
@@ -29,6 +30,7 @@ public class DesktopEntry {
         //Creación e inicialización del manager de recursos
         ResourceManager resourceManager = new ResourceManager(game);
         resourceManager.init();
+        window.setIconImage(((PCImage)resourceManager.getAppIcon().getImage()).getAWTImage());
 
         gameLogic.init(resourceManager);
 

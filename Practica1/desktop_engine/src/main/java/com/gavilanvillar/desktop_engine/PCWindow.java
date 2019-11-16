@@ -1,7 +1,12 @@
 package com.gavilanvillar.desktop_engine;
 
 import com.gavilanvillar.engine.Graphics;
+
+import java.awt.Image;
 import java.awt.image.BufferStrategy;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
+
 import javax.swing.JFrame;
 
 /**

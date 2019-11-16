@@ -156,6 +156,9 @@ public class ResourceManager {
     private void loadMenuSprites() {
         Image image;
 
+        image = _game.getGraphics().newImage("sprites/logo.png");
+        _appIcon = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));
+
         image = _game.getGraphics().newImage("sprites/gameOver.png");
         _gameOver = new Sprite(image, new Rect(0, image.getWidth(), 0, image.getHeight()));
 
@@ -231,6 +234,8 @@ public class ResourceManager {
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //                          Getters
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    public Sprite getAppIcon() { return _appIcon; }
 
     public Sprite[] getBackgrounds() {
         return _backgrounds;
@@ -332,6 +337,9 @@ public class ResourceManager {
     private final int GLIFO_HEIGHT = 160;
     private final int GLIFO_REAL_WIDTH = 93;
     private final int GLIFO_REAL_HEIGHT = 112;
+
+    // Logo app
+    private Sprite _appIcon = null;
 
     //Fondos
     private Sprite[] _backgrounds = null;
