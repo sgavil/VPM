@@ -1,5 +1,6 @@
 package com.gavilanvillar.game_logic;
 
+import com.gavilanvillar.engine.Button;
 import com.gavilanvillar.engine.Game;
 import com.gavilanvillar.engine.GameState;
 import com.gavilanvillar.engine.ResourceManager;
@@ -51,6 +52,10 @@ public abstract class GenericGameState implements GameState {
         this._arrowsPosY_1 = 0;
 
         this._tapToPlay = _resourceManager.getTapToPlay();
+
+        this._soundMutedIcon = resourceManager.getMutedIcon();
+        this._soundUnMutedIcon = resourceManager.getNotMutedIcon();
+        this._soundButton = new Button(_soundUnMutedIcon);
     }
 
 
@@ -70,7 +75,9 @@ public abstract class GenericGameState implements GameState {
         arrowsMovement(deltaTime);
     }
 
-
+    /**
+     * Aumenta la velocidad de las flechas cuando se aumenta de nivel
+     */
     public void speedUpArrows() {
         _arrowsVel += ARROWS_VEL_INCR;
     }
@@ -126,10 +133,18 @@ public abstract class GenericGameState implements GameState {
 
     }
 
-    /**
-     * Aumenta la velocidad de las flechas cuando se aumenta de nivel
-     */
 
+    protected void changeMutedIcon() {
+        if (_game.getAudio().isSoundMuted()) {
+            _soundButton.changeSprite(_soundMutedIcon);
+            _game.getAudio().muteAll();
+        } else {
+            _soundButton.changeSprite(_soundUnMutedIcon);
+            _game.getAudio().unMuteAll();
+        }
+
+
+    }
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //   Atributos privados/protegidos  (de GenericGameState)
@@ -158,6 +173,10 @@ public abstract class GenericGameState implements GameState {
 
     protected Sound _changeStateSound;
 
+    protected Button _soundButton = null;
+
+    protected Sprite _soundMutedIcon = null;
+    protected Sprite _soundUnMutedIcon = null;
 
 
 }

@@ -2,6 +2,7 @@ package com.gavilanvillar.desktop_engine;
 
 import com.gavilanvillar.engine.Music;
 
+import javax.sound.sampled.BooleanControl;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 
@@ -10,6 +11,8 @@ public class PCMusic implements Music {
     public PCMusic(Clip clip){
         _clip= clip;
         _clipVolume = (FloatControl) _clip.getControl(FloatControl.Type.MASTER_GAIN);
+         _bc = (BooleanControl) _clip.getControl(BooleanControl.Type.MUTE);
+
     }
     @Override
     public void play() {
@@ -29,19 +32,28 @@ public class PCMusic implements Music {
 
     @Override
     public void mute() {
-        _clipVolume.setValue(0.0f);
+        _bc.setValue(true);
+
     }
 
     @Override
     public void unMute() {
-        _clipVolume.setValue(1.0f);
+        _bc.setValue(false);
+
     }
 
     @Override
     public void stop() {
+        _clip.stop();
 
+    }
+
+    @Override
+    public void resume() {
+_clip.start();
     }
 
     private Clip _clip;
     private FloatControl _clipVolume;
+    private BooleanControl _bc;
 }

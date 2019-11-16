@@ -40,12 +40,14 @@ public class GameOver extends GenericGameState {
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //  Métodos de inicialización (de GameOver)
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     /**
      * Construtor del estado GameOver
-     * @param game Referencia al juego para poder obtener los "singleton" graphics,input y el stateManager
+     *
+     * @param game       Referencia al juego para poder obtener los "singleton" graphics,input y el stateManager
      * @param arrowSpeed Velocidad a la que se estaban moviendo las flechas en el estado de juego para mantenerla en este etado
      */
-    public GameOver(Game game,int arrowSpeed){
+    public GameOver(Game game, int arrowSpeed) {
 
         super(game);
         _arrowsVel = arrowSpeed;
@@ -54,6 +56,7 @@ public class GameOver extends GenericGameState {
 
     /**
      * Se llama al init de GenericGameState y se obtienen los sprites específicos de este estado
+     *
      * @param resourceManager Gestor de recursos para poder obtener los sprites
      */
     public void init(ResourceManager resourceManager) {
@@ -66,10 +69,6 @@ public class GameOver extends GenericGameState {
         _numbers = resourceManager.getNumbers();
         _letters = resourceManager.getLetters();
 
-        _soundMutedIcon = resourceManager.getMutedIcon();
-        _soundUnMutedIcon = resourceManager.getNotMutedIcon();
-        _soundButton = new Button(_soundUnMutedIcon);
-
         _questionIcon = resourceManager.getQuestionIcon();
         _instructionsButton = new Button(_questionIcon);
 
@@ -78,15 +77,18 @@ public class GameOver extends GenericGameState {
         _gameOverTheme.setLoop(true);
         _gameOverTheme.play();
 
+        changeMutedIcon();
+
     }
 
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //   Métodos públicos (de GameOver)
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     /**
      * Realiza la renderizacion de los Sprites del GameState
-    **/
+     **/
     @Override
     public void render() {
         _game.getGraphics().clear(0xFF000000);
@@ -100,7 +102,7 @@ public class GameOver extends GenericGameState {
         _playAgain.drawCentered(_game.getGraphics(), PLAY_AGAIN_POSY, 0, fadeInOutAlpha);
         _gameOver.drawCentered(_game.getGraphics(), GAME_OVER_POSY, 0, 1.0f);
 
-        _soundButton.getSprite().draw(_game.getGraphics(), SOUND_ICON_POS_X, ICON_POS_Y,1.0f);
+        _soundButton.getSprite().draw(_game.getGraphics(), SOUND_ICON_POS_X, ICON_POS_Y, 1.0f);
         _instructionsButton.getSprite().draw(_game.getGraphics(), QUESTION_ICON_POS_X, ICON_POS_Y, 1.0f);
 
         renderFinalScore();
@@ -114,49 +116,39 @@ public class GameOver extends GenericGameState {
 
         List<TouchEvent> ev = _game.getInput().getTouchEvents();
 
-        for (TouchEvent e: ev){
-             if (e._type == EventType.LIBERADO) {
-                 // Se ha hecho click en el botón de sonido
-                 if(_soundButton.isClicked(e._x,e._y))
-                 {
-                     if(_soundButton.isClicked(e._x,e._y))
-                     {
-                         if(_isSoundMuted){
-                             _soundButton.changeSprite(_soundUnMutedIcon);
-                             _game.getAudio().unMuteAll();
-                         }
-                         else{
-                             _soundButton.changeSprite(_soundMutedIcon);
-                             _game.getAudio().muteAll();
-                         }
+        for (TouchEvent e : ev) {
+            if (e._type == EventType.LIBERADO) {
+                // Se ha hecho click en el botón de sonido
+                if (_soundButton.isClicked(e._x, e._y)) {
+                    if (_soundButton.isClicked(e._x, e._y)) {
 
-                         _isSoundMuted = !_isSoundMuted;
+                        _game.getAudio().setSoundState(!_game.getAudio().isSoundMuted());
+                        changeMutedIcon();
+                    }
+                }
+                // Se ha hecho click en el botón de instrucciones
+                else if (_instructionsButton.isClicked(e._x, e._y)) {
 
+                    _changeStateSound.play();
+                    _gameOverTheme.stop();
+                    Tutorial s = new Tutorial(_game);
+                    s.init(_resourceManager);
+                    s.changeMutedIcon();
+                    _game.getGameStateManager().setState(s);
 
-                     }
-                 }
-                 // Se ha hecho click en el botón de instrucciones
-                 else if(_instructionsButton.isClicked(e._x, e._y)){
-
-                     _changeStateSound.play();
-                     _gameOverTheme.stop();
-                     Tutorial s = new Tutorial(_game);
-                     s.init(_resourceManager);
-                     _game.getGameStateManager().setState(s);
-
-                 }
-                 else if (e._id == FULLSCREEN_KEYCODE){
-                     _fullscreen = !_fullscreen;
-                     _game.setFullscreen(_fullscreen);
-                 }
-                 // Se ha hecho click en la pantalla
-                 else {
-                     _changeStateSound.play();
-                     _gameOverTheme.stop();
-                     SwitchDash s = new SwitchDash(_game);
-                     s.init(_resourceManager);
-                     _game.getGameStateManager().setState(s);
-                 }
+                } else if (e._id == FULLSCREEN_KEYCODE) {
+                    _fullscreen = !_fullscreen;
+                    _game.setFullscreen(_fullscreen);
+                }
+                // Se ha hecho click en la pantalla
+                else {
+                    _changeStateSound.play();
+                    _gameOverTheme.stop();
+                    SwitchDash s = new SwitchDash(_game);
+                    s.init(_resourceManager);
+                    s.changeMutedIcon();
+                    _game.getGameStateManager().setState(s);
+                }
             }
         }
 
@@ -165,7 +157,7 @@ public class GameOver extends GenericGameState {
     /**
      * Pinta la información sobre la puntuación final.
      */
-    public void renderFinalScore(){
+    public void renderFinalScore() {
         renderScore();
         renderPoints();
     }
@@ -173,30 +165,30 @@ public class GameOver extends GenericGameState {
     /**
      * Pinta la puntuación.
      */
-    private void renderScore(){
+    private void renderScore() {
 
         int newScore = _score;
         boolean zeroScore = false;
         // Se calcula el cantidad de números que tiene "score" para poder centrarlo en pantalla
         int numCont = 0;
-        while (newScore > 0 || (newScore == 0 && !zeroScore)){
+        while (newScore > 0 || (newScore == 0 && !zeroScore)) {
             numCont++;
             newScore /= 10;
             if (newScore == 0) zeroScore = true;
         }
 
         // Se calcula la posición inicial del número
-        int initX  = ((int)(_game.getGraphics().getResolutionWidth() / 2) +
-                (int)(((_numbers[0].getSrcRect()._width * numCont) * SCORE_SCALE) / 2)) -
-                (int)(_numbers[0].getSrcRect()._width * SCORE_SCALE);
+        int initX = ((int) (_game.getGraphics().getResolutionWidth() / 2) +
+                (int) (((_numbers[0].getSrcRect()._width * numCont) * SCORE_SCALE) / 2)) -
+                (int) (_numbers[0].getSrcRect()._width * SCORE_SCALE);
 
         // Se guardan los valores del ancho y el alto de cada número
-        int numberWidth = (int)(_numbers[0].getSrcRect()._width * SCORE_SCALE);
-        int numberHeight = (int)(_numbers[0].getSrcRect()._height * SCORE_SCALE);
+        int numberWidth = (int) (_numbers[0].getSrcRect()._width * SCORE_SCALE);
+        int numberHeight = (int) (_numbers[0].getSrcRect()._height * SCORE_SCALE);
 
         // Pinta los números
         newScore = _score;
-        for(int i = 0; i < numCont; i++){
+        for (int i = 0; i < numCont; i++) {
             int n = newScore % 10;
 
             _numbers[n].draw(_game.getGraphics(), new Rect(initX, initX + numberWidth,
@@ -212,18 +204,18 @@ public class GameOver extends GenericGameState {
     /**
      * Pinta la palabra, en este caso, POINTS
      */
-    private void renderPoints(){
+    private void renderPoints() {
 
         // Calcula la posición inicial de la palabra
-        int initX  = (int)(_game.getGraphics().getResolutionWidth() / 2) -
-                (int)(((_letters[0].getSrcRect()._width * NUMBER_OF_LETTERS_POINTS) * POINTS_SCALE) / 2);
+        int initX = (int) (_game.getGraphics().getResolutionWidth() / 2) -
+                (int) (((_letters[0].getSrcRect()._width * NUMBER_OF_LETTERS_POINTS) * POINTS_SCALE) / 2);
 
         // Se guardan los valores del ancho y el alto de cada letra
-        int letterWidth = (int)(_letters[0].getSrcRect()._width * POINTS_SCALE);
-        int letterHeight = (int)(_letters[0].getSrcRect()._height * POINTS_SCALE);
+        int letterWidth = (int) (_letters[0].getSrcRect()._width * POINTS_SCALE);
+        int letterHeight = (int) (_letters[0].getSrcRect()._height * POINTS_SCALE);
 
         // Pinta las letras de POINTS
-        for(int i = 0; i < _pointsLetters.length; i++){
+        for (int i = 0; i < _pointsLetters.length; i++) {
             _letters[_pointsLetters[i]].draw(_game.getGraphics(), new Rect(initX, initX + letterWidth,
                     POINTS_POS_Y, POINTS_POS_Y + letterHeight), 1.0f);
 
@@ -232,7 +224,7 @@ public class GameOver extends GenericGameState {
 
     }
 
-    public void setScore(int s){
+    public void setScore(int s) {
         _score = s;
     }
 
@@ -248,18 +240,12 @@ public class GameOver extends GenericGameState {
     private Sprite[] _numbers = null;
     private Sprite[] _letters = null;
 
-    private int[] _pointsLetters = { 15, 14, 8, 13, 19, 18 };
+    private int[] _pointsLetters = {15, 14, 8, 13, 19, 18};
 
     // Botones
-    private Button _soundButton = null;
     private Button _instructionsButton = null;
 
-    private Sprite _soundMutedIcon = null;
-    private Sprite _soundUnMutedIcon = null;
-
     private Sprite _questionIcon = null;
-
-    private boolean _isSoundMuted = false;
 
     private boolean _fullscreen = false;
 

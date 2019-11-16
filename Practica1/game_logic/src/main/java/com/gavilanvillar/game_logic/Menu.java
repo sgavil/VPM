@@ -30,7 +30,6 @@ public class Menu extends GenericGameState {
     private final int FULLSCREEN_KEYCODE = 70; // f
 
 
-
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     //   Métodos de inicialización (de Menu)
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -50,10 +49,6 @@ public class Menu extends GenericGameState {
 
         _switchDashLogo = _resourceManager.getSwitchDashLogo();
 
-        _soundMutedIcon = resourceManager.getMutedIcon();
-        _soundUnMutedIcon = resourceManager.getNotMutedIcon();
-        _soundButton = new Button(_soundUnMutedIcon);
-
         _questionIcon = resourceManager.getQuestionIcon();
         _instructionsButton = new Button(_questionIcon);
 
@@ -62,8 +57,10 @@ public class Menu extends GenericGameState {
         _menuTheme.setLoop(true);
         _menuTheme.play();
 
-    }
+        changeMutedIcon();
 
+
+    }
 
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -84,7 +81,7 @@ public class Menu extends GenericGameState {
         _switchDashLogo.drawCentered(_game.getGraphics(), 356, 0, 1.0f);
         _tapToPlay.drawCentered(_game.getGraphics(), 950, 0, fadeInOutAlpha);
 
-        _soundButton.getSprite().draw(_game.getGraphics(), SOUND_ICON_POS_X, ICON_POS_Y,1.0f);
+        _soundButton.getSprite().draw(_game.getGraphics(), SOUND_ICON_POS_X, ICON_POS_Y, 1.0f);
         _instructionsButton.getSprite().draw(_game.getGraphics(), QUESTION_ICON_POS_X, ICON_POS_Y, 1.0f);
 
     }
@@ -97,26 +94,15 @@ public class Menu extends GenericGameState {
         List<TouchEvent> ev = _game.getInput().getTouchEvents();
 
         for (TouchEvent e : ev) {
-            if (e._type == EventType.LIBERADO)
-            {
+            if (e._type == EventType.LIBERADO) {
                 // Se ha hecho click en el botón de sonido
-                if(_soundButton.isClicked(e._x,e._y))
-                {
-                    if(_isSoundMuted){
-                        _soundButton.changeSprite(_soundUnMutedIcon);
-                        _game.getAudio().unMuteAll();
-                    }
-                    else{
-                        _soundButton.changeSprite(_soundMutedIcon);
-                        _game.getAudio().muteAll();
-                    }
+                if (_soundButton.isClicked(e._x, e._y)) {
 
-                    _isSoundMuted = !_isSoundMuted;
-
-
+                    _game.getAudio().setSoundState(!_game.getAudio().isSoundMuted());
+                    changeMutedIcon();
                 }
                 // Se ha hecho click en el botón de instrucciones
-                else if(_instructionsButton.isClicked(e._x, e._y)){
+                else if (_instructionsButton.isClicked(e._x, e._y)) {
 
                     _changeStateSound.play();
                     _menuTheme.stop();
@@ -127,7 +113,7 @@ public class Menu extends GenericGameState {
                 }
                 // Se ha pulsado la tecla "F" en teclado para cambiar entre pantalla completa
                 // y modo ventana
-                else if (e._id == FULLSCREEN_KEYCODE){
+                else if (e._id == FULLSCREEN_KEYCODE) {
                     _fullscreen = !_fullscreen;
                     _game.setFullscreen(_fullscreen);
                 }
@@ -150,18 +136,13 @@ public class Menu extends GenericGameState {
     private Sprite _switchDashLogo = null;
 
     // Botones
-    private Button _soundButton = null;
     private Button _instructionsButton = null;
 
-    private Sprite _soundMutedIcon = null;
-    private Sprite _soundUnMutedIcon = null;
 
     private Sprite _questionIcon = null;
-
-
-    private boolean _isSoundMuted = false;
 
     private boolean _fullscreen = false;
 
     private Music _menuTheme;
+
 }

@@ -78,7 +78,7 @@ public class ResourceManager {
      *
      */
     private void loadMusic(){
-        _menuTheme = _game.getAudio().newMusic("music/menuTheme.mp3");
+        _menuTheme = _game.getAudio().newMusic("music/menuTheme.wav");
         _gameOverTheme = _game.getAudio().newMusic("music/gameOverTheme.wav");
         _switchDashTheme = _game.getAudio().newMusic("music/switchDashTheme.wav");
         _tutorialTheme = _game.getAudio().newMusic("music/tutorialTheme.wav");

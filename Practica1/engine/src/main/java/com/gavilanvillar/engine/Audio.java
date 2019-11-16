@@ -14,4 +14,7 @@ public interface Audio {
 
     void resumeAll();
 
+    boolean isSoundMuted();
+
+    void setSoundState(boolean isSoundMuted);
 }

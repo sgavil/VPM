@@ -121,11 +121,25 @@ public class AAudio implements Audio
             m.resume();
         }
     }
+
+    @Override
+    public boolean isSoundMuted() {
+        return _isSoundMuted;
+    }
+
+    @Override
+    public void setSoundState(boolean isSoundMuted) {
+        _isSoundMuted = isSoundMuted;
+    }
+
+
     private AppCompatActivity _appContext;
     private AssetManager _assetManager;
     private SoundPool _soundPool;
 
     private List<Sound> _soundList;
     private List<Music> _musicList;
+
+    private boolean _isSoundMuted = false;
 
 }

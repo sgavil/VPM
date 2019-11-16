@@ -152,6 +152,7 @@ public class SwitchDash extends GenericGameState {
         GameOver gameOverState = new GameOver(_game,_arrowsVel);
         gameOverState.init(_resourceManager);
         gameOverState.setScore(_score);
+        gameOverState.changeMutedIcon();
         _gameTheme.stop();
         _game.getGameStateManager().setState(gameOverState);
     }
