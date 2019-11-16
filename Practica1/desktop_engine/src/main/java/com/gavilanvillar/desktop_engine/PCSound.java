@@ -1,19 +1,22 @@
 package com.gavilanvillar.desktop_engine;
+
 import com.gavilanvillar.engine.Sound;
 
 import javax.sound.sampled.BooleanControl;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
 
 
+/**
+ * Clase que hereda de Sound e implementa los métodos de gestión de un sonido ( reproducción, pausa...)
+ */
 public class PCSound implements Sound {
 
-    public PCSound(Clip clip){
-        _clip= clip;
-        _clipVolume = (FloatControl) _clip.getControl(FloatControl.Type.MASTER_GAIN);
+    public PCSound(Clip clip) {
+        _clip = clip;
         _bc = (BooleanControl) _clip.getControl(BooleanControl.Type.MUTE);
 
     }
+
     @Override
     public void play() {
         _clip.setMicrosecondPosition(0);
@@ -22,13 +25,9 @@ public class PCSound implements Sound {
 
     @Override
     public void release() {
-
+        _clip.close();
     }
 
-    @Override
-    public void setLoop(boolean loopActive) {
-
-    }
 
     @Override
     public void mute() {
@@ -54,7 +53,8 @@ public class PCSound implements Sound {
     }
 
     private Clip _clip;
-    private FloatControl _clipVolume;
+
+    //Variable para controlar que la pista esté o no en MUTE
     private BooleanControl _bc;
 
 }

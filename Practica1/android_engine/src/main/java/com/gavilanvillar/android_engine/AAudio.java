@@ -14,6 +14,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase que hereda de Audio e implementa los métodos necesarios para la gestion y carga de sonidos y música en Android
+ * Guarda una lista de sonidos y música para poder silenciarlos todos a la vez
+ */
+
 public class AAudio implements Audio
 {
     public AAudio(AssetManager assetManager,AppCompatActivity appContext){
@@ -34,8 +39,9 @@ public class AAudio implements Audio
             descriptor  = _assetManager.openFd(name);
 
         }
-        catch (IOException e){
-            android.util.Log.e("AAUDIO","Error al abrir el archivo de sonido: " + name);
+        catch (IOException e) {
+            System.out.println("Error al crear el archivo de sonido: " + name);
+            e.printStackTrace();
         }
         int soundID = _soundPool.load(descriptor, 1);
 
@@ -82,13 +88,13 @@ public class AAudio implements Audio
 
         }
         catch (IOException e) {
-            System.out.println("excep in  the music file.");
+            System.out.println("Error al crear el archivo de música: " + name);
             e.printStackTrace();
         } catch (IllegalArgumentException e) {
-            System.out.println("excep in  the music file.");
+            System.out.println("Error al crear el archivo de música: " + name);
             e.printStackTrace();
         } catch (IllegalStateException e) {
-            System.out.println("excep in  the music file.");
+            System.out.println("Error al crear el archivo de música: " + name);
             e.printStackTrace();
         }
     finally {
@@ -130,6 +136,16 @@ public class AAudio implements Audio
     @Override
     public void setSoundState(boolean isSoundMuted) {
         _isSoundMuted = isSoundMuted;
+    }
+
+    @Override
+    public void releaseAll() {
+        for(Music m : _musicList){
+            m.release();
+        }
+        for(Sound s : _soundList){
+            s.release();
+        }
     }
 
 

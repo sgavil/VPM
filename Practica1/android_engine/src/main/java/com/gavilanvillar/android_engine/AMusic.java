@@ -4,6 +4,9 @@ import android.media.MediaPlayer;
 
 import com.gavilanvillar.engine.Music;
 
+/**
+ * Clase que implementa la interfaz Music y permite la gestión de una pista de música
+ */
 public class AMusic implements Music {
 
     public AMusic(MediaPlayer mp) {

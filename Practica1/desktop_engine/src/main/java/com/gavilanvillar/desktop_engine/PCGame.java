@@ -94,6 +94,11 @@ public class PCGame implements Game {
     }
 
     @Override
+    public void release() {
+        _audio.releaseAll();
+    }
+
+    @Override
     public void setRunning(boolean b) {
         _running = b;
     }
@@ -140,6 +145,9 @@ public class PCGame implements Game {
                 _window.getStrategy().show();
             } while(_window.getStrategy().contentsLost());
         } // while
+
+        release();
+
     }
 
 

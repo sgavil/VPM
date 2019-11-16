@@ -4,16 +4,18 @@ import com.gavilanvillar.engine.Music;
 
 import javax.sound.sampled.BooleanControl;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
 
+/**
+ * Clase que implementa la interfaz Music y sobrescribe los métodos necesarios para la gestión de un archivo de música
+ */
 public class PCMusic implements Music {
 
-    public PCMusic(Clip clip){
-        _clip= clip;
-        _clipVolume = (FloatControl) _clip.getControl(FloatControl.Type.MASTER_GAIN);
-         _bc = (BooleanControl) _clip.getControl(BooleanControl.Type.MUTE);
+    public PCMusic(Clip clip) {
+        _clip = clip;
+        _bc = (BooleanControl) _clip.getControl(BooleanControl.Type.MUTE);
 
     }
+
     @Override
     public void play() {
         _clip.setMicrosecondPosition(0);
@@ -22,12 +24,12 @@ public class PCMusic implements Music {
 
     @Override
     public void release() {
-
+        _clip.close();
     }
 
     @Override
     public void setLoop(boolean loopActive) {
-
+        _clip.loop(loopActive ? 1 : 0);
     }
 
     @Override
@@ -50,10 +52,11 @@ public class PCMusic implements Music {
 
     @Override
     public void resume() {
-_clip.start();
+        _clip.start();
     }
 
     private Clip _clip;
-    private FloatControl _clipVolume;
+
+    //Variable para controlar el estado de MUTE de la música
     private BooleanControl _bc;
 }

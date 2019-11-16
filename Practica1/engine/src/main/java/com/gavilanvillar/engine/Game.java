@@ -44,5 +44,10 @@ public interface Game {
      */
     void setFullscreen(boolean b);
 
+    /**
+     * Libera los recursos utilizados que necesiten de un cierre como sonidos o música
+     */
+    void release();
+
     void setRunning(boolean b);
 }

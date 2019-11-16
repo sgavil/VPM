@@ -202,6 +202,11 @@ public class AGame implements Game, Runnable{
     }
 
     @Override
+    public void release() {
+        _audio.releaseAll();
+    }
+
+    @Override
     public void setRunning(boolean b) {
         _running = b;
     }

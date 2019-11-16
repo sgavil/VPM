@@ -102,6 +102,16 @@ public class AndroidEntry extends AppCompatActivity {
 
     } // init
 
+    /**
+     * Al destruir la aplicación se liberan los recursos utilizados que necesiten algún tipo de cierre
+     */
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        _game.release();
+    }
+
     private AGame _game = null;
     private Menu _menuState = null;
 }

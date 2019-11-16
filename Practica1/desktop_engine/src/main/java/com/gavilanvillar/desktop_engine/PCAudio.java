@@ -15,6 +15,11 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+
+/**
+ * Clase que hereda de Audio e implementa los métodos necesarios para la gestion y carga de sonidos y música en PC
+ * Guarda una lista de sonidos y música para poder silenciarlos a la vez
+ */
 public class PCAudio implements Audio {
 
     public PCAudio() {
@@ -133,6 +138,16 @@ public class PCAudio implements Audio {
     @Override
     public void setSoundState(boolean isSoundMuted){
         _isSoundMuted = isSoundMuted;
+    }
+
+    @Override
+    public void releaseAll() {
+        for(Music m : _musicList){
+            m.release();
+        }
+        for(Sound s : _soundsList){
+            s.release();
+        }
     }
 
     private List<PCSound> _soundsList;
