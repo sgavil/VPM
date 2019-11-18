@@ -28,6 +28,8 @@ public class Ball
     public Ball(Sprite sprite, BALL_COLOR ballColor) {
         _sprite = new Sprite(sprite.getImage(), sprite.getSrcRect());
         _ballColor = ballColor;
+        _alpha = 1.0f;
+
     }
 
 
@@ -47,12 +49,63 @@ public class Ball
     }
 
     /**
-     *
+     * Actualiza la posicion en X del objeto
+     * @param x Posicion a la que se quiere actualizar el valor de la bola
+     */
+    public void setPosX(int x){
+        _posX = x;
+    }
+
+    /**
+     * Actualiza la velocidad en Y del objeto
+     * @param y Velocidad a la que se quiere actualizar el valor de la bola
+     */
+    public void setVelY(int y){
+        _velY = y;
+    }
+
+    /**
+     * Actualiza la velocidad en X del objeto
+     * @param x Velocidad a la que se quiere actualizar el valor de la bola
+     */
+    public void setVelX(int x){
+        _velX = x;
+    }
+
+    /**
      * @return Devuelve la posicion en el eje Y del objeto
      */
     public int getPosY() {
 
         return _posY;
+    }
+
+    /**
+     * Devuelve la posición en el eje X del objeto
+     *
+     * @return posición X
+     */
+    public int getPosX(){
+
+        return _posX;
+    }
+
+    /**
+     * Devuelve la velocidad en el eje Y del objeto
+     *
+     * @return velocidad Y
+     */
+    public int getVelY(){
+        return _velY;
+    }
+
+    /**
+     * Devuelve la velocidad en el eje X del objeto
+     *
+     * @return velocidad X
+     */
+    public int getVelX(){
+        return _velX;
     }
 
     /**
@@ -91,6 +144,22 @@ public class Ball
     }
 
     /**
+     * Actualiza el valor alpha usado para renderizar
+     * @param alpha alpha
+     */
+    public void setAlpha(float alpha){
+        this._alpha = alpha;
+    }
+
+    /**
+     * Actualiza el valor del tamaño de la bola
+     * @param size tamaño
+     */
+    public void setSize(int size){
+        this._size = size;
+    }
+
+    /**
      *
      * @return Devuelve el color actual de la bola
      */
@@ -109,7 +178,21 @@ public class Ball
         return _active;
     }
 
+    /**
+     * Devuelve el valor alpha de la bola
+     * @return alpha
+     */
+    public float getAlpha(){
+        return _alpha;
+    }
 
+    /**
+     * Devuelve el tamaño de la bola
+     * @return tamaño
+     */
+    public int getSize(){
+        return _size;
+    }
 
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -124,9 +207,7 @@ public class Ball
     public boolean checkCollisionWith(Player player){
 
         return ( (_posY + getBallSprite().getSrcRect()._height >= player.getPosY() &&
-                _posY <= player.getPosY() + player.getSprite().getDestRect()._height) &&
-                 ((player.getColor() == PLAYER_COLOR.BLACK && _ballColor == BALL_COLOR.BLACK) ||
-                        (player.getColor() == PLAYER_COLOR.WHITE && _ballColor == BALL_COLOR.WHITE)));
+                _posY <= player.getPosY() + player.getSprite().getDestRect()._height));
 
     }
 
@@ -139,7 +220,14 @@ public class Ball
 
     private Sprite _sprite;
     private BALL_COLOR _ballColor;
+
     private int _posY = 0;
+    private int _posX = 0;
+    private int _velX = 0;
+    private int _velY = 0;
+
+    private int _size = 0;
+    private float _alpha;
 
     //Atributo que indica si el objeto se actualiza de forma lógica y de forma gráfica
     private boolean _active = true;

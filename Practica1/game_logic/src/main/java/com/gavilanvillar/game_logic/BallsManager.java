@@ -4,6 +4,7 @@ import com.gavilanvillar.engine.Graphics;
 import com.gavilanvillar.engine.Sound;
 import com.gavilanvillar.engine.Sprite;
 import com.gavilanvillar.game_logic.Ball.BALL_COLOR;
+import com.gavilanvillar.game_logic.Player.PLAYER_COLOR;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +59,8 @@ public class BallsManager {
         this._lasGeneratedBall = getObject();
 
         this._ballVel = INITIAL_BALL_VEL;
+
+        this._particleSystem = new ParticleSystem(whiteSprite, blackSprite);
 
     }
 
@@ -184,27 +187,36 @@ public class BallsManager {
         // y en caso de haber sobrepasado la pala se llama al gameOver
         for (int i = 0; i < _objs.size(); i++) {
             //System.out.println("La bola [" + i + "] esta " + _objs.get(i).isActive() );
-            if (_objs.get(i).isActive()) {
+            Ball b = _objs.get(i);
+            if (b.isActive()) {
                 //En el checkcollisionWith se comprueba si son del mismo color
-                if (_objs.get(i).checkCollisionWith(_player)) {
-                    _objs.get(i).setActive(false);
-                    _ballLevelUpScore++;
-                    _switchDash.addScore();
-                    _takeBall.play();
+                if (b.checkCollisionWith(_player)) {
+                    // Coinciden el color de la bola y el player
+                    if ((_player.getColor() == PLAYER_COLOR.BLACK && b.getBallColor() == BALL_COLOR.BLACK) ||
+                            (_player.getColor() == PLAYER_COLOR.WHITE && b.getBallColor() == BALL_COLOR.WHITE)) {
+                        b.setActive(false);
+                        _ballLevelUpScore++;
+                        _switchDash.addScore();
+                        _takeBall.play();
+
+                        _particleSystem.createParticles(b);
+                    }
+                    // No coinciden
+                    else{
+                        // Fin del juego
+                        _switchDash.gameOver();
+                    }
                 }
 
-                int nextPos = _objs.get(i).getPosY();
+                int nextPos = b.getPosY();
                 nextPos += (_ballVel * deltaTime);
-                _objs.get(i).setPosY(nextPos);
-
-                //La bola ha sobrepasado la pala del jugador
-                if (_objs.get(i).getBallSprite().getDestRect()._top > _player.getSprite().getDestRect()._bottom) {
-                    _switchDash.gameOver();
-                }
+                b.setPosY(nextPos);
 
             }
 
         }
+
+        _particleSystem.update(deltaTime);
 
     }
 
@@ -216,10 +228,11 @@ public class BallsManager {
     public void render(Graphics g) {
         for (Ball b : _objs) {
             if (b.isActive()) {
-                b.getBallSprite().drawCentered(g, b.getPosY(), 0, 1.0f);
+                b.getBallSprite().drawCentered(g, b.getPosY(), 0, b.getAlpha());
             }
         }
 
+        _particleSystem.render(g);
     }
 
     /**
@@ -261,8 +274,9 @@ public class BallsManager {
 
     private SwitchDash _switchDash;
     private Player _player;
+    private ParticleSystem _particleSystem = null;
 
-    //Ball Collsion sound
+    //Ball Collision sound
     private Sound _takeBall;
 
 
