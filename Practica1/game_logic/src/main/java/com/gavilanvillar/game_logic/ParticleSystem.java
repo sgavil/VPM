@@ -94,7 +94,7 @@ public class ParticleSystem {
         List<Integer> ballsInactive = new ArrayList<>();
 
         // Analiza los elementos inactivos
-        for(int i = 0; i < _particles.size(); i++){
+        for(int i = 0; i < _particles.size() && ballsInactive.size() <= NUM_PARTICLES_TO_CREATE; i++){
             if(!_particles.get(i).isActive())
                 ballsInactive.add(i);
         }
@@ -133,10 +133,9 @@ public class ParticleSystem {
 
                 // Actualiza el alpha y el tamaño de la bola
                 b.setAlpha((float)(b.getAlpha() - (DECREMENT_ALPHA * deltaTime)));
-                b.setSize((int)(b.getSize() - (DECREMENT_SIZE * deltaTime)));
 
                 // Si es transparente o el tamaño es 0, se desactiva la bola
-                if (b.getAlpha() <= 0.0f || b.getSize() <= 0)
+                if (b.getAlpha() <= 0.0f)
                     b.setActive(false);
                 else{
 
