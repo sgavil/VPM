@@ -51,7 +51,7 @@ public class Sprite {
      *              axis == 1 eje Y
      * @param alpha Valor de la transparencia que toma el Sprite
      */
-    public void drawCentered(Graphics g, int pos, int axis, float alpha) {
+    public void drawCentered(Graphics g, float pos, int axis, float alpha) {
 
         if (axis == 0)
             g.drawImageCenteredAxisX(this, pos, alpha);

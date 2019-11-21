@@ -72,7 +72,7 @@ public abstract class AbstractGraphics implements Graphics {
     } // drawImageCentered
 
     @Override
-    public void drawImageCenteredAxisX(Sprite sprite, int y, float alpha){
+    public void drawImageCenteredAxisX(Sprite sprite, float y, float alpha){
 
         Rect src = sprite.getSrcRect();
 
@@ -97,7 +97,7 @@ public abstract class AbstractGraphics implements Graphics {
     } // drawImageCenteredAxisX
 
     @Override
-    public void drawImageCenteredAxisY(Sprite sprite, int x, float alpha){
+    public void drawImageCenteredAxisY(Sprite sprite, float x, float alpha){
 
         Rect src = sprite.getSrcRect();
 

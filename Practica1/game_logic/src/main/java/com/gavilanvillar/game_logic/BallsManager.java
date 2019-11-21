@@ -208,9 +208,7 @@ public class BallsManager {
                     }
                 }
 
-                int nextPos = b.getPosY();
-                nextPos += (_ballVel * deltaTime);
-                b.setPosY(nextPos);
+                b.setPosY((float)(b.getPosY() + _ballVel * deltaTime));
 
             }
 

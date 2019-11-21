@@ -43,7 +43,7 @@ public class Ball
      * Actualiza la posicion en Y del objeto
      * @param y Posicion a la que se quiere actualizar el valor de la bola
      */
-    public void setPosY(int y) {
+    public void setPosY(float y) {
 
         _posY = y;
     }
@@ -52,7 +52,7 @@ public class Ball
      * Actualiza la posicion en X del objeto
      * @param x Posicion a la que se quiere actualizar el valor de la bola
      */
-    public void setPosX(int x){
+    public void setPosX(float x){
         _posX = x;
     }
 
@@ -60,7 +60,7 @@ public class Ball
      * Actualiza la velocidad en Y del objeto
      * @param y Velocidad a la que se quiere actualizar el valor de la bola
      */
-    public void setVelY(int y){
+    public void setVelY(float y){
         _velY = y;
     }
 
@@ -68,14 +68,14 @@ public class Ball
      * Actualiza la velocidad en X del objeto
      * @param x Velocidad a la que se quiere actualizar el valor de la bola
      */
-    public void setVelX(int x){
+    public void setVelX(float x){
         _velX = x;
     }
 
     /**
      * @return Devuelve la posicion en el eje Y del objeto
      */
-    public int getPosY() {
+    public float getPosY() {
 
         return _posY;
     }
@@ -85,7 +85,7 @@ public class Ball
      *
      * @return posición X
      */
-    public int getPosX(){
+    public float getPosX(){
 
         return _posX;
     }
@@ -95,7 +95,7 @@ public class Ball
      *
      * @return velocidad Y
      */
-    public int getVelY(){
+    public float getVelY(){
         return _velY;
     }
 
@@ -104,7 +104,7 @@ public class Ball
      *
      * @return velocidad X
      */
-    public int getVelX(){
+    public float getVelX(){
         return _velX;
     }
 
@@ -221,10 +221,10 @@ public class Ball
     private Sprite _sprite;
     private BALL_COLOR _ballColor;
 
-    private int _posY = 0;
-    private int _posX = 0;
-    private int _velX = 0;
-    private int _velY = 0;
+    private float _posY = 0;
+    private float _posX = 0;
+    private float _velX = 0;
+    private float _velY = 0;
 
     private int _size = 0;
     private float _alpha;

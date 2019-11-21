@@ -71,7 +71,7 @@ public interface Graphics {
      * @param y      Posición "y" en coordenadas del juego
      *               @param alpha Valor de la transparencia que toma el Sprite
      */
-    void drawImageCenteredAxisX(Sprite sprite, int y, float alpha);
+    void drawImageCenteredAxisX(Sprite sprite, float y, float alpha);
 
     /**
      * Pinta la imagen "image" en el centro del eje Y de la pantalla/ventana con una transparencia "alpha".
@@ -81,7 +81,7 @@ public interface Graphics {
      * @param x      Posición "x" en coordenadas del juego
      * @param alpha  Valor de la transparencia del Sprite
      */
-    void drawImageCenteredAxisY(Sprite sprite, int x, float alpha);
+    void drawImageCenteredAxisY(Sprite sprite, float x, float alpha);
 
     /**
      * Método vacío que se llamará para realizar el pintado de la imagen. Las clases que

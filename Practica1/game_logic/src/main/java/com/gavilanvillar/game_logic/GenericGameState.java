@@ -93,8 +93,7 @@ public abstract class GenericGameState implements GameState {
      * @param deltaTime Tiempo transcurrido desde el ultmo frame en milisegundos
      */
     protected void arrowsMovement(double deltaTime) {
-        int newArrowsPos = 0;
-        newArrowsPos += (_arrowsVel * deltaTime);
+        double newArrowsPos = (_arrowsVel * deltaTime);
         _arrowsPosY_0 += newArrowsPos;
         _arrowsPosY_1 += newArrowsPos;
 
@@ -155,8 +154,8 @@ public abstract class GenericGameState implements GameState {
     protected int _arrowsVel = 384;
 
     //Posicion del fondo de flechas
-    protected int _arrowsPosY_0 = 0;
-    protected int _arrowsPosY_1 = 0;
+    protected float _arrowsPosY_0 = 0;
+    protected float _arrowsPosY_1 = 0;
 
     private float deltaAlpha = 1.2f;
 

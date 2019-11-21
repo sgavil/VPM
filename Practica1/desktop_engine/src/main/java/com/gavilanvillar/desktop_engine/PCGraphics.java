@@ -85,10 +85,10 @@ public class PCGraphics extends AbstractGraphics implements ComponentListener {
             // Se pinta la imagen usando la imagen de Java, y los rectángulos fuente y destino,
             // con el Graphics2D que tiene almacenado el "filtro" de transparencia
             g2d.drawImage(((PCImage) image).getAWTImage(),
-                    destRect._left, destRect._top,
-                    destRect._right, destRect._bottom,
-                    srcRect._left, srcRect._top,
-                    srcRect._right, srcRect._bottom,
+                    (int)destRect._left, (int)destRect._top,
+                    (int)destRect._right, (int)destRect._bottom,
+                    (int)srcRect._left, (int)srcRect._top,
+                    (int)srcRect._right, (int)srcRect._bottom,
                     null);
 
         }

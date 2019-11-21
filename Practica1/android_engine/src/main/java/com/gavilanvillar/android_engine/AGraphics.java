@@ -91,12 +91,12 @@ public class AGraphics extends AbstractGraphics {
         if(image != null) {
 
              // Crea un rectángulo fuente de Java con la información que obtiene de "srcRect"
-            android.graphics.Rect src = new android.graphics.Rect(srcRect._left, srcRect._top,
-                    srcRect._right, srcRect._bottom);
+            android.graphics.Rect src = new android.graphics.Rect((int)srcRect._left, (int)srcRect._top,
+                    (int)srcRect._right, (int)srcRect._bottom);
 
             // Crea un rectángulo destino de Java con la información que obtiene de "destRect"
-            android.graphics.Rect dest = new android.graphics.Rect(destRect._left, destRect._top,
-                    destRect._right, destRect._bottom);
+            android.graphics.Rect dest = new android.graphics.Rect((int)destRect._left, (int)destRect._top,
+                    (int)destRect._right, (int)destRect._bottom);
 
             // Crea un objeto Paint que almacenará el valor del alpha
             Paint alphaPaint = new Paint();
