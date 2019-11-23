@@ -78,10 +78,10 @@ public class ResourceManager {
      *
      */
     private void loadMusic(){
-        _menuTheme = _game.getAudio().newMusic("music/menuTheme.wav");
-        _gameOverTheme = _game.getAudio().newMusic("music/gameOverTheme.wav");
-        _switchDashTheme = _game.getAudio().newMusic("music/switchDashTheme.wav");
-        _tutorialTheme = _game.getAudio().newMusic("music/tutorialTheme.wav");
+        _menuTheme = _game.getAudio().newMusic("music/menuTheme.mp3");
+        _gameOverTheme = _game.getAudio().newMusic("music/gameOverTheme.mp3");
+        _switchDashTheme = _game.getAudio().newMusic("music/switchDashTheme.mp3");
+        _tutorialTheme = _game.getAudio().newMusic("music/tutorialTheme.mp3");
 
 
     }

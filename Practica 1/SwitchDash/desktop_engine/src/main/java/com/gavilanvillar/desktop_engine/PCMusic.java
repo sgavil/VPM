@@ -11,48 +11,64 @@ import javax.sound.sampled.Clip;
 public class PCMusic implements Music {
 
     public PCMusic(Clip clip) {
-        _clip = clip;
-        _bc = (BooleanControl) _clip.getControl(BooleanControl.Type.MUTE);
+        if(clip != null){
+            _clip = clip;
+            _bc = (BooleanControl) _clip.getControl(BooleanControl.Type.MUTE);
+        }
 
     }
 
     @Override
     public void play() {
-        _clip.setMicrosecondPosition(0);
-        _clip.start();
+        if(_clip != null) {
+            _clip.setMicrosecondPosition(0);
+            _clip.start();
+        }
     }
 
     @Override
     public void release() {
-        _clip.close();
+        if(_clip != null) {
+            _clip.close();
+        }
     }
 
     @Override
     public void setLoop(boolean loopActive) {
-        _clip.loop(loopActive ? 1 : 0);
+        if(_clip != null) {
+            _clip.loop(loopActive ? 1 : 0);
+        }
     }
 
     @Override
     public void mute() {
-        _bc.setValue(true);
+        if(_clip != null) {
+            _bc.setValue(true);
+        }
 
     }
 
     @Override
     public void unMute() {
-        _bc.setValue(false);
+        if(_clip != null) {
+            _bc.setValue(false);
+        }
 
     }
 
     @Override
     public void stop() {
-        _clip.stop();
+        if(_clip != null) {
+            _clip.stop();
+        }
 
     }
 
     @Override
     public void resume() {
-        _clip.start();
+        if(_clip != null) {
+            _clip.start();
+        }
     }
 
     private Clip _clip;

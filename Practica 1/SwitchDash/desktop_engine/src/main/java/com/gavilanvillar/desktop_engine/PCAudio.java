@@ -92,13 +92,13 @@ public class PCAudio implements Audio {
 
         } catch (UnsupportedAudioFileException ex) {
             System.out.println("The specified audio file is not supported.");
-            ex.printStackTrace();
+           ex.printStackTrace();
         } catch (IOException ex) {
             System.out.println("Error playing the audio file.");
-            ex.printStackTrace();
+           ex.printStackTrace();
         } catch (LineUnavailableException ex) {
             System.out.println("Audio line for playing back is unavailable.");
-            ex.printStackTrace();
+           ex.printStackTrace();
         } finally {
             try {
                 audioInputStream.close();
@@ -106,6 +106,11 @@ public class PCAudio implements Audio {
                 System.out.println("Could not close audioInputStream.");
                 ex.printStackTrace();
             }
+            catch (NullPointerException ex) {
+                System.out.println("Could not close audioInputStream.");
+                ex.printStackTrace();
+            }
+
         }
         PCMusic s = new PCMusic(clip);
         _musicList.add(s);

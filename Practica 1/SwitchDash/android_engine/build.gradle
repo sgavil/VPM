@@ -1,5 +1,7 @@
 apply plugin: 'com.android.library'
 
+
+
 task copyPNGs(type: Copy){
     description = "Copying images into assets folder..."
     from(rootDir){
@@ -23,6 +25,10 @@ task copyMusic(type: Copy){
     }
     into "src/main/assets"
 }
+
+preBuild.dependsOn copyPNGs
+preBuild.dependsOn copySounds
+preBuild.dependsOn copyMusic
 
 android {
     compileSdkVersion 29
