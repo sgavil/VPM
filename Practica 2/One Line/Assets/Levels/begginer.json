@@ -1,5 +1,7 @@
 {
-  "level": [
+	"size": [5, 5],
+	"availableSpace": [6, 5],
+  	"level": [
     {
       	"index": 1,
 	    "layout": [ "211" ],

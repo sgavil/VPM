@@ -63,10 +63,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\JsonParser.cs" />
+    <Compile Include="Assets\Scripts\BlockScriptableObject.cs" />
+    <Compile Include="Assets\Scripts\GridManager.cs" />
+    <Compile Include="Assets\Scripts\InputManager.cs" />
     <Compile Include="Assets\Scripts\LevelManager.cs" />
     <Compile Include="Assets\Scripts\LevelsData.cs" />
     <Compile Include="Assets\Scripts\MiniJSON.cs" />
+    <Compile Include="Assets\Scripts\ResourceManager.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/avr-9/Desktop/Desarrollo de Videojuegos/Videojuegos para Dispositivos Moviles/Practicas/VPM/Practica 2/One Line/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
@@ -87,12 +90,6 @@
     </Reference>
     <Reference Include="Unity.Rider.Editor">
       <HintPath>C:/Users/avr-9/Desktop/Desarrollo de Videojuegos/Videojuegos para Dispositivos Moviles/Practicas/VPM/Practica 2/One Line/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Sprite.Editor">
-      <HintPath>C:/Users/avr-9/Desktop/Desarrollo de Videojuegos/Videojuegos para Dispositivos Moviles/Practicas/VPM/Practica 2/One Line/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Tilemap.Editor">
-      <HintPath>C:/Users/avr-9/Desktop/Desarrollo de Videojuegos/Videojuegos para Dispositivos Moviles/Practicas/VPM/Practica 2/One Line/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>C:/Users/avr-9/Desktop/Desarrollo de Videojuegos/Videojuegos para Dispositivos Moviles/Practicas/VPM/Practica 2/One Line/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
