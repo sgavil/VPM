@@ -2,40 +2,51 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(LevelsData))]
+[RequireComponent(typeof(GridManager))]
 public class LevelManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // Publico
+    public ResourceManager _resourceManager;
+
+    [Tooltip("Archivos .json que almacenan los niveles.")]
+    public List<TextAsset> _categoryLevelFiles;
+
+    [Tooltip("Nombre de la categoría del nivel al que quieres acceder.")]
+    public string _categoryLevel;
+
+    [Tooltip("Nivel del juego.")]
+    public int _level;
+
+    public GameObject _tile;
+
+    // Privado
     private LevelsData _levelsData;
     private GridManager _gridManager;
-
-    public
-        ResourceManager _resourceManager;
 
     private int _actualColor { get; set; }
 
     void Start()
     {
 
-        _resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
-
-        _levelsData = GetComponent<LevelsData>();
-        _levelsData.LoadLevelsFromJSON();
-
-
+        _levelsData = new LevelsData();
         _gridManager = GetComponent<GridManager>();
 
-        _actualColor = UnityEngine.Random.Range(0, _resourceManager._blockScriptableObjects.Count);
-        _gridManager.SetActualColor(_actualColor);
+        _levelsData.LoadLevelsFromJSON(_categoryLevelFiles);
 
-        _gridManager.SetGridSize(_levelsData.GetSize(CategoryLevel.MASTER));
-        _gridManager.GenerateGrid(_levelsData.GetLevelLayout(CategoryLevel.MASTER, 1));
-
+        CreateGrid(_categoryLevel, _level);
     }
 
-    // Update is called once per frame
-    void Update()
+    void SetColor()
     {
-        
+        _actualColor = UnityEngine.Random.Range(1, _resourceManager._blockScriptableObjects.Count);
+        _tile.GetComponent<Tile>()._defaultTile.sprite = _resourceManager._blockScriptableObjects[0].block;
+        _tile.GetComponent<Tile>()._colourTile.sprite = _resourceManager._blockScriptableObjects[_actualColor].block;
+    }
+
+    void CreateGrid(string categoryLevel, int level)
+    {
+        SetColor();
+        _gridManager.SetGridSize(_levelsData.GetSize(categoryLevel));
+        _gridManager.GenerateGrid(_tile, _levelsData.GetLevelLayout(categoryLevel, level));
     }
 }

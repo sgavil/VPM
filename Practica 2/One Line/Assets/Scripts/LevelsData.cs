@@ -5,17 +5,6 @@ using UnityEngine;
 using MiniJSON;
 using System.IO;
 
-/// <summary>
-/// Categoria de los niveles.
-/// </summary>
-public enum CategoryLevel
-{
-    BEGGINER,
-    REGULAR,
-    ADVANCED,
-    EXPERT,
-    MASTER
-}
 
 ///<summary>
 ///<para>
@@ -27,50 +16,19 @@ public enum CategoryLevel
 ///<para>Layout: Tablero del nivel.</para>
 ///<para>Path: Camino a seguir para resolver el nivel.</para>
 ///</summary>
-public class LevelsData : MonoBehaviour
+public class LevelsData
 {
-    // Start is called before the first frame update
-    private string _path;
-    private string _jsonString;
-
-    public string begginerFilename;
-    public string regularFilename;
-    public string advancedFilename;
-    public string expertFilename;
-    public string masterFilename;
-
-    private Dictionary<CategoryLevel, Dictionary<string, object>> categoryLevels;
+    private Dictionary<string, Dictionary<string, object>> categoryLevels;
 
     /// <summary>
     /// Carga todos los archivos que representan las distintas categorias de niveles.
     /// </summary>
-    public void LoadLevelsFromJSON()
+    public void LoadLevelsFromJSON(List<TextAsset> _categoryLevelFiles)
     {
-
-        // Begginer
-        _path = Application.dataPath + "/Levels/" + begginerFilename + ".json";
-        _jsonString = File.ReadAllText(_path);
-        AddCategoryLevel(CategoryLevel.BEGGINER, Json.Deserialize(_jsonString) as Dictionary<string, object>);
-
-        // Regular
-        _path = Application.dataPath + "/Levels/" + regularFilename + ".json";
-        _jsonString = File.ReadAllText(_path);
-        AddCategoryLevel(CategoryLevel.REGULAR, Json.Deserialize(_jsonString) as Dictionary<string, object>);
-
-        // Advanced
-        _path = Application.dataPath + "/Levels/" + advancedFilename + ".json";
-        _jsonString = File.ReadAllText(_path);
-        AddCategoryLevel(CategoryLevel.ADVANCED, Json.Deserialize(_jsonString) as Dictionary<string, object>);
-
-        // Expert
-        _path = Application.dataPath + "/Levels/" + expertFilename + ".json";
-        _jsonString = File.ReadAllText(_path);
-        AddCategoryLevel(CategoryLevel.EXPERT, Json.Deserialize(_jsonString) as Dictionary<string, object>);
-
-        // Master
-        _path = Application.dataPath + "/Levels/" + masterFilename + ".json";
-        _jsonString = File.ReadAllText(_path);
-        AddCategoryLevel(CategoryLevel.MASTER, Json.Deserialize(_jsonString) as Dictionary<string, object>);
+        for(int i = 0; i < _categoryLevelFiles.Count; i++)
+        {
+            AddCategoryLevel(_categoryLevelFiles[i].name.ToUpper(), Json.Deserialize(_categoryLevelFiles[i].text) as Dictionary<string, object>);
+        }
     }
 
     /// <summary>
@@ -79,12 +37,12 @@ public class LevelsData : MonoBehaviour
     /// </summary>
     /// <param name="category">Categoria del nivel.</param>
     /// <param name="dict">Diccionario que va asociado a esa categoria.</param>
-    public void AddCategoryLevel(CategoryLevel category, Dictionary<string, object> dict)
+    public void AddCategoryLevel(string category, Dictionary<string, object> dict)
     {
         if (categoryLevels == null)
-            categoryLevels = new Dictionary<CategoryLevel, Dictionary<string, object>>();
+            categoryLevels = new Dictionary<string, Dictionary<string, object>>();
 
-        categoryLevels.Add(category, dict);
+        categoryLevels.Add(category.ToUpper(), dict);
     }
 
     /// <summary>
@@ -92,9 +50,9 @@ public class LevelsData : MonoBehaviour
     /// </summary>
     /// <param name="category">Categoria del nivel.</param>
     /// <returns>Diccionario de la categoria.</returns>
-    public Dictionary<string, object> GetCategoryLevel(CategoryLevel category)
+    public Dictionary<string, object> GetCategoryLevel(string category)
     {
-        return categoryLevels[category];
+        return categoryLevels[category.ToUpper()];
     }
 
     /// <summary>
@@ -102,9 +60,9 @@ public class LevelsData : MonoBehaviour
     /// </summary>
     /// <param name="category">Categoria del nivel.</param>
     /// <returns>Tamaño de los niveles.</returns>
-    public List<int> GetSize(CategoryLevel category)
+    public List<int> GetSize(string category)
     {
-        return (GetCategoryLevel(category)["size"] as List<object>).ConvertAll(input => Convert.ToInt32(input));
+        return (GetCategoryLevel(category.ToUpper())["size"] as List<object>).ConvertAll(input => Convert.ToInt32(input));
     }
 
     /// <summary>
@@ -112,9 +70,9 @@ public class LevelsData : MonoBehaviour
     /// </summary>
     /// <param name="category">Categoria del nivel.</param>
     /// <returns>Espacio disponible.</returns>
-    public List<int> GetAvailableSpace(CategoryLevel category)
+    public List<int> GetAvailableSpace(string category)
     {
-        return (GetCategoryLevel(category)["availableSpace"] as List<object>).ConvertAll(input => Convert.ToInt32(input));
+        return (GetCategoryLevel(category.ToUpper())["availableSpace"] as List<object>).ConvertAll(input => Convert.ToInt32(input));
     }
 
     /// <summary>
@@ -122,9 +80,9 @@ public class LevelsData : MonoBehaviour
     /// </summary>
     /// <param name="category">Categoria del nivel.</param>
     /// <returns>Niveles</returns>
-    public List<object> GetLevels(CategoryLevel category)
+    public List<object> GetLevels(string category)
     {
-        return (List<object>)GetCategoryLevel(category)["level"];
+        return (List<object>)GetCategoryLevel(category.ToUpper())["level"];
     }
 
     /// <summary>
@@ -133,9 +91,9 @@ public class LevelsData : MonoBehaviour
     /// <param name="category">Categoria del nivel.</param>
     /// <param name="level">Nivel al que se quiere acceder.</param>
     /// <returns>Diccionario con los datos del nivel.</returns>
-    public Dictionary<string, object> GetOneLevel(CategoryLevel category, int level)
+    public Dictionary<string, object> GetOneLevel(string category, int level)
     {
-        return (Dictionary<string, object>)GetLevels(category)[level - 1];
+        return (Dictionary<string, object>)GetLevels(category.ToUpper())[level - 1];
     }
 
     /// <summary>
@@ -144,9 +102,9 @@ public class LevelsData : MonoBehaviour
     /// <param name="category">Categoria del nivel.</param>
     /// <param name="level">Nivel al que se quiere acceder.</param>
     /// <returns>Numero del nivel.</returns>
-    public int GetLevelIndex(CategoryLevel category, int level)
+    public int GetLevelIndex(string category, int level)
     {
-        return Convert.ToInt32(GetOneLevel(category, level)["index"]);
+        return Convert.ToInt32(GetOneLevel(category.ToUpper(), level)["index"]);
     }
 
     /// <summary>
@@ -155,9 +113,9 @@ public class LevelsData : MonoBehaviour
     /// <param name="category">Categoria del nivel.</param>
     /// <param name="level">Nivel al que se quiere acceder.</param>
     /// <returns>Lista de strings que respresentan las filas del tablero.</returns>
-    public List<string> GetLevelLayout(CategoryLevel category, int level)
+    public List<string> GetLevelLayout(string category, int level)
     {
-        return (GetOneLevel(category, level)["layout"] as List<object>).ConvertAll(input => input.ToString());
+        return (GetOneLevel(category.ToUpper(), level)["layout"] as List<object>).ConvertAll(input => input.ToString());
     }
 
     /// <summary>
@@ -167,9 +125,9 @@ public class LevelsData : MonoBehaviour
     /// <param name="level">Nivel al que se quiere acceder.</param>
     /// <returns>Lista de lista de enteros que representan la sucesion de movimientos para
     /// resolver el tablero.</returns>
-    public List<List<int>> GetLevelPath(CategoryLevel category, int level)
+    public List<List<int>> GetLevelPath(string category, int level)
     {
-        List<object> list = (List<object>)GetOneLevel(category, level)["path"];
+        List<object> list = (List<object>)GetOneLevel(category.ToUpper(), level)["path"];
         List<List<int>> intList = new List<List<int>>();
         for(int i = 0; i < list.Count; i++)
         {

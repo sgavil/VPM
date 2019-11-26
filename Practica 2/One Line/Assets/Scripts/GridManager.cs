@@ -4,31 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GridManager : MonoBehaviour
-{
+{ 
 
-    public ResourceManager _resourceManager;
+    private int height = 0;
+    private int width = 0;
 
-    [SerializeField]
-    private int height = 5;
-    [SerializeField]
-    private int width = 8;
     [SerializeField]
     private float tileSize = 1;
 
-    private readonly int _defaultColor = 0;
-    private int _actualColor = 0;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-       
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     public void SetGridSize(List<int> gridSize)
     {
@@ -43,13 +26,8 @@ public class GridManager : MonoBehaviour
         transform.position = new Vector2(-gridW / 2 + tileSize / 2, gridH / 2 - tileSize / 2);
     }
 
-    public void GenerateGrid(List<string> layout)
+    public void GenerateGrid(GameObject referenceTile, List<string> layout)
     {
-
-        GameObject referenceTile = new GameObject("Block");
-        SpriteRenderer renderer = referenceTile.AddComponent<SpriteRenderer>();
-        renderer.sprite = _resourceManager._blockScriptableObjects[_defaultColor].block;
-
         for(int y = 0; y < layout.Count; y++)
         {
             for(int x = 0; x < layout[y].Length; x++)
@@ -62,23 +40,16 @@ public class GridManager : MonoBehaviour
 
                     tile.transform.position = new Vector2(posX, posY);
 
-                    if (layout[y][x] == '2')
-                    {
-                        tile.GetComponent<SpriteRenderer>().sprite = _resourceManager._blockScriptableObjects[_actualColor].block;
-                    }
+                    if (layout[y][x] == '1')
+                        tile.GetComponent<Tile>().Pressed = false;
+                    else if (layout[y][x] == '2')
+                        tile.GetComponent<Tile>().Pressed = true;
                 }
 
             }
         }
 
-        Destroy(referenceTile);
-
         SetGridAtInitialPosition();
-    }
-
-    public void SetActualColor(int c)
-    {
-        _actualColor = c;
     }
 
 }
