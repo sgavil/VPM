@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(GridManager))]
-public class LevelManager : MonoBehaviour
+public class BoardManager : MonoBehaviour
 {
     // Publico
     public ResourceManager _resourceManager;
@@ -18,6 +17,9 @@ public class LevelManager : MonoBehaviour
     public int _level = 0;
 
     public GameObject _tile;
+
+    private int _boardHeight = 0;
+    private int _boardWidth = 0;
 
     public int ActualColor
     {
@@ -34,7 +36,6 @@ public class LevelManager : MonoBehaviour
 
     // Privado
     private LevelsData _levelsData;
-    private GridManager _gridManager;
 
     private int _actualColor = 0;
 
@@ -43,7 +44,6 @@ public class LevelManager : MonoBehaviour
         _levelsData = new LevelsData();
         _levelsData.LoadLevelsFromJSON(_categoryLevelFiles);
 
-        _gridManager = GetComponent<GridManager>();
         CreateGrid(_categoryLevel, _level);
     }
 
@@ -58,7 +58,43 @@ public class LevelManager : MonoBehaviour
     {
         SetTileColor();
 
-        _gridManager.SetGridSize(_levelsData.GetSize(categoryLevel));
-        _gridManager.GenerateGrid(_tile, _levelsData.GetLevelLayout(categoryLevel, level));
+        SetGridSize(_levelsData.GetSize(categoryLevel));
+        GenerateGrid(_tile, _levelsData.GetLevelLayout(categoryLevel, level));
+    }
+
+    public void SetGridSize(List<int> gridSize)
+    {
+        _boardWidth = gridSize[0];
+        _boardHeight = gridSize[1];
+    }
+    private void SetGridAtInitialPosition()
+    {
+        transform.position = new Vector2(-_boardWidth / 2, _boardHeight / 2);
+    }
+
+    public void GenerateGrid(GameObject referenceTile, List<string> layout)
+    {
+        for (int y = 0; y < layout.Count; y++)
+        {
+            for (int x = 0; x < layout[y].Length; x++)
+            {
+                if (layout[y][x] != '0')
+                {
+                    GameObject tile = (GameObject)Instantiate(referenceTile, transform);
+                    float posX = x;
+                    float posY = -y;
+
+                    tile.transform.position = new Vector2(posX, posY);
+
+                    if (layout[y][x] == '1')
+                        tile.GetComponent<Tile>().Pressed = false;
+                    else if (layout[y][x] == '2')
+                        tile.GetComponent<Tile>().Pressed = true;
+                }
+
+            }
+        }
+
+        SetGridAtInitialPosition();
     }
 }
