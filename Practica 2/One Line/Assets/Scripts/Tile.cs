@@ -10,23 +10,9 @@ public class Tile : MonoBehaviour
     [Tooltip("Sprite usado cuando el camino está activo.")]
     public SpriteRenderer _colourTile;
 
-    private bool _pressed = false;
-    public bool Pressed
+    public void SetTilePressed(bool pressed)
     {
-        get
-        {
-            return _pressed;
-        }
-        set
-        {
-            _pressed = value;
-            _defaultTile.enabled = !_pressed;
-            _colourTile.enabled = _pressed;
-        }
-    }
-
-    private void OnMouseDown()
-    {
-        Pressed = true;
+        _defaultTile.enabled = !pressed;
+        _colourTile.enabled = pressed;
     }
 }

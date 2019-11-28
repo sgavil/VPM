@@ -53,4 +53,5 @@ MonoBehaviour:
   - {fileID: 4900000, guid: 0adc6fba59c30cd4688b81966a8940e8, type: 3}
   _categoryLevel: begginer
   _level: 32
-  _tile: {fileID: 8866050157813201086, guid: 96237ced59a3cef4d98d9900e8a06791, type: 3}
+  _tileGameObject: {fileID: 8866050157813201086, guid: 96237ced59a3cef4d98d9900e8a06791,
+    type: 3}
