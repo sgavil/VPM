@@ -15,28 +15,39 @@ public class LevelManager : MonoBehaviour
     public string _categoryLevel;
 
     [Tooltip("Nivel del juego.")]
-    public int _level;
+    public int _level = 0;
 
     public GameObject _tile;
+
+    public int ActualColor
+    {
+        get
+        {
+            return _actualColor;
+        }
+        set
+        {
+            _actualColor = value;
+        }
+    }
+
 
     // Privado
     private LevelsData _levelsData;
     private GridManager _gridManager;
 
-    private int _actualColor { get; set; }
+    private int _actualColor = 0;
 
     void Start()
     {
-
         _levelsData = new LevelsData();
-        _gridManager = GetComponent<GridManager>();
-
         _levelsData.LoadLevelsFromJSON(_categoryLevelFiles);
 
+        _gridManager = GetComponent<GridManager>();
         CreateGrid(_categoryLevel, _level);
     }
 
-    void SetColor()
+    void SetTileColor()
     {
         _actualColor = UnityEngine.Random.Range(1, _resourceManager._blockScriptableObjects.Count);
         _tile.GetComponent<Tile>()._defaultTile.sprite = _resourceManager._blockScriptableObjects[0].block;
@@ -45,7 +56,8 @@ public class LevelManager : MonoBehaviour
 
     void CreateGrid(string categoryLevel, int level)
     {
-        SetColor();
+        SetTileColor();
+
         _gridManager.SetGridSize(_levelsData.GetSize(categoryLevel));
         _gridManager.GenerateGrid(_tile, _levelsData.GetLevelLayout(categoryLevel, level));
     }

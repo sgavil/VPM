@@ -55,6 +55,7 @@ MonoBehaviour:
   _categoryLevel: begginer
   _level: 32
   _tile: {fileID: 8866050157813201086, guid: 96237ced59a3cef4d98d9900e8a06791, type: 3}
+  _tileSize: 1.1
 --- !u!114 &9166630359763550564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,4 +68,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bea3e05365ab4754598f03e3dfab2864, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileSize: 1.1

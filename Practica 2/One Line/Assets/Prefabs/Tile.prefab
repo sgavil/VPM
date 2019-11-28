@@ -149,7 +149,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5ff9493c37c3c104f8cbe44f48aa67ed, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c1731f6466f492543877b8f5271774e5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -170,6 +170,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8866050157813201087}
   - component: {fileID: 8866050157813201084}
+  - component: {fileID: -53739263785816886}
   m_Layer: 0
   m_Name: Tile
   m_TagString: Untagged
@@ -207,3 +208,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _defaultTile: {fileID: 8866050157408410895}
   _colourTile: {fileID: 8866050157629239910}
+--- !u!65 &-53739263785816886
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8866050157813201086}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
