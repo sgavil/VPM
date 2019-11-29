@@ -26,6 +26,9 @@ public class BoardManager : MonoBehaviour
     private int _boardHeight = 0;
     private int _boardWidth = 0;
 
+    Texture2D _cursorTexture;
+    Vector2 _cursorHotspot;
+
     public int ActualColor
     {
         get
@@ -106,6 +109,9 @@ public class BoardManager : MonoBehaviour
             _actualColor = UnityEngine.Random.Range(1, _resourceManager._blockScriptableObjects.Count);
             tile._colourTile.sprite = _resourceManager._blockScriptableObjects[_actualColor].block;
         }
+
+        _cursorTexture = _resourceManager._blockScriptableObjects[_actualColor].touch;
+        _cursorHotspot = new Vector2(_cursorTexture.width / 2, _cursorTexture.height / 2);
     }
 
     /// <summary>
@@ -163,12 +169,17 @@ public class BoardManager : MonoBehaviour
     /// </summary>
     private void InputController()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
+            Cursor.SetCursor(_cursorTexture, _cursorHotspot, CursorMode.ForceSoftware);
             Vector3 mousePosition = Input.mousePosition;
             mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
             mousePosition.z = 0;
             TilePressed((int)Mathf.RoundToInt(mousePosition.x), (int)Mathf.RoundToInt(mousePosition.y));
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); 
         }
     }
 
