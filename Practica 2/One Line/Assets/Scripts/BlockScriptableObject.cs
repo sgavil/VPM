@@ -7,5 +7,5 @@ public class BlockScriptableObject: ScriptableObject
 {
     public Sprite block;
     public Sprite hint;
-    public Texture2D touch;
+    public Sprite touch;
 }

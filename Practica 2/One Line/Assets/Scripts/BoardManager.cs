@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class BoardManager : MonoBehaviour
 {
     // Publico
@@ -16,18 +17,27 @@ public class BoardManager : MonoBehaviour
     [Tooltip("Nivel del juego.")]
     public int _level = 0;
 
+    public struct MatrixPos
+    {
+        public int _x;
+        public int _y;
+
+        public MatrixPos(int x, int y)
+        {
+            _x = x;
+            _y = y;
+        }
+    }
+
     public GameObject _tileGameObject;
 
     // Privado
     private bool[,] _pressedTilesMatrix;
     private Tile[,] _tilesMatrix;
-    private Stack<Tile> _tilesStack;
+    private Stack<MatrixPos> _pathStack;
 
     private int _boardHeight = 0;
     private int _boardWidth = 0;
-
-    Texture2D _cursorTexture;
-    Vector2 _cursorHotspot;
 
     public int ActualColor
     {
@@ -72,7 +82,7 @@ public class BoardManager : MonoBehaviour
     {
         _pressedTilesMatrix = new bool[_boardHeight, _boardWidth];
         _tilesMatrix = new Tile[_boardHeight, _boardWidth];
-        _tilesStack = new Stack<Tile>();
+        _pathStack = new Stack<MatrixPos>();
     }
 
     /// <summary>
@@ -109,9 +119,6 @@ public class BoardManager : MonoBehaviour
             _actualColor = UnityEngine.Random.Range(1, _resourceManager._blockScriptableObjects.Count);
             tile._colourTile.sprite = _resourceManager._blockScriptableObjects[_actualColor].block;
         }
-
-        _cursorTexture = _resourceManager._blockScriptableObjects[_actualColor].touch;
-        _cursorHotspot = new Vector2(_cursorTexture.width / 2, _cursorTexture.height / 2);
     }
 
     /// <summary>
@@ -141,7 +148,7 @@ public class BoardManager : MonoBehaviour
                     }
                     else if (layout[y][x] == '2')
                     {
-                        _tilesStack.Push(tile.GetComponent<Tile>());
+                        _pathStack.Push(new MatrixPos(x, y));
                     }
   
                     _tilesMatrix[y, x] = tile.GetComponent<Tile>();
@@ -169,18 +176,49 @@ public class BoardManager : MonoBehaviour
     /// </summary>
     private void InputController()
     {
+
+
+#if !UNITY_EDITOR && (UNITY_ANDROID || UNITY_IOS)
+
+        if (Input.touchCount > 0)
+        {
+            foreach (Touch touch in Input.touches)
+            {
+                if (touch.fingerId == 0)
+                {
+                    if (touch.phase == TouchPhase.Began || touch.phase == TouchPhase.Moved)
+                        ProcessClickDown(touch.position);
+                    else if (touch.phase == TouchPhase.Ended)
+                        ProcessClickUp();
+                }
+            }
+        }
+
+#else
+        
         if (Input.GetMouseButton(0))
         {
-            Cursor.SetCursor(_cursorTexture, _cursorHotspot, CursorMode.ForceSoftware);
-            Vector3 mousePosition = Input.mousePosition;
-            mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-            mousePosition.z = 0;
-            TilePressed((int)Mathf.RoundToInt(mousePosition.x), (int)Mathf.RoundToInt(mousePosition.y));
+            ProcessClickDown(Input.mousePosition);
+            
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); 
+            ProcessClickUp();
         }
+#endif
+
+    }
+
+    private void ProcessClickDown(Vector3 mousePosition)
+    {
+        mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+        mousePosition.z = 0;
+        TilePressed((int)Mathf.RoundToInt(mousePosition.x), (int)Mathf.RoundToInt(mousePosition.y));
+    }
+
+    private void ProcessClickUp()
+    {
+
     }
 
     /// <summary>
@@ -199,44 +237,24 @@ public class BoardManager : MonoBehaviour
         if ((x >= 0 && x < _boardWidth && y >= 0 && y < _boardHeight) && _tilesMatrix[y, x] != null) {
             if (!_pressedTilesMatrix[y, x])
             {
-                if (IsPeekOfTilesPressed(x - 1, y) || IsPeekOfTilesPressed(x + 1, y) 
-                    || IsPeekOfTilesPressed(x, y - 1) || IsPeekOfTilesPressed(x, y + 1))
+                if (IsPeekOfPath(x - 1, y) || IsPeekOfPath(x + 1, y) 
+                    || IsPeekOfPath(x, y - 1) || IsPeekOfPath(x, y + 1))
                 {
                     _pressedTilesMatrix[y, x] = true;
                     _tilesMatrix[y, x].SetPressed(true);
-                    _tilesStack.Push(_tilesMatrix[y, x]);
+                    _pathStack.Push(new MatrixPos(x, y));
                 }
             }
             else
             {
-                while(_tilesStack.Count != 0 && _tilesStack.Peek() != _tilesMatrix[y, x])
+                while(_pathStack.Count != 0 && (_pathStack.Peek()._x != x || _pathStack.Peek()._y != y))
                 {
-                    Tile t = _tilesStack.Pop();
-                    Vector2Int tilePos = GetTileMatrixPos(t);
-                    _pressedTilesMatrix[tilePos.y, tilePos.x] = false;
-                    _tilesMatrix[tilePos.y, tilePos.x].SetPressed(false);
+                    MatrixPos pos = _pathStack.Pop();
+                    _pressedTilesMatrix[pos._y, pos._x] = false;
+                    _tilesMatrix[pos._y, pos._x].SetPressed(false);
                 }
             }
         }
-    }
-
-    /// <summary>
-    /// Devuelve la posicion del Tile en la matriz.
-    /// </summary>
-    /// <param name="tile"></param>
-    /// <returns>Posicion del Tile</returns>
-    private Vector2Int GetTileMatrixPos(Tile tile)
-    {
-        bool found = false;
-        Vector2Int pos = new Vector2Int();
-        for (int j = 0; j < _boardHeight && !found; j++)
-            for (int i = 0; i < _boardWidth && !found; i++)
-                if (_tilesMatrix[j, i] == tile) {
-                    found = true;
-                    pos.x = i;
-                    pos.y = j;
-                }
-        return pos;
     }
 
     /// <summary>
@@ -245,10 +263,10 @@ public class BoardManager : MonoBehaviour
     /// <param name="x">Posicion X en coordenadas de matriz</param>
     /// <param name="y">Posicion Y en coordenadas de matriz</param>
     /// <returns>Devuelve true si el Tile en (x, y) fue el ultimo pulsado.</returns>
-    private bool IsPeekOfTilesPressed(int x, int y)
+    private bool IsPeekOfPath(int x, int y)
     {
         return (x >= 0 && x < _boardWidth && y >= 0 && y < _boardHeight)
-            && _tilesMatrix[y, x] == _tilesStack.Peek();
+            && (x == _pathStack.Peek()._x && y == _pathStack.Peek()._y);
     }
 
     /// <summary>
@@ -263,3 +281,27 @@ public class BoardManager : MonoBehaviour
             && (_pressedTilesMatrix[y, x] && _tilesMatrix[y, x] != null);
     }
 }
+
+
+
+/*
+
+void Update(){
+    
+    if (estoyEnPC){
+        if(Input.GetMouseButton(0)){
+            .........
+        }
+        else if (Input.GetMouseButtonUp(0){
+            procesarLiberacion(); // para probar si hemos acabado el nivel o no
+        }
+    }
+    else{
+        if (touchCount > 0){
+            Buscar el dedo que te interesa dentro de "touches" (0) y procesar.
+        }
+    }
+
+}
+     
+*/

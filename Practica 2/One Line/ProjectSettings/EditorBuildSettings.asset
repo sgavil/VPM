@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Test/SelectLevel.unity
     guid: 23127c3e304d67d4b906549d890b0576
   - enabled: 1
