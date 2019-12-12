@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     [Tooltip("Nivel del juego.")]
     public int _level = 0;
 
-    private LevelsGroup _levelsGroup;
+    public LevelsGroup _levelsGroup;
 
     // Start is called before the first frame update
     void Awake()
