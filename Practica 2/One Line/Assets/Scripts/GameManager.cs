@@ -7,14 +7,24 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public static string _categoryLevel;
-    public static int _level;
+    [Tooltip("Archivos .json que almacenan los niveles.")]
+    public List<TextAsset> _categoryLevelFiles;
+
+    [Tooltip("Nombre de la categoría del nivel al que quieres acceder.")]
+    public int _categoryLevel = 0;
+
+    [Tooltip("Nivel del juego.")]
+    public int _level = 0;
+
+    private LevelsGroup _levelsGroup;
 
     // Start is called before the first frame update
     void Awake()
     {
         Instance = this;
-        DontDestroyOnLoad(this.gameObject);
+
+        _levelsGroup = new LevelsGroup();
+        _levelsGroup.LoadLevelsFromJSON(_categoryLevelFiles);
     }
 
     // Update is called once per frame
@@ -23,18 +33,8 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public void SetCategoryLevel(string category)
+    public LevelData GetLevel()
     {
-        _categoryLevel = category;
-    }
-
-    public void SetLevel(int level)
-    {
-        _level = level;
-    }
-
-    public void Play()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        return _levelsGroup._levels[_categoryLevel - 1][_level - 1];
     }
 }

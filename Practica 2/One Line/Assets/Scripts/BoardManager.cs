@@ -8,15 +8,6 @@ public class BoardManager : MonoBehaviour
     // Publico
     public ResourceManager _resourceManager;
 
-    [Tooltip("Archivos .json que almacenan los niveles.")]
-    public List<TextAsset> _categoryLevelFiles;
-
-    [Tooltip("Nombre de la categoría del nivel al que quieres acceder.")]
-    public string _categoryLevel;
-
-    [Tooltip("Nivel del juego.")]
-    public int _level = 0;
-
     public struct MatrixPos
     {
         public int _x;
@@ -53,20 +44,20 @@ public class BoardManager : MonoBehaviour
 
 
     // Privado
-    private LevelsData _levelsData;
+    private LevelData _levelData;
 
     private int _actualColor = 0;
 
     void Start()
     {
-        _levelsData = new LevelsData();
-        _levelsData.LoadLevelsFromJSON(_categoryLevelFiles);
 
-        SetGridSize(_levelsData.GetSize(_categoryLevel));
+        _levelData = GameManager.Instance.GetLevel();
+
+        SetGridSize();
 
         InitializeMatrix();
 
-        CreateGrid(_categoryLevel, _level);
+        CreateGrid();
     }
 
     private void Update()
@@ -89,10 +80,10 @@ public class BoardManager : MonoBehaviour
     /// Guarda el tamaño del tablero.
     /// </summary>
     /// <param name="gridSize">Tamaño del tablero</param>
-    public void SetGridSize(List<int> gridSize)
+    public void SetGridSize()
     {
-        _boardWidth = gridSize[0];
-        _boardHeight = gridSize[1];
+        _boardWidth = _levelData._width;
+        _boardHeight = _levelData._height;
     }
 
     /// <summary>
@@ -100,10 +91,10 @@ public class BoardManager : MonoBehaviour
     /// </summary>
     /// <param name="categoryLevel">Categoria del nivel para crear</param>
     /// <param name="level">Nivel</param>
-    void CreateGrid(string categoryLevel, int level)
+    void CreateGrid()
     {
         SetTileColor();
-        GenerateGrid(_levelsData.GetLevelLayout(categoryLevel, level));
+        GenerateGrid();
     }
 
     /// <summary>
@@ -127,14 +118,14 @@ public class BoardManager : MonoBehaviour
     /// Por ultimo, modifica la posicion del tablero para centrarlo en el espacio.
     /// </summary>
     /// <param name="layout">Tablero</param>
-    public void GenerateGrid(List<string> layout)
+    public void GenerateGrid()
     {
         for (int y = 0; y < _boardHeight; y++)
         {
             for (int x = 0; x < _boardWidth; x++)
             {
                 _pressedTilesMatrix[y, x] = true;
-                if (layout[y][x] != '0')
+                if (_levelData._layout[y][x] != '0')
                 {
                     GameObject tile = (GameObject)Instantiate(_tileGameObject, transform);
                     float posX = x;
@@ -142,11 +133,11 @@ public class BoardManager : MonoBehaviour
 
                     tile.transform.position = new Vector2(posX, posY);
 
-                    if (layout[y][x] == '1')
+                    if (_levelData._layout[y][x] == '1')
                     {
                         _pressedTilesMatrix[y, x] = false;
                     }
-                    else if (layout[y][x] == '2')
+                    else if (_levelData._layout[y][x] == '2')
                     {
                         _pathStack.Push(new MatrixPos(x, y));
                     }
