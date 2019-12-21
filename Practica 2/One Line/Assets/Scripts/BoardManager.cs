@@ -7,6 +7,7 @@ public class BoardManager : MonoBehaviour
 {
     // Publico
     public ResourceManager _resourceManager;
+    public CanvasManager _canvasManager;
 
     public struct MatrixPos
     {
@@ -158,7 +159,7 @@ public class BoardManager : MonoBehaviour
     /// </summary>
     private void SetGridAtInitialPosition()
     {
-        Vector2 startPos = Camera.main.ScreenToWorldPoint(GameManager.Instance.GetEmptySpaceCenterPosition());
+        Vector2 startPos = Camera.main.ScreenToWorldPoint(_canvasManager.GetEmptySpaceCenterPosition());
         startPos.y = -startPos.y;
         transform.position = startPos;
 
