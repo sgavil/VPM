@@ -16,7 +16,7 @@ public class CanvasManager : MonoBehaviour
     private Vector3 _centerPositionEmptyCanvas;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         _screenSize = new Vector2(0, 0);
         Scaler();
@@ -54,6 +54,7 @@ public class CanvasManager : MonoBehaviour
         _centerPositionEmptyCanvas = new Vector3(_screenSize.x / 2,
             (_screenSize.y / 2) + (_topCanvasSize.y + (_emptyCanvasSize.y / 2) - (_screenSize.y / 2)),
             0.0f);
+
     }
 
     /// <summary>
