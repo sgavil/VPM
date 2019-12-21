@@ -149,6 +149,7 @@ public class BoardManager : MonoBehaviour
             }
         }
 
+        ScaleGrid();
         SetGridAtInitialPosition();
     }
 
@@ -157,9 +158,26 @@ public class BoardManager : MonoBehaviour
     /// </summary>
     private void SetGridAtInitialPosition()
     {
-        transform.position = new Vector2(-_boardWidth / 2, _boardHeight / 2);
+        Vector2 startPos = Camera.main.ScreenToWorldPoint(GameManager.Instance.GetEmptySpaceCenterPosition());
+        startPos.y = -startPos.y;
+        transform.position = startPos;
+
+        float width = -_boardWidth / 2;
+        if (_boardWidth % 2 == 0) width += 0.5f;
+
+        float height = _boardHeight / 2;
+        if (_boardHeight % 2 == 0) height -= 0.5f;
+        transform.position = new Vector2(transform.position.x + width, transform.position.y + height);
     }
 
+
+    /// <summary>
+    /// Escala el tamaño del grid segun el tamaño de la pantalla.
+    /// </summary>
+    private void ScaleGrid()
+    {
+        
+    }
 
     /// <summary>
     /// Detecta la posicion del raton al ser pulsado y decide si el Tile se puede

@@ -18,6 +18,7 @@ using System.IO;
 ///</summary>
 public class LevelsGroup
 {
+    public List<List<int>> _levelsAvailableSpace;
     public List<List<LevelData>> _levels;
     /*public List<LevelData> _begginerLevels;
     public List<LevelData> _regularLevels;
@@ -31,10 +32,13 @@ public class LevelsGroup
     public void LoadLevelsFromJSON(List<TextAsset> _categoryLevelFiles)
     {
         _levels = new List<List<LevelData>>();
+        _levelsAvailableSpace = new List<List<int>>();
         for(int i = 0; i < _categoryLevelFiles.Count; i++)
         {
             _levels.Add(new List<LevelData>());
             CreateCategoryLevel(i, (Json.Deserialize(_categoryLevelFiles[i].text) as Dictionary<string, object>)["level"] as List<object>);
+            _levelsAvailableSpace.Add(((Json.Deserialize(_categoryLevelFiles[i].text) as Dictionary<string, object>)["availableSpace"]
+                as List<object>).ConvertAll(input => Convert.ToInt32(input)));
         }
     }
 
@@ -78,8 +82,8 @@ public class LevelsGroup
     /// </summary>
     /// <param name="category">Categoria del nivel.</param>
     /// <returns>Espacio disponible.</returns>
-    /*public List<int> GetAvailableSpace(string category)
+    public List<int> GetAvailableSpace(int category)
     {
-        return (GetCategoryLevel(category.ToUpper())["availableSpace"] as List<object>).ConvertAll(input => Convert.ToInt32(input));
-    }*/
+        return (_levelsAvailableSpace[category]);
+    }
 }
