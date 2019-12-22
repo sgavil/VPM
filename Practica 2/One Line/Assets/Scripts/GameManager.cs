@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
 
     [Tooltip("Nivel del juego.")]
     public int _level = 0;
+
+    private bool _screenSizeIsChanged = false;
     //---------------------------------------------------
 
 
@@ -48,6 +50,16 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void SetScreenSizeIsChanged(bool b)
+    {
+        _screenSizeIsChanged = b;    
+    }
+
+    public bool IsScreenSizeChanged()
+    {
+        return _screenSizeIsChanged;
+    }
+
     /// <summary>
     /// Devuelve el nivel los datos del nivel elegido por el jugador
     /// </summary>
@@ -55,5 +67,15 @@ public class GameManager : MonoBehaviour
     public LevelData GetLevel()
     {
         return _levelsGroup._levels[_categoryLevel - 1][_level - 1];
+    }
+
+    public List<int> GetAvailableSpace()
+    {
+        return _levelsGroup._levelsAvailableSpace[_categoryLevel - 1];
+    }
+
+    public List<int> GetSize()
+    {
+        return _levelsGroup._levelsSize[_categoryLevel - 1];
     }
 }

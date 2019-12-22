@@ -8,10 +8,14 @@ public class CanvasManager : MonoBehaviour
     private Vector2 _screenSize;
 
     private Vector2 _genericCanvasSize;
+
     public GameObject _bottomCanvasGO;
     private Vector2 _bottomCanvasSize;
+
     public GameObject _topCanvasGO;
     private Vector2 _topCanvasSize;
+
+    public float _emptyLimitPercent;
     private Vector2 _emptyCanvasSize;
     private Vector3 _centerPositionEmptyCanvas;
 
@@ -50,12 +54,20 @@ public class CanvasManager : MonoBehaviour
             (_topCanvasGO.GetComponent<RectTransform>().rect.height * _screenSize.y) / _genericCanvasSize.y);
 
         // Tamaño del espacio sobrante
-        _emptyCanvasSize = new Vector2(_screenSize.x, _screenSize.y - (_topCanvasSize.y + _bottomCanvasSize.y));
+        float emptyWidth = _screenSize.x;
+        float emptyHeight = _screenSize.y - (_topCanvasSize.y + _bottomCanvasSize.y);
+        // Tamaño del espacio sobrante aplicando los limites
+        _emptyCanvasSize = new Vector2(emptyWidth - (emptyWidth * (_emptyLimitPercent * 2)), 
+            (emptyHeight) - (emptyHeight * (_emptyLimitPercent * 2)));
+
         _centerPositionEmptyCanvas = new Vector3(_screenSize.x / 2,
-            (_screenSize.y / 2) + (_topCanvasSize.y + (_emptyCanvasSize.y / 2) - (_screenSize.y / 2)),
+            (_screenSize.y / 2) + (_topCanvasSize.y + (emptyHeight / 2) - (_screenSize.y / 2)),
             0.0f);
 
+
+        GameManager.Instance.SetScreenSizeIsChanged(true);
     }
+
 
     /// <summary>
     /// Devuelve el espacio restante en pantalla que se encuentra entre el HUD superior y el inferior

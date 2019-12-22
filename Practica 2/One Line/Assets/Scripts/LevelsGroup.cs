@@ -18,13 +18,9 @@ using System.IO;
 ///</summary>
 public class LevelsGroup
 {
-    public List<List<int>> _levelsAvailableSpace;
     public List<List<LevelData>> _levels;
-    /*public List<LevelData> _begginerLevels;
-    public List<LevelData> _regularLevels;
-    public List<LevelData> _advancedLevels;
-    public List<LevelData> _expertLevels;
-    public List<LevelData> _masterLevels;*/
+    public List<List<int>> _levelsAvailableSpace;
+    public List<List<int>> _levelsSize;
 
     /// <summary>
     /// Carga todos los archivos que representan las distintas categorias de niveles.
@@ -33,11 +29,15 @@ public class LevelsGroup
     {
         _levels = new List<List<LevelData>>();
         _levelsAvailableSpace = new List<List<int>>();
+        _levelsSize = new List<List<int>>();
+
         for(int i = 0; i < _categoryLevelFiles.Count; i++)
         {
             _levels.Add(new List<LevelData>());
             CreateCategoryLevel(i, (Json.Deserialize(_categoryLevelFiles[i].text) as Dictionary<string, object>)["level"] as List<object>);
             _levelsAvailableSpace.Add(((Json.Deserialize(_categoryLevelFiles[i].text) as Dictionary<string, object>)["availableSpace"]
+                as List<object>).ConvertAll(input => Convert.ToInt32(input)));
+            _levelsSize.Add(((Json.Deserialize(_categoryLevelFiles[i].text) as Dictionary<string, object>)["size"]
                 as List<object>).ConvertAll(input => Convert.ToInt32(input)));
         }
     }

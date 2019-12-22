@@ -46,6 +46,8 @@ public class BoardManager : MonoBehaviour
 
     // Privado
     private LevelData _levelData;
+    private List<int> _levelAvailableSpace;
+    private List<int> _levelSize;
 
     private int _actualColor = 0;
 
@@ -53,6 +55,8 @@ public class BoardManager : MonoBehaviour
     {
 
         _levelData = GameManager.Instance.GetLevel();
+        _levelAvailableSpace = GameManager.Instance.GetAvailableSpace();
+        _levelSize = GameManager.Instance.GetSize();
 
         SetGridSize();
 
@@ -64,6 +68,11 @@ public class BoardManager : MonoBehaviour
     private void Update()
     {
         InputController();
+        if (GameManager.Instance.IsScreenSizeChanged())
+        {
+            ScaleGridAndSetPosition();
+            GameManager.Instance.SetScreenSizeIsChanged(false);
+        }
     }
 
     /// <summary>
@@ -150,6 +159,11 @@ public class BoardManager : MonoBehaviour
             }
         }
 
+        ScaleGridAndSetPosition();
+    }
+
+    private void ScaleGridAndSetPosition()
+    {
         ScaleGrid();
         SetGridAtInitialPosition();
     }
@@ -164,11 +178,13 @@ public class BoardManager : MonoBehaviour
         transform.position = startPos;
 
         float width = -_boardWidth / 2;
+
         if (_boardWidth % 2 == 0) width += 0.5f;
 
         float height = _boardHeight / 2;
         if (_boardHeight % 2 == 0) height -= 0.5f;
-        transform.position = new Vector2(transform.position.x + width, transform.position.y + height);
+        transform.position = new Vector2((transform.position.x + width) * transform.localScale.x,
+            (transform.position.y + height) * transform.localScale.y);
     }
 
 
@@ -177,7 +193,15 @@ public class BoardManager : MonoBehaviour
     /// </summary>
     private void ScaleGrid()
     {
-        
+
+        Vector2 emptySize = _canvasManager.GetEmptySpaceSize();
+        emptySize.x += Screen.width / 2;
+        emptySize.y += Screen.height / 2;
+        emptySize = Camera.main.ScreenToWorldPoint(emptySize);
+
+        float widthFactor = emptySize.x / _levelSize[0];
+        float heightFactor = emptySize.y / _levelSize[1];
+        transform.localScale = new Vector2(widthFactor, heightFactor);
     }
 
     /// <summary>
@@ -223,6 +247,7 @@ public class BoardManager : MonoBehaviour
     {
         mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
         mousePosition.z = 0;
+        if (_boardWidth % 2 == 0) mousePosition.x -= 0.5f;
         TilePressed((int)Mathf.RoundToInt(mousePosition.x), (int)Mathf.RoundToInt(mousePosition.y));
     }
 
@@ -243,6 +268,7 @@ public class BoardManager : MonoBehaviour
     {
         y = -y + (_boardHeight / 2);
         x += (_boardWidth / 2);
+        Debug.Log(x);
 
         if ((x >= 0 && x < _boardWidth && y >= 0 && y < _boardHeight) && _tilesMatrix[y, x] != null) {
             if (!_pressedTilesMatrix[y, x])
