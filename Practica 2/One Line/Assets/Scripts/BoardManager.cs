@@ -22,9 +22,6 @@ public class BoardManager : MonoBehaviour
     [Tooltip("Gestor de Recursos que almacena los sprites que formaran el tablero.")]
     public ResourceManager _resourceManager;
 
-    [Tooltip("Gestor del canvas")]
-    public CanvasManager _canvasManager;
-
     [Tooltip("Prefab del Tile")]
     public GameObject _tileGameObject;
 
@@ -279,7 +276,7 @@ public class BoardManager : MonoBehaviour
     /// </summary>
     private void SetGridAtInitialPosition()
     {
-        Vector2 startPos = Camera.main.ScreenToWorldPoint(_canvasManager.GetEmptySpaceCenterPosition());
+        Vector2 startPos = Camera.main.ScreenToWorldPoint(GameManager.Instance.GetEmptySpaceCenterPosition());
         startPos.y = -startPos.y;
         transform.position = startPos;
 
@@ -300,7 +297,7 @@ public class BoardManager : MonoBehaviour
     private void ScaleGrid()
     {
 
-        Vector2 emptySize = _canvasManager.GetEmptySpaceSize();
+        Vector2 emptySize = GameManager.Instance.GetEmptySpaceSize();
         emptySize.x += Screen.width / 2;
         emptySize.y += Screen.height / 2;
         emptySize = Camera.main.ScreenToWorldPoint(emptySize);
@@ -353,7 +350,6 @@ public class BoardManager : MonoBehaviour
         mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
         mousePosition.z = 0;
 
-        _cursorGameObject.SetActive(true);
         _cursorGameObject.transform.position = mousePosition;
 
         TilePressed((int)Mathf.RoundToInt(mousePosition.x), (int)Mathf.RoundToInt(mousePosition.y));
@@ -394,8 +390,10 @@ public class BoardManager : MonoBehaviour
         x += (_boardWidth / 2);
 
         if ((x >= 0 && x < _boardWidth && y >= 0 && y < _boardHeight) && _tilesMatrix[y, x] != null) {
+
             if (!_pressedTilesMatrix[y, x])
             {
+                _cursorGameObject.SetActive(true);
                 if (IsPeekOfPath(x - 1, y) || IsPeekOfPath(x + 1, y)
                     || IsPeekOfPath(x, y - 1) || IsPeekOfPath(x, y + 1))
                 {
@@ -412,10 +410,16 @@ public class BoardManager : MonoBehaviour
                     }
 
                     _pathStack.Push(new MatrixPos(x, y));
+
+                    SoundManager.Instance.PlayMove();
                 }
             }
-            else
+            else if (_pressedTilesMatrix[y, x] && (_pathStack.Peek()._x != x || _pathStack.Peek()._y != y))
+            {
                 GoBack(x, y);
+                SoundManager.Instance.PlayMove();
+            }
+               
         }
     }
 
@@ -444,6 +448,11 @@ public class BoardManager : MonoBehaviour
         }
     }
 
+    public void Replay()
+    {
+        GoBack(_firsTile._x, _firsTile._y);
+    }
+
     /// <summary>
     /// Crea el camino cuando el jugador pide una ayuda. La longitud del camino esta determinada por la
     /// variable "_tilesShowingWhenUserWantHint". Cada vez que el jugador requiere ayuda, se sigue
@@ -454,7 +463,7 @@ public class BoardManager : MonoBehaviour
         if (_hintCont < _levelData._path.Count - 1)
         {
             if (_hintCont % _tilesShowingWhenUserWantHint == 0)
-                GoBack(_firsTile._x, _firsTile._y);
+                Replay();
 
             _pathArray[_hintCont].gameObject.SetActive(true);
 
