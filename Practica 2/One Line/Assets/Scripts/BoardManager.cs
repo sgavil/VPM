@@ -2,66 +2,96 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Estructura usada para almacenar las coordenadas de las entidades 
+// dentro de las matrices
+struct MatrixPos
+{
+    public int _x;
+    public int _y;
 
+    public MatrixPos(int x, int y)
+    {
+        _x = x;
+        _y = y;
+    }
+}
 public class BoardManager : MonoBehaviour
 {
-    // Publico
+    #region ATRIBUTOS PUBLICOS
+
+    [Tooltip("Gestor de Recursos que almacena los sprites que formaran el tablero.")]
     public ResourceManager _resourceManager;
+
+    [Tooltip("Gestor del canvas")]
     public CanvasManager _canvasManager;
 
-    public struct MatrixPos
-    {
-        public int _x;
-        public int _y;
-
-        public MatrixPos(int x, int y)
-        {
-            _x = x;
-            _y = y;
-        }
-    }
-
+    [Tooltip("Prefab del Tile")]
     public GameObject _tileGameObject;
+
+    [Tooltip("Prefab del Hint")]
     public GameObject _hintGameObject;
+
+    [Tooltip("Prefab del Curosr")]
     public GameObject _cursorGameObject;
 
+    [Tooltip("Numero de casillas que se le quiere mostrar al jugador cuando pide una pista.")]
     public int _tilesShowingWhenUserWantHint;
 
-    // Privado
-    private bool[,] _pressedTilesMatrix;
-    private Tile[,] _tilesMatrix;
-    private Hint[,] _hintVerticalArray;
-    private Hint[,] _hintHorizontalArray;
-    private Stack<MatrixPos> _pathStack;
+    #endregion
 
-    private int _boardHeight = 0;
-    private int _boardWidth = 0;
+    #region ATRIBUTOS PRIVADOS
 
-    private int _tilesShowing;
-    private int _hintCont = 0;
+    // INFORMACION NECESARIA PARA LA CREACION DEL NIVEL
 
-    public int ActualColor
-    {
-        get
-        {
-            return _actualColor;
-        }
-        set
-        {
-            _actualColor = value;
-        }
-    }
+    private LevelData _levelData;   // Informacion del tablero
+
+    private List<int> _levelAvailableSpace; // Espacio total del que dispone el tablero
+
+    private List<int> _levelSize;   // Dimensiones del tablero
 
 
-    // Privado
-    private LevelData _levelData;
-    private List<int> _levelAvailableSpace;
-    private List<int> _levelSize;
+    // MATRICES Y ARRAYS QUE ALMACENAN INFORMACION Y ENTIDADES DEL TABLERO
 
-    private MatrixPos _firsTile;
-    private int _actualColor = 0;
+    private bool[,] _pressedTilesMatrix;    // Matriz de booleanos que indica que posicion
+                                            // esta pulsada o no. Aquellas posiciones de la
+                                            // matriz que no tenga una entidad correspondiente,
+                                            // es decir, que haya un espacio vacio en el tablero,
+                                            // estaran a "true" por defecto para que en las
+                                            // posteriores comprobaciones del tablero finalizado
+                                            // no supongan ningun problema.
 
-    void Start()
+    private Tile[,] _tilesMatrix;   // Matriz de entidades "Tile". En las posiciones vacias tendra
+                                    // valor "null".
+
+    private Hint[,] _hintVerticalMatrix;    // Matriz formada por "Hint" en vertical. 
+                                            // Tamaño BoardWidth x BoardHeight - 1.
+
+    private Hint[,] _hintHorizontalMatrix;  // Matriz formada por "Hint" en horizontal. 
+                                            // Tamaño BoardWidth - 1 x BoardHeight.
+
+    private Hint[] _pathArray;  // Array de "Hint" que contiene las entidades que marcan el camino que
+                                // vera el jugador si pide una pista.
+
+    private Stack<MatrixPos> _pathStack;    // Pila de posiciones que almacena el camino que esta recorriendo
+                                            // el jugador.
+
+
+    private int _boardHeight = 0;   // Altura del tablero.
+
+    private int _boardWidth = 0;    // Anchura del tablero.
+
+    private int _tilesShowing;  // Contador que almacena el numero de posiciones totales que se tiene que
+                                // mostrar al pedir una pista.
+
+    private int _hintCont = 0;  // Contador que sabe el numero de posiciones que esta mostrando.
+        
+    private MatrixPos _firsTile; // Almacena la posicion del punto de inicio del tablero.
+
+    private int _actualColor = 0;   // Almacena el color actual del tablero.
+
+    #endregion
+
+    private void Start()
     {
 
         _levelData = GameManager.Instance.GetLevel();
@@ -75,6 +105,7 @@ public class BoardManager : MonoBehaviour
         InitializeMatrix();
 
         CreateGrid();
+        CreatePath();
     }
 
     private void Update()
@@ -88,17 +119,18 @@ public class BoardManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Inicializa las matrices que almacenan los bool y los Tiles. Tambien inicializa la
-    /// pila de Tiles.
+    /// Inicializa las matrices, arrays y pilas.
     /// </summary>
-    public void InitializeMatrix()
+    private void InitializeMatrix()
     {
         _pressedTilesMatrix = new bool[_boardHeight, _boardWidth];
 
         _tilesMatrix = new Tile[_boardHeight, _boardWidth];
 
-        _hintHorizontalArray = new Hint[_boardHeight, _boardWidth - 1];
-        _hintVerticalArray = new Hint[_boardHeight - 1, _boardWidth];
+        _hintHorizontalMatrix = new Hint[_boardHeight, _boardWidth - 1];
+        _hintVerticalMatrix = new Hint[_boardHeight - 1, _boardWidth];
+
+        _pathArray = new Hint[_levelData._path.Count];
 
         _pathStack = new Stack<MatrixPos>();
     }
@@ -107,7 +139,7 @@ public class BoardManager : MonoBehaviour
     /// Guarda el tamaño del tablero.
     /// </summary>
     /// <param name="gridSize">Tamaño del tablero</param>
-    public void SetGridSize()
+    private void SetGridSize()
     {
         _boardWidth = _levelData._width;
         _boardHeight = _levelData._height;
@@ -118,7 +150,7 @@ public class BoardManager : MonoBehaviour
     /// </summary>
     /// <param name="categoryLevel">Categoria del nivel para crear</param>
     /// <param name="level">Nivel</param>
-    void CreateGrid()
+    private void CreateGrid()
     {
         SetBoardColor();
         GenerateGrid();
@@ -127,7 +159,7 @@ public class BoardManager : MonoBehaviour
     /// <summary>
     /// Asigna el color por defecto y una piel aleatoria al GameObject Tile.
     /// </summary>
-    void SetBoardColor()
+    private void SetBoardColor()
     {
         _actualColor = UnityEngine.Random.Range(1, _resourceManager._blockScriptableObjects.Count);
         _cursorGameObject.GetComponent<SpriteRenderer>().sprite = _resourceManager._blockScriptableObjects[_actualColor].touch;
@@ -153,13 +185,9 @@ public class BoardManager : MonoBehaviour
     /// Por ultimo, modifica la posicion del tablero para centrarlo en el espacio.
     /// </summary>
     /// <param name="layout">Tablero</param>
-    public void GenerateGrid()
+    private void GenerateGrid()
     {
-        GameObject tileParent = (GameObject)Instantiate(new GameObject(), transform);
-        tileParent.name = "Tile Group";
-        GameObject pathParent = (GameObject)Instantiate(new GameObject(), transform);
-        pathParent.name = "Path Group";
-
+    
         for (int y = 0; y < _boardHeight; y++)
         {
             for (int x = 0; x < _boardWidth; x++)
@@ -167,7 +195,7 @@ public class BoardManager : MonoBehaviour
                 _pressedTilesMatrix[y, x] = true;
                 if (_levelData._layout[y][x] != '0')
                 {
-                    GameObject tile = (GameObject)Instantiate(_tileGameObject, tileParent.transform);
+                    GameObject tile = (GameObject)Instantiate(_tileGameObject, transform);
                     float posX = x;
                     float posY = -y;
 
@@ -186,36 +214,58 @@ public class BoardManager : MonoBehaviour
                     _tilesMatrix[y, x] = tile.GetComponent<Tile>();
                     _tilesMatrix[y, x].SetPressed(_pressedTilesMatrix[y, x]);
 
-
-                    if (x + 1 < _boardWidth && _levelData._layout[y][x + 1] != '0')
-                    {
-                        GameObject hint = (GameObject)Instantiate(_hintGameObject, pathParent.transform);
-                        float hintPosX = posX + 0.5f;
-                        hint.transform.position = new Vector3(hintPosX, posY);
-                        hint.GetComponent<Hint>().SetClueActive(false);
-
-                        _hintHorizontalArray[y, x] = hint.GetComponent<Hint>();
-
-                        hint.SetActive(false);
-
-                    }
-                    if (y + 1 < _boardHeight && _levelData._layout[y + 1][x] != '0')
-                    {
-                        GameObject hint = (GameObject)Instantiate(_hintGameObject, pathParent.transform);
-                        float hintPosY = posY - 0.5f;
-                        hint.transform.position = new Vector3(posX, hintPosY);
-                        hint.transform.Rotate(new Vector3(0, 0, 90));
-                        hint.GetComponent<Hint>().SetClueActive(false);
-
-                        _hintVerticalArray[y, x] = hint.GetComponent<Hint>();
-
-                        hint.SetActive(false);
-                    }
+                    CreateHint(x, y, posX, posY);
+                    
                 }
             }
         }
 
         ScaleGridAndSetPosition();
+    }
+
+    private void CreateHint(int x, int y, float posX, float posY)
+    {
+        if (x + 1 < _boardWidth && _levelData._layout[y][x + 1] != '0')
+        {
+            GameObject hint = (GameObject)Instantiate(_hintGameObject, transform);
+            hint.GetComponent<Hint>().SetClueActive(false);
+            hint.SetActive(false);
+
+            float hintPosX = posX + 0.5f;
+            hint.transform.position = new Vector3(hintPosX, posY);
+
+            _hintHorizontalMatrix[y, x] = hint.GetComponent<Hint>();
+        }
+        if (y + 1 < _boardHeight && _levelData._layout[y + 1][x] != '0')
+        {
+            GameObject hint = (GameObject)Instantiate(_hintGameObject, transform);
+            hint.GetComponent<Hint>().SetClueActive(false);
+            hint.SetActive(false);
+
+            float hintPosY = posY - 0.5f;
+            hint.transform.position = new Vector3(posX, hintPosY);
+            hint.transform.Rotate(new Vector3(0, 0, 90));
+
+            _hintVerticalMatrix[y, x] = hint.GetComponent<Hint>();
+        }
+    }
+    private void CreatePath()
+    {
+        for (int i = 0; i < _pathArray.Length - 1; i++)
+        {
+            List<int> path = _levelData._path[i];
+            List<int> postPath = _levelData._path[i + 1];
+
+            GameObject hint = null;
+
+            if (path[1] != postPath[1])
+                hint = Instantiate(_hintHorizontalMatrix[path[0], Mathf.Min(path[1], postPath[1])].gameObject, transform);
+            else if (path[0] != postPath[0])
+                hint = Instantiate(_hintVerticalMatrix[Mathf.Min(path[0], postPath[0]), path[1]].gameObject, transform);
+
+            hint.GetComponent<Hint>().SetClueActive(true);
+            _pathArray[i] = hint.GetComponent<Hint>();
+        }
     }
 
     private void ScaleGridAndSetPosition()
@@ -266,7 +316,6 @@ public class BoardManager : MonoBehaviour
     /// </summary>
     private void InputController()
     {
-
 
 #if !UNITY_EDITOR && (UNITY_ANDROID || UNITY_IOS)
 
@@ -355,11 +404,11 @@ public class BoardManager : MonoBehaviour
 
                     if (_pathStack.Peek()._x != x)
                     {
-                        _hintHorizontalArray[y, Mathf.Min(_pathStack.Peek()._x, x)].gameObject.SetActive(true);
+                        _hintHorizontalMatrix[y, Mathf.Min(_pathStack.Peek()._x, x)].gameObject.SetActive(true);
                     }
                     else if (_pathStack.Peek()._y != y)
                     {
-                        _hintVerticalArray[Mathf.Min(_pathStack.Peek()._y, y), x].gameObject.SetActive(true);
+                        _hintVerticalMatrix[Mathf.Min(_pathStack.Peek()._y, y), x].gameObject.SetActive(true);
                     }
 
                     _pathStack.Push(new MatrixPos(x, y));
@@ -386,11 +435,11 @@ public class BoardManager : MonoBehaviour
 
             if (_pathStack.Peek()._x != pos._x)
             {
-                _hintHorizontalArray[_pathStack.Peek()._y, Mathf.Min(_pathStack.Peek()._x, pos._x)].gameObject.SetActive(false);
+                _hintHorizontalMatrix[_pathStack.Peek()._y, Mathf.Min(_pathStack.Peek()._x, pos._x)].gameObject.SetActive(false);
             }
             else if (_pathStack.Peek()._y != pos._y)
             {
-                _hintVerticalArray[Mathf.Min(_pathStack.Peek()._y, pos._y), _pathStack.Peek()._x].gameObject.SetActive(false);
+                _hintVerticalMatrix[Mathf.Min(_pathStack.Peek()._y, pos._y), _pathStack.Peek()._x].gameObject.SetActive(false);
             }
         }
     }
@@ -404,26 +453,16 @@ public class BoardManager : MonoBehaviour
     {
         if (_hintCont < _levelData._path.Count - 1)
         {
-            if (_hintCont == 0)
+            if (_hintCont % _tilesShowingWhenUserWantHint == 0)
                 GoBack(_firsTile._x, _firsTile._y);
 
-            List<int> path = _levelData._path[_hintCont];
-            List<int> postPath = _levelData._path[_hintCont + 1];
-
-            if (path[1] != postPath[1])
-            {
-                _hintHorizontalArray[path[0], Mathf.Min(path[1], postPath[1])].gameObject.SetActive(true);
-            }
-            else if (path[0] != postPath[0])
-            {
-                _hintVerticalArray[Mathf.Min(path[0], postPath[0]), path[1]].gameObject.SetActive(true);
-            }
+            _pathArray[_hintCont].gameObject.SetActive(true);
 
             _hintCont++;
 
             if (_hintCont < _tilesShowing)
             {
-                Invoke("UserWantHint", 0.1f);
+                Invoke("UserWantHint", 0.15f);
             }
             else
             {
