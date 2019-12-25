@@ -25,6 +25,8 @@ public class BoardManager : MonoBehaviour
     public GameObject _hintGameObject;
     public GameObject _cursorGameObject;
 
+    public int _tilesShowingWhenUserWantHint;
+
     // Privado
     private bool[,] _pressedTilesMatrix;
     private Tile[,] _tilesMatrix;
@@ -34,6 +36,9 @@ public class BoardManager : MonoBehaviour
 
     private int _boardHeight = 0;
     private int _boardWidth = 0;
+
+    private int _tilesShowing;
+    private int _hintCont = 0;
 
     public int ActualColor
     {
@@ -53,6 +58,7 @@ public class BoardManager : MonoBehaviour
     private List<int> _levelAvailableSpace;
     private List<int> _levelSize;
 
+    private MatrixPos _firsTile;
     private int _actualColor = 0;
 
     void Start()
@@ -61,6 +67,8 @@ public class BoardManager : MonoBehaviour
         _levelData = GameManager.Instance.GetLevel();
         _levelAvailableSpace = GameManager.Instance.GetAvailableSpace();
         _levelSize = GameManager.Instance.GetSize();
+
+        _tilesShowing = _tilesShowingWhenUserWantHint;
 
         SetGridSize();
 
@@ -132,7 +140,7 @@ public class BoardManager : MonoBehaviour
         }
 
         Hint hint;
-        if(_hintGameObject.TryGetComponent<Hint>(out hint))
+        if (_hintGameObject.TryGetComponent<Hint>(out hint))
         {
             hint._defaultTile.sprite = _resourceManager._blockScriptableObjects[0].hint;
             hint._colourTile.sprite = _resourceManager._blockScriptableObjects[_actualColor].hint;
@@ -171,9 +179,10 @@ public class BoardManager : MonoBehaviour
                     }
                     else if (_levelData._layout[y][x] == '2')
                     {
+                        _firsTile = new MatrixPos(x, y);
                         _pathStack.Push(new MatrixPos(x, y));
                     }
-  
+
                     _tilesMatrix[y, x] = tile.GetComponent<Tile>();
                     _tilesMatrix[y, x].SetPressed(_pressedTilesMatrix[y, x]);
 
@@ -276,11 +285,11 @@ public class BoardManager : MonoBehaviour
         }
 
 #else
-        
+
         if (Input.GetMouseButton(0))
         {
             ProcessClickDown(Input.mousePosition);
-            
+
         }
         else if (Input.GetMouseButtonUp(0))
         {
@@ -307,9 +316,9 @@ public class BoardManager : MonoBehaviour
 
         bool finished = true;
 
-        for(int y = 0; y < _boardHeight && finished; y++)
+        for (int y = 0; y < _boardHeight && finished; y++)
         {
-            for(int x = 0; x < _boardWidth && finished; x++)
+            for (int x = 0; x < _boardWidth && finished; x++)
             {
                 if (!_pressedTilesMatrix[y, x])
                     finished = false;
@@ -338,7 +347,7 @@ public class BoardManager : MonoBehaviour
         if ((x >= 0 && x < _boardWidth && y >= 0 && y < _boardHeight) && _tilesMatrix[y, x] != null) {
             if (!_pressedTilesMatrix[y, x])
             {
-                if (IsPeekOfPath(x - 1, y) || IsPeekOfPath(x + 1, y) 
+                if (IsPeekOfPath(x - 1, y) || IsPeekOfPath(x + 1, y)
                     || IsPeekOfPath(x, y - 1) || IsPeekOfPath(x, y + 1))
                 {
                     _pressedTilesMatrix[y, x] = true;
@@ -357,22 +366,68 @@ public class BoardManager : MonoBehaviour
                 }
             }
             else
-            {
-                while(_pathStack.Count != 0 && (_pathStack.Peek()._x != x || _pathStack.Peek()._y != y))
-                {
-                    MatrixPos pos = _pathStack.Pop();
-                    _pressedTilesMatrix[pos._y, pos._x] = false;
-                    _tilesMatrix[pos._y, pos._x].SetPressed(false);
+                GoBack(x, y);
+        }
+    }
 
-                    if (_pathStack.Peek()._x != pos._x)
-                    {
-                        _hintHorizontalArray[_pathStack.Peek()._y, Mathf.Min(_pathStack.Peek()._x, pos._x)].gameObject.SetActive(false);
-                    }
-                    else if (_pathStack.Peek()._y != pos._y)
-                    {
-                        _hintVerticalArray[Mathf.Min(_pathStack.Peek()._y, pos._y), _pathStack.Peek()._x].gameObject.SetActive(false);
-                    }
-                }
+
+    /// <summary>
+    /// Retrocede el camino ya realizado por el jugador.
+    /// </summary>
+    /// <param name="x">Posicion X del tablero a la que se quiere retroceder.</param>
+    /// <param name="y">Posicion Y del tablero a la que se quiere retroceder.</param>
+    private void GoBack(int x, int y)
+    {
+        while (_pathStack.Count != 0 && (_pathStack.Peek()._x != x || _pathStack.Peek()._y != y))
+        {
+            MatrixPos pos = _pathStack.Pop();
+            _pressedTilesMatrix[pos._y, pos._x] = false;
+            _tilesMatrix[pos._y, pos._x].SetPressed(false);
+
+            if (_pathStack.Peek()._x != pos._x)
+            {
+                _hintHorizontalArray[_pathStack.Peek()._y, Mathf.Min(_pathStack.Peek()._x, pos._x)].gameObject.SetActive(false);
+            }
+            else if (_pathStack.Peek()._y != pos._y)
+            {
+                _hintVerticalArray[Mathf.Min(_pathStack.Peek()._y, pos._y), _pathStack.Peek()._x].gameObject.SetActive(false);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Crea el camino cuando el jugador pide una ayuda. La longitud del camino esta determinada por la
+    /// variable "_tilesShowingWhenUserWantHint". Cada vez que el jugador requiere ayuda, se sigue
+    /// el camino por donde estaba y vuelve a mostrar la misma cantidad de tiles.
+    /// </summary>
+    public void UserWantHint()
+    {
+        if (_hintCont < _levelData._path.Count - 1)
+        {
+            if (_hintCont == 0)
+                GoBack(_firsTile._x, _firsTile._y);
+
+            List<int> path = _levelData._path[_hintCont];
+            List<int> postPath = _levelData._path[_hintCont + 1];
+
+            if (path[1] != postPath[1])
+            {
+                _hintHorizontalArray[path[0], Mathf.Min(path[1], postPath[1])].gameObject.SetActive(true);
+            }
+            else if (path[0] != postPath[0])
+            {
+                _hintVerticalArray[Mathf.Min(path[0], postPath[0]), path[1]].gameObject.SetActive(true);
+            }
+
+            _hintCont++;
+
+            if (_hintCont < _tilesShowing)
+            {
+                Invoke("UserWantHint", 0.1f);
+            }
+            else
+            {
+                _tilesShowing += _tilesShowingWhenUserWantHint;
             }
         }
     }
@@ -401,27 +456,3 @@ public class BoardManager : MonoBehaviour
             && (_pressedTilesMatrix[y, x] && _tilesMatrix[y, x] != null);
     }
 }
-
-
-
-/*
-
-void Update(){
-    
-    if (estoyEnPC){
-        if(Input.GetMouseButton(0)){
-            .........
-        }
-        else if (Input.GetMouseButtonUp(0){
-            procesarLiberacion(); // para probar si hemos acabado el nivel o no
-        }
-    }
-    else{
-        if (touchCount > 0){
-            Buscar el dedo que te interesa dentro de "touches" (0) y procesar.
-        }
-    }
-
-}
-     
-*/

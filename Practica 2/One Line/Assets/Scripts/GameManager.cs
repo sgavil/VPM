@@ -82,4 +82,12 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Finish");
     }
+
+
+    // BOTONES
+
+    public void UserClickHint()
+    {
+        FindObjectOfType<BoardManager>().UserWantHint();
+    }
 }
