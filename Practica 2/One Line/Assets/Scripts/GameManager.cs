@@ -36,7 +36,6 @@ public class GameManager : MonoBehaviour
         _levelsGroup = new LevelsGroup();
         _levelsGroup.LoadLevelsFromJSON(_categoryLevelFiles);
 
-
     }
 
     private void Start()
@@ -77,5 +76,10 @@ public class GameManager : MonoBehaviour
     public List<int> GetSize()
     {
         return _levelsGroup._levelsSize[_categoryLevel - 1];
+    }
+
+    public void LevelFinished()
+    {
+        Debug.Log("Finish");
     }
 }

@@ -22,10 +22,14 @@ public class BoardManager : MonoBehaviour
     }
 
     public GameObject _tileGameObject;
+    public GameObject _hintGameObject;
+    public GameObject _cursorGameObject;
 
     // Privado
     private bool[,] _pressedTilesMatrix;
     private Tile[,] _tilesMatrix;
+    private Hint[,] _hintVerticalArray;
+    private Hint[,] _hintHorizontalArray;
     private Stack<MatrixPos> _pathStack;
 
     private int _boardHeight = 0;
@@ -82,7 +86,12 @@ public class BoardManager : MonoBehaviour
     public void InitializeMatrix()
     {
         _pressedTilesMatrix = new bool[_boardHeight, _boardWidth];
+
         _tilesMatrix = new Tile[_boardHeight, _boardWidth];
+
+        _hintHorizontalArray = new Hint[_boardHeight, _boardWidth - 1];
+        _hintVerticalArray = new Hint[_boardHeight - 1, _boardWidth];
+
         _pathStack = new Stack<MatrixPos>();
     }
 
@@ -103,22 +112,30 @@ public class BoardManager : MonoBehaviour
     /// <param name="level">Nivel</param>
     void CreateGrid()
     {
-        SetTileColor();
+        SetBoardColor();
         GenerateGrid();
     }
 
     /// <summary>
     /// Asigna el color por defecto y una piel aleatoria al GameObject Tile.
     /// </summary>
-    void SetTileColor()
+    void SetBoardColor()
     {
+        _actualColor = UnityEngine.Random.Range(1, _resourceManager._blockScriptableObjects.Count);
+        _cursorGameObject.GetComponent<SpriteRenderer>().sprite = _resourceManager._blockScriptableObjects[_actualColor].touch;
+
         Tile tile;
         if (_tileGameObject.TryGetComponent<Tile>(out tile))
         {
             tile._defaultTile.sprite = _resourceManager._blockScriptableObjects[0].block;
-
-            _actualColor = UnityEngine.Random.Range(1, _resourceManager._blockScriptableObjects.Count);
             tile._colourTile.sprite = _resourceManager._blockScriptableObjects[_actualColor].block;
+        }
+
+        Hint hint;
+        if(_hintGameObject.TryGetComponent<Hint>(out hint))
+        {
+            hint._defaultTile.sprite = _resourceManager._blockScriptableObjects[0].hint;
+            hint._colourTile.sprite = _resourceManager._blockScriptableObjects[_actualColor].hint;
         }
     }
 
@@ -130,6 +147,11 @@ public class BoardManager : MonoBehaviour
     /// <param name="layout">Tablero</param>
     public void GenerateGrid()
     {
+        GameObject tileParent = (GameObject)Instantiate(new GameObject(), transform);
+        tileParent.name = "Tile Group";
+        GameObject pathParent = (GameObject)Instantiate(new GameObject(), transform);
+        pathParent.name = "Path Group";
+
         for (int y = 0; y < _boardHeight; y++)
         {
             for (int x = 0; x < _boardWidth; x++)
@@ -137,7 +159,7 @@ public class BoardManager : MonoBehaviour
                 _pressedTilesMatrix[y, x] = true;
                 if (_levelData._layout[y][x] != '0')
                 {
-                    GameObject tile = (GameObject)Instantiate(_tileGameObject, transform);
+                    GameObject tile = (GameObject)Instantiate(_tileGameObject, tileParent.transform);
                     float posX = x;
                     float posY = -y;
 
@@ -154,8 +176,33 @@ public class BoardManager : MonoBehaviour
   
                     _tilesMatrix[y, x] = tile.GetComponent<Tile>();
                     _tilesMatrix[y, x].SetPressed(_pressedTilesMatrix[y, x]);
-                }
 
+
+                    if (x + 1 < _boardWidth && _levelData._layout[y][x + 1] != '0')
+                    {
+                        GameObject hint = (GameObject)Instantiate(_hintGameObject, pathParent.transform);
+                        float hintPosX = posX + 0.5f;
+                        hint.transform.position = new Vector3(hintPosX, posY);
+                        hint.GetComponent<Hint>().SetClueActive(false);
+
+                        _hintHorizontalArray[y, x] = hint.GetComponent<Hint>();
+
+                        hint.SetActive(false);
+
+                    }
+                    if (y + 1 < _boardHeight && _levelData._layout[y + 1][x] != '0')
+                    {
+                        GameObject hint = (GameObject)Instantiate(_hintGameObject, pathParent.transform);
+                        float hintPosY = posY - 0.5f;
+                        hint.transform.position = new Vector3(posX, hintPosY);
+                        hint.transform.Rotate(new Vector3(0, 0, 90));
+                        hint.GetComponent<Hint>().SetClueActive(false);
+
+                        _hintVerticalArray[y, x] = hint.GetComponent<Hint>();
+
+                        hint.SetActive(false);
+                    }
+                }
             }
         }
 
@@ -247,20 +294,39 @@ public class BoardManager : MonoBehaviour
     {
         mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
         mousePosition.z = 0;
-        if (_boardWidth % 2 == 0) mousePosition.x -= 0.5f;
+
+        _cursorGameObject.SetActive(true);
+        _cursorGameObject.transform.position = mousePosition;
+
         TilePressed((int)Mathf.RoundToInt(mousePosition.x), (int)Mathf.RoundToInt(mousePosition.y));
     }
 
     private void ProcessClickUp()
     {
+        _cursorGameObject.SetActive(false);
 
+        bool finished = true;
+
+        for(int y = 0; y < _boardHeight && finished; y++)
+        {
+            for(int x = 0; x < _boardWidth && finished; x++)
+            {
+                if (!_pressedTilesMatrix[y, x])
+                    finished = false;
+            }
+        }
+
+        if (finished)
+            GameManager.Instance.LevelFinished();
     }
 
     /// <summary>
     /// Gestiona la pulsacion del Tile.
     /// 
-    /// En el caso de que sea un Tile nuevo comprueba si es adyacente del ultimo Tile pulsado.
-    /// En el caso de que sea un Tile ya pulsado anteriormente elimina todo el camino posteriormente creado.
+    /// En el caso de que sea un Tile nuevo comprueba si es adyacente del ultimo Tile pulsado. Ademas, marca
+    /// el camino que va siguiendo el jugador.
+    /// En el caso de que sea un Tile ya pulsado anteriormente elimina todo el camino posteriormente creado. Ademas,
+    /// elimina el camino sobrante.
     /// </summary>
     /// <param name="x">Posicion X en coordenadas del mundo</param>
     /// <param name="y">Posicion Y en coordenadas del mundo</param>
@@ -268,7 +334,6 @@ public class BoardManager : MonoBehaviour
     {
         y = -y + (_boardHeight / 2);
         x += (_boardWidth / 2);
-        Debug.Log(x);
 
         if ((x >= 0 && x < _boardWidth && y >= 0 && y < _boardHeight) && _tilesMatrix[y, x] != null) {
             if (!_pressedTilesMatrix[y, x])
@@ -278,6 +343,16 @@ public class BoardManager : MonoBehaviour
                 {
                     _pressedTilesMatrix[y, x] = true;
                     _tilesMatrix[y, x].SetPressed(true);
+
+                    if (_pathStack.Peek()._x != x)
+                    {
+                        _hintHorizontalArray[y, Mathf.Min(_pathStack.Peek()._x, x)].gameObject.SetActive(true);
+                    }
+                    else if (_pathStack.Peek()._y != y)
+                    {
+                        _hintVerticalArray[Mathf.Min(_pathStack.Peek()._y, y), x].gameObject.SetActive(true);
+                    }
+
                     _pathStack.Push(new MatrixPos(x, y));
                 }
             }
@@ -288,6 +363,15 @@ public class BoardManager : MonoBehaviour
                     MatrixPos pos = _pathStack.Pop();
                     _pressedTilesMatrix[pos._y, pos._x] = false;
                     _tilesMatrix[pos._y, pos._x].SetPressed(false);
+
+                    if (_pathStack.Peek()._x != pos._x)
+                    {
+                        _hintHorizontalArray[_pathStack.Peek()._y, Mathf.Min(_pathStack.Peek()._x, pos._x)].gameObject.SetActive(false);
+                    }
+                    else if (_pathStack.Peek()._y != pos._y)
+                    {
+                        _hintVerticalArray[Mathf.Min(_pathStack.Peek()._y, pos._y), _pathStack.Peek()._x].gameObject.SetActive(false);
+                    }
                 }
             }
         }
