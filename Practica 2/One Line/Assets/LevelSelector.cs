@@ -6,11 +6,28 @@ public class LevelSelector : MonoBehaviour
 {
     public GameObject lockedImageGO;
 
+
+    //Elemento del canvas donde se van a meter las imagenes para hacer el scroll
+    public Transform content;
+
+    public GameObject[] categoryLevelIndicator;
+
     private void Start()
     {
-        for (int i = 0; i < GameManager.Instance._levelsGroup._levels[GameManager.Instance._categoryLevel].Count; i++)
+        GenerateLevels();
+        categoryLevelIndicator[GameManager.Instance._categoryLevel - 1].SetActive(true);
+    }
+
+    private void GenerateLevels()
+    {
+        for (int i = 0; i < GameManager.Instance._levelsGroup._levels[GameManager.Instance._categoryLevel-1].Count; i++)
         {
-            Instantiate(lockedImageGO, transform);
+            Instantiate(lockedImageGO, content.transform);
         }
+    }
+
+    public void GoBack()
+    {
+
     }
 }

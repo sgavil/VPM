@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    private const int levelSelectorSceneIndex = 2;
+
     [Tooltip("Archivos .json que almacenan los niveles.")]
     public List<TextAsset> _categoryLevelFiles;
 
@@ -44,8 +46,17 @@ public class GameManager : MonoBehaviour
     private Vector2 _emptyCanvasSize;
     private Vector3 _centerPositionEmptyCanvas;
 
-    private int _playerMoney { get; set; }
-
+    public int _playerMoney
+    {
+        get {
+            return _money;
+        }
+        set
+        {
+            _money = value;
+        }
+    }
+    private int _money;
     //---------------------------------------------------
     //TEMPORAL
     [Tooltip("Nombre de la categoría del nivel al que quieres acceder.")]
@@ -61,6 +72,11 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+
         Instance = this;
 
         _levelsGroup = new LevelsGroup();
@@ -69,21 +85,33 @@ public class GameManager : MonoBehaviour
         _screenSize = new Vector2(0, 0);
         _emptyLimitPercent /= 100.0f;
         Scaler();
+        DontDestroyOnLoad(this);
     }
 
     private void Start()
     {
-        _hintPriceText.text = _hintPrice.ToString();
+        if(_hintPriceText != null)
+            _hintPriceText.text = _hintPrice.ToString();
+        if(_playerMoneyText != null)
         _playerMoneyText.text = _playerMoney.ToString();
+
+
     }
+
 
     // Update is called once per frame
     void Update()
     {
         if (_screenSize.x != Screen.width || _screenSize.y != Screen.height)
             Scaler();
+
     }
 
+    public void updateMoneyAdViewed(int n)
+    {
+        _money += n;
+        _playerMoneyText.text = _money.ToString();
+    }
     public void SetScreenSizeIsChanged(bool b)
     {
         _screenSizeIsChanged = b;    
@@ -198,4 +226,11 @@ public class GameManager : MonoBehaviour
     {
         return _centerPositionEmptyCanvas;
     }
+    public void LoadLevelSelector(int i)
+    {
+        _categoryLevel = i;
+        Debug.Log("me he cambiado al selector de niveles " + i.ToString());
+        SceneManager.LoadScene(levelSelectorSceneIndex);
+    }
+   
 }
