@@ -22,6 +22,8 @@ public class BoardManager : MonoBehaviour
     [Tooltip("Gestor de Recursos que almacena los sprites que formaran el tablero.")]
     public ResourceManager _resourceManager;
 
+    public CanvasSize _canvasSize;
+
     [Tooltip("Prefab del Tile")]
     public GameObject _tileGameObject;
 
@@ -276,18 +278,18 @@ public class BoardManager : MonoBehaviour
     /// </summary>
     private void SetGridAtInitialPosition()
     {
-        Vector2 startPos = Camera.main.ScreenToWorldPoint(GameManager.Instance.GetEmptySpaceCenterPosition());
+        Vector2 startPos = Camera.main.ScreenToWorldPoint(_canvasSize.GetEmptySpaceCenterPosition());
+
         startPos.y = -startPos.y;
         transform.position = startPos;
 
         float width = -_boardWidth / 2;
-
         if (_boardWidth % 2 == 0) width += 0.5f;
 
         float height = _boardHeight / 2;
         if (_boardHeight % 2 == 0) height -= 0.5f;
-        transform.position = new Vector2((transform.position.x + width) * transform.localScale.x,
-            (transform.position.y + height) * transform.localScale.y);
+        transform.position = new Vector2(transform.position.x + (width * transform.localScale.x),
+            transform.position.y + (height * transform.localScale.y));
     }
 
 
@@ -297,14 +299,17 @@ public class BoardManager : MonoBehaviour
     private void ScaleGrid()
     {
 
-        Vector2 emptySize = GameManager.Instance.GetEmptySpaceSize();
+        Vector2 emptySize = _canvasSize.GetEmptySpaceSize();
         emptySize.x += Screen.width / 2;
         emptySize.y += Screen.height / 2;
         emptySize = Camera.main.ScreenToWorldPoint(emptySize);
 
-        float widthFactor = emptySize.x / _levelSize[0];
-        float heightFactor = emptySize.y / _levelSize[1];
-        transform.localScale = new Vector2(widthFactor, heightFactor);
+        float widthFactor = emptySize.x / _levelAvailableSpace[0];
+
+        float heightFactor = emptySize.y / _levelAvailableSpace[1];
+        float scaleFactor = Mathf.Min(widthFactor, heightFactor);
+
+        transform.localScale = new Vector2(scaleFactor, scaleFactor);
     }
 
     /// <summary>
@@ -351,6 +356,8 @@ public class BoardManager : MonoBehaviour
         mousePosition.z = 0;
 
         _cursorGameObject.transform.position = mousePosition;
+
+
 
         TilePressed((int)Mathf.RoundToInt(mousePosition.x), (int)Mathf.RoundToInt(mousePosition.y));
     }
