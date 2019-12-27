@@ -74,6 +74,12 @@ public class BoardManager : MonoBehaviour
     private Stack<MatrixPos> _pathStack;    // Pila de posiciones que almacena el camino que esta recorriendo
                                             // el jugador.
 
+    private Vector2 _emptySpaceSize; // Almacena el tamaño del espacio del que dispone el tablero.
+
+    private Vector2 _emptyCenterPosition; // Almacena la posicion del espacio central vacio.
+
+    private Vector2 _tileSize;  // Guarda el tamaño de un tile
+
 
     private int _boardHeight = 0;   // Altura del tablero.
 
@@ -278,7 +284,8 @@ public class BoardManager : MonoBehaviour
     /// </summary>
     private void SetGridAtInitialPosition()
     {
-        Vector2 startPos = Camera.main.ScreenToWorldPoint(_canvasSize.GetEmptySpaceCenterPosition());
+        _emptyCenterPosition = _canvasSize.GetEmptySpaceCenterPosition();
+        Vector2 startPos = Camera.main.ScreenToWorldPoint(_emptyCenterPosition);
 
         startPos.y = -startPos.y;
         transform.position = startPos;
@@ -298,14 +305,19 @@ public class BoardManager : MonoBehaviour
     /// </summary>
     private void ScaleGrid()
     {
+        _emptySpaceSize = _canvasSize.GetEmptySpaceSize();
 
-        Vector2 emptySize = _canvasSize.GetEmptySpaceSize();
-        emptySize.x += Screen.width / 2;
-        emptySize.y += Screen.height / 2;
+        float tileWidth = _emptySpaceSize.x / _levelAvailableSpace[0];
+        float tileHeight = _emptySpaceSize.y / _levelAvailableSpace[1];
+        float tSize = Mathf.Min(tileWidth, tileHeight);
+        _tileSize = new Vector2(tSize, tSize);
+
+        Vector2 emptySize = new Vector2();
+        emptySize.x = _emptySpaceSize.x + Screen.width / 2;
+        emptySize.y = _emptySpaceSize.y + Screen.height / 2;
         emptySize = Camera.main.ScreenToWorldPoint(emptySize);
 
         float widthFactor = emptySize.x / _levelAvailableSpace[0];
-
         float heightFactor = emptySize.y / _levelAvailableSpace[1];
         float scaleFactor = Mathf.Min(widthFactor, heightFactor);
 
@@ -352,14 +364,16 @@ public class BoardManager : MonoBehaviour
 
     private void ProcessClickDown(Vector3 mousePosition)
     {
-        mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-        mousePosition.z = 0;
+        Vector3 cursorPos = Camera.main.ScreenToWorldPoint(mousePosition);
+        cursorPos.z = 0;
 
-        _cursorGameObject.transform.position = mousePosition;
+        _cursorGameObject.transform.position = cursorPos;
 
+        float x = (mousePosition.x - ((Screen.width - (_boardWidth * _tileSize.x)) / 2)) / _tileSize.x;
+        float y = (mousePosition.y - ((Screen.height - (_emptyCenterPosition.y * 2 - Screen.height) - (_boardHeight * _tileSize.y)) / 2)) / _tileSize.y;
+        y = -y;
 
-
-        TilePressed((int)Mathf.RoundToInt(mousePosition.x), (int)Mathf.RoundToInt(mousePosition.y));
+        TilePressed((int)x, (int)y + _boardHeight - 1);
     }
 
     private void ProcessClickUp()
@@ -393,14 +407,11 @@ public class BoardManager : MonoBehaviour
     /// <param name="y">Posicion Y en coordenadas del mundo</param>
     private void TilePressed(int x, int y)
     {
-        y = -y + (_boardHeight / 2);
-        x += (_boardWidth / 2);
 
         if ((x >= 0 && x < _boardWidth && y >= 0 && y < _boardHeight) && _tilesMatrix[y, x] != null) {
 
             if (!_pressedTilesMatrix[y, x])
             {
-                _cursorGameObject.SetActive(true);
                 if (IsPeekOfPath(x - 1, y) || IsPeekOfPath(x + 1, y)
                     || IsPeekOfPath(x, y - 1) || IsPeekOfPath(x, y + 1))
                 {
@@ -426,7 +437,7 @@ public class BoardManager : MonoBehaviour
                 GoBack(x, y);
                 SoundManager.Instance.PlayMove();
             }
-               
+            _cursorGameObject.SetActive(true);
         }
     }
 
