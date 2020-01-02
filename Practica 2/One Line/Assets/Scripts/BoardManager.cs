@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 
 // Estructura usada para almacenar las coordenadas de las entidades 
 // dentro de las matrices
@@ -36,10 +38,19 @@ public class BoardManager : MonoBehaviour
     [Tooltip("Numero de casillas que se le quiere mostrar al jugador cuando pide una pista.")]
     public int _tilesShowingWhenUserWantHint;
 
+    [Tooltip("Canvas que se muestra al completar el nivel")]
+    public GameObject _nextLevelCanvas;
+
+    [Tooltip("Transform donde se agruparan todos los tiles")]
+    public Transform _tilesGroup;
+
     #endregion
 
     #region ATRIBUTOS PRIVADOS
 
+
+    private bool _levelFinished = false;     //Indica si se ha completado el nivel o no
+    
     // INFORMACION NECESARIA PARA LA CREACION DEL NIVEL
 
     private LevelData _levelData;   // Informacion del tablero
@@ -96,26 +107,17 @@ public class BoardManager : MonoBehaviour
 
     #endregion
 
+
     private void Start()
     {
-
-        _levelData = GameManager.Instance.GetLevel();
-        _levelAvailableSpace = GameManager.Instance.GetAvailableSpace();
-        _levelSize = GameManager.Instance.GetSize();
-
-        _tilesShowing = _tilesShowingWhenUserWantHint;
-
-        SetGridSize();
-
-        InitializeMatrix();
-
-        CreateGrid();
-        CreatePath();
+        PrepareLevel();
     }
 
     private void Update()
     {
-        InputController();
+        if(!_levelFinished)
+            InputController();
+
         if (GameManager.Instance.IsScreenSizeChanged())
         {
             ScaleGridAndSetPosition();
@@ -148,6 +150,7 @@ public class BoardManager : MonoBehaviour
     {
         _boardWidth = _levelData._width;
         _boardHeight = _levelData._height;
+        Debug.Log(_boardHeight + " " + _boardWidth);
     }
 
     /// <summary>
@@ -192,7 +195,7 @@ public class BoardManager : MonoBehaviour
     /// <param name="layout">Tablero</param>
     private void GenerateGrid()
     {
-    
+        
         for (int y = 0; y < _boardHeight; y++)
         {
             for (int x = 0; x < _boardWidth; x++)
@@ -201,10 +204,15 @@ public class BoardManager : MonoBehaviour
                 if (_levelData._layout[y][x] != '0')
                 {
                     GameObject tile = (GameObject)Instantiate(_tileGameObject, transform);
+                   
+                    tile.transform.parent = _tilesGroup;
                     float posX = x;
                     float posY = -y;
 
-                    tile.transform.position = new Vector2(posX, posY);
+                    posX = (float)Math.Round(posX, 0);
+                    posY = (float)Math.Round(posY, 0);
+
+                    tile.transform.localPosition = new Vector2(x, -y);
 
                     if (_levelData._layout[y][x] == '1')
                     {
@@ -233,22 +241,24 @@ public class BoardManager : MonoBehaviour
         if (x + 1 < _boardWidth && _levelData._layout[y][x + 1] != '0')
         {
             GameObject hint = (GameObject)Instantiate(_hintGameObject, transform);
+            hint.transform.parent = _tilesGroup;
             hint.GetComponent<Hint>().SetClueActive(false);
             hint.SetActive(false);
 
             float hintPosX = posX + 0.5f;
-            hint.transform.position = new Vector3(hintPosX, posY);
+            hint.transform.localPosition= new Vector3(hintPosX, posY);
 
             _hintHorizontalMatrix[y, x] = hint.GetComponent<Hint>();
         }
         if (y + 1 < _boardHeight && _levelData._layout[y + 1][x] != '0')
         {
             GameObject hint = (GameObject)Instantiate(_hintGameObject, transform);
+            hint.transform.parent = _tilesGroup;
             hint.GetComponent<Hint>().SetClueActive(false);
             hint.SetActive(false);
 
             float hintPosY = posY - 0.5f;
-            hint.transform.position = new Vector3(posX, hintPosY);
+            hint.transform.localPosition = new Vector3(posX, hintPosY);
             hint.transform.Rotate(new Vector3(0, 0, 90));
 
             _hintVerticalMatrix[y, x] = hint.GetComponent<Hint>();
@@ -264,9 +274,17 @@ public class BoardManager : MonoBehaviour
             GameObject hint = null;
 
             if (path[1] != postPath[1])
+            {
                 hint = Instantiate(_hintHorizontalMatrix[path[0], Mathf.Min(path[1], postPath[1])].gameObject, transform);
+                hint.transform.parent = _tilesGroup;
+            }
+               
             else if (path[0] != postPath[0])
+            {
                 hint = Instantiate(_hintVerticalMatrix[Mathf.Min(path[0], postPath[0]), path[1]].gameObject, transform);
+                hint.transform.parent = _tilesGroup;
+            }
+                
 
             hint.GetComponent<Hint>().SetClueActive(true);
             _pathArray[i] = hint.GetComponent<Hint>();
@@ -297,6 +315,7 @@ public class BoardManager : MonoBehaviour
         if (_boardHeight % 2 == 0) height -= 0.5f;
         transform.position = new Vector2(transform.position.x + (width * transform.localScale.x),
             transform.position.y + (height * transform.localScale.y));
+        
     }
 
 
@@ -392,7 +411,10 @@ public class BoardManager : MonoBehaviour
         }
 
         if (finished)
-            GameManager.Instance.LevelFinished();
+        {
+            LevelFinished();
+        }
+            //GameManager.Instance.LevelFinished();
     }
 
     /// <summary>
@@ -521,4 +543,54 @@ public class BoardManager : MonoBehaviour
         return (x >= 0 && x < _boardWidth && y >= 0 && y < _boardHeight)
             && (_pressedTilesMatrix[y, x] && _tilesMatrix[y, x] != null);
     }
+
+
+    /// <summary>
+    /// Muestra el hud de nivel completado para poder pasar al siguiente
+    /// </summary>
+    private void LevelFinished()
+    {
+        _levelFinished = true;
+        if (_nextLevelCanvas != null)
+        {
+            _nextLevelCanvas.SetActive(true);
+        }
+    }
+
+    public void NextLevel()
+    {
+        _nextLevelCanvas.SetActive(false);
+        _levelFinished = false;
+        GameManager.Instance.NextLevel();
+        PrepareLevel();
+
+    }
+    private void PrepareLevel()
+    {
+        _levelData = GameManager.Instance.GetLevel();
+        _levelAvailableSpace = GameManager.Instance.GetAvailableSpace();
+        _levelSize = GameManager.Instance.GetSize();
+
+        
+
+        _tilesShowing = _tilesShowingWhenUserWantHint;
+
+        SetGridSize();
+
+        InitializeMatrix();
+
+        ClearGrid();
+        CreateGrid();
+        CreatePath();
+    }
+
+    private void ClearGrid()
+    {
+        foreach(Transform c in _tilesGroup)
+        {
+            Destroy(c.gameObject);
+        }
+    }
+
+
 }

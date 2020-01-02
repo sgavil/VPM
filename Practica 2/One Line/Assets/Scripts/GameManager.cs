@@ -9,7 +9,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    private const int levelSelectorSceneIndex = 2;
+    private const int mainMenuScene = 0;
+    private const int levelSelectorSceneIndex = 1;
+    private const int levelScene = 2;
 
     [Tooltip("Archivos .json que almacenan los niveles.")]
     public List<TextAsset> _categoryLevelFiles;
@@ -50,15 +52,15 @@ public class GameManager : MonoBehaviour
     private bool _screenSizeIsChanged = false;
     //---------------------------------------------------
 
-    // Start is called before the first frame update
     void Awake()
     {
-        if (Instance != null && Instance != this)
+        if (Instance == null)
         {
-            Destroy(this.gameObject);
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
-
-        Instance = this;
+        else
+            Destroy(gameObject);
 
         _levelsGroup = new LevelsGroup();
         _levelsGroup.LoadLevelsFromJSON(_categoryLevelFiles);
@@ -72,14 +74,6 @@ public class GameManager : MonoBehaviour
             _hintPriceText.text = _hintPrice.ToString();
         if(_playerMoneyText != null)
         _playerMoneyText.text = _playerMoney.ToString();
-
-
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
 
 
     }
@@ -118,11 +112,21 @@ public class GameManager : MonoBehaviour
         return _levelsGroup._levelsSize[_categoryLevel - 1];
     }
 
-    public void LevelFinished()
-    {
-        Debug.Log("Finish");
-    }
+    //public void LevelFinished()
+    //{
+    //    Debug.Log("Finish");
+    //}
 
+    public void NextLevel()
+    {
+        _level++;
+        if (_level > _levelsGroup._levels[_categoryLevel].Count)
+        {
+            _categoryLevel++;
+            _level = 0;
+        }
+        //SceneManager.LoadScene(levelScene);
+    }
 
     // BOTONES
 
@@ -157,5 +161,16 @@ public class GameManager : MonoBehaviour
         Debug.Log("me he cambiado al selector de niveles " + i.ToString());
         SceneManager.LoadScene(levelSelectorSceneIndex);
     }
+
+    public void GoMainMenu()
+    {
+        SceneManager.LoadScene(mainMenuScene);
+    }
    
+    public void MoveToLevel(int number)
+    {
+        Debug.Log("me he movido al numero: " + number.ToString());
+        _level = number;
+        SceneManager.LoadScene(levelScene);
+    }
 }
