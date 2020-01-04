@@ -14,33 +14,49 @@ public class ProgressManager : MonoBehaviour
     private PersistenceController persistenceController;
 
     private List<int> levelsCompleted = new List<int>();
-    private int _virtualCoin = 55;
-    private bool _adsBought = true;
-    private float _timeLeftToNextChallenge = 21.0f;
 
+    public int _virtualCoin = 0;
+    public bool _adsBought = false;
+    public string _serializationVersion = "0.01";
+    public int _completedChallenges = 0;
+    public DateTime _timeWhenChallengeDone;
 
+    [HideInInspector]
+    public string progressID;
 
-    private void Start()
+    private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+
         }
         else
+        {
             Destroy(gameObject);
-
-        DontDestroyOnLoad(this);
+            return;
+        }
 
         for (int i = 0; i < GameManager.Instance._categoryLevelFiles.Count; i++)
         {
-            levelsCompleted.Add(1);
+            levelsCompleted.Add(0);
         }
 
         persistenceController = new PersistenceController();
-        persistenceController.LoadFile();
+
+        Debug.Log(Application.persistentDataPath);
+        LoadProgress();
     }
 
+    public void LoadProgress()
+    {
+        persistenceController.LoadFile();
+    }
+    public void LevelCompleted(int category)
+    {
+        levelsCompleted[category] += 1;
+    }
     public string GetJson(SerializationObject obj)
     {
         return JsonUtility.ToJson(obj);
@@ -60,7 +76,7 @@ public class ProgressManager : MonoBehaviour
 
     public int GetUnlockedLevelsOfCategory(int nCategory)
     {
-        return levelsCompleted[GameManager.Instance._categoryLevel];
+        return levelsCompleted[nCategory - 1] + 1;
     }
 
     public void UpdateValues(SerializationObject obj)
@@ -68,20 +84,57 @@ public class ProgressManager : MonoBehaviour
         levelsCompleted = obj._levelsCompleted;
         _virtualCoin = obj._virtualCoin;
         _adsBought = obj._adsBought;
-        _timeLeftToNextChallenge = obj._timeLeftToNextChallenge;
+        _timeWhenChallengeDone = obj.getDate();
+        _serializationVersion = obj._serializationVersion;
 
-        Debug.Log("VALORES ACTUALIZADOS: ");
-        Debug.Log(levelsCompleted);
-        Debug.Log(_virtualCoin);
-        Debug.Log(_timeLeftToNextChallenge);
+        _completedChallenges = obj._completedChallenges;
 
     }
 
     public void SaveProgress()
     {
-        SerializationObject sObj = new SerializationObject(levelsCompleted, _virtualCoin, _adsBought, _timeLeftToNextChallenge);
+
+        SerializationObject sObj = new SerializationObject(levelsCompleted, _virtualCoin, _adsBought,
+             _serializationVersion, _completedChallenges, _timeWhenChallengeDone);
+
         persistenceController.SaveFile(sObj);
     }
+    private void OnApplicationQuit()
+    {
+        SaveProgress();
+    }
+    private void OnApplicationFocus(bool focus)
+    {
+        if (!focus)
+            SaveProgress();
+    }
 
+    public void UpdateMoneyAdViewed(int n)
+    {
+        _virtualCoin += n;
+        HUDManager.Instance.UpdateMoneyText();
+
+    }
+    public void ResetProgress()
+    {
+        for (int i = 0; i < levelsCompleted.Count; i++)
+        {
+            levelsCompleted[i] = 0;
+        }
+        _virtualCoin = 0;
+        _adsBought = false;
+        
+        _completedChallenges = 0;
+
+    }
+    public void AddDuplicatedChallengeMoney()
+    {
+        _virtualCoin += GameManager.Instance._challengeMoneyObtained * 2;
+    }
+    public void AddChallengeCoins()
+    {
+        _virtualCoin += GameManager.Instance._challengeMoneyObtained;
+
+    }
 
 }

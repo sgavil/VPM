@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEditor;
 using UnityEngine.UI;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,41 +14,47 @@ public class GameManager : MonoBehaviour
     private const int levelSelectorSceneIndex = 1;
     private const int levelScene = 2;
 
+    [Header("Archivos de los niveles")]
     [Tooltip("Archivos .json que almacenan los niveles.")]
     public List<TextAsset> _categoryLevelFiles;
 
     public LevelsGroup _levelsGroup;
 
-    [Tooltip("Texto donde se muestra el dinero actual del jugador.")]
-    public Text _playerMoneyText;
 
-    [Tooltip("Texto donde se muestra el precio de una pista.")]
-    public Text _hintPriceText;
+    [Header("Atributos del reto")]
+    public int _challengeCost;
+    public int _challengeMoneyObtained;
+    public int _challengeMedalsObtained;
+    public int _challengeSeconds;
+    public bool _doingChallenge = false;
+    public bool _challengeAvailable = true;
+    
 
-    [Tooltip("Precio de una pista.")]
-    public int _hintPrice;
+    [HideInInspector]
+    public string _challengeLeftTimeText;
 
+    [Tooltip("Tiempo que tiene que esperar el jugador para poder volver a jugar un reto en minutos")]
+    public float _challengeTime;
+    public DateTime _currChallengeDate;
 
-
-    public int _playerMoney
-    {
-        get {
-            return _money;
-        }
-        set
-        {
-            _money = value;
-        }
-    }
-    private int _money;
-    //---------------------------------------------------
-    //TEMPORAL
-    [Tooltip("Nombre de la categoría del nivel al que quieres acceder.")]
+    [Header("Control de nivel y dificultad")]
+    [Tooltip("Número de la categoría del nivel al que quieres acceder.")]
     [Range(1, 5)]
     public int _categoryLevel = 0;
 
     [Tooltip("Nivel del juego.")]
     public int _level = 0;
+
+
+    [Header("Gestión de moneda virtual")]
+    [Tooltip("Precio de una pista.")]
+    public int _hintPrice;
+
+    [Tooltip("Dinero obtenido al ver un anuncio.")]
+    public int _adsMoneyObtained;
+
+    [HideInInspector]
+    public int GameID = 47810; //Game I
 
     private bool _screenSizeIsChanged = false;
     //---------------------------------------------------
@@ -60,32 +67,62 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
         else
+        {
             Destroy(gameObject);
+            return;
+        }
 
         _levelsGroup = new LevelsGroup();
         _levelsGroup.LoadLevelsFromJSON(_categoryLevelFiles);
-
         DontDestroyOnLoad(this);
     }
-
-    private void Start()
+    public void Start()
     {
-        if(_hintPriceText != null)
-            _hintPriceText.text = _hintPrice.ToString();
-        if(_playerMoneyText != null)
-        _playerMoneyText.text = _playerMoney.ToString();
+        _currChallengeDate = ProgressManager.Instance._timeWhenChallengeDone;
+        _challengeTime *= 60; //Pasamos el tiempo a segundos
+
+    }
+    private void Update()
+    {
+        CheckChallengeDate();
+    }
+    private void CheckChallengeDate()
+    {
+        DateTime actualDate = DateTime.Now;
+        TimeSpan diff =  actualDate - _currChallengeDate;
+
+
+        if (diff.TotalSeconds >= _challengeTime)
+        {
+            _challengeAvailable = true;
+            HUDManager.Instance.DisableChallengePanel();
+        }
+        else
+        {
+            float time = _challengeTime - (float)diff.TotalSeconds;
+
+            string minutes = Mathf.Floor(time / 60).ToString("00");
+            string seconds = (time % 60).ToString("00");
+            string fraction = ((time * 100) % 100).ToString("000");
+            _challengeLeftTimeText = minutes + ":" + seconds.ToString();
+            Debug.Log(_challengeLeftTimeText);
+        }
 
 
     }
 
-    public void updateMoneyAdViewed(int n)
+    public void ChallengeCompleted()
     {
-        _money += n;
-        _playerMoneyText.text = _money.ToString();
+        ProgressManager.Instance._completedChallenges++;
+        ProgressManager.Instance.AddChallengeCoins();
+        
+        _doingChallenge = false;
+        GoMainMenu();
     }
+
     public void SetScreenSizeIsChanged(bool b)
     {
-        _screenSizeIsChanged = b;    
+        _screenSizeIsChanged = b;
     }
 
     public bool IsScreenSizeChanged()
@@ -112,11 +149,30 @@ public class GameManager : MonoBehaviour
         return _levelsGroup._levelsSize[_categoryLevel - 1];
     }
 
-    //public void LevelFinished()
-    //{
-    //    Debug.Log("Finish");
-    //}
+    public void AddSkippedWhileChallenge()
+    {
+        _doingChallenge = false;
+        GoMainMenu();
+    }
+    public bool PlayChallenge(bool adShown)
+    {
+        if (!adShown && _challengeCost > ProgressManager.Instance._virtualCoin )
+            return false;
 
+        if (!adShown)
+            ProgressManager.Instance._virtualCoin -= _challengeCost;
+
+        ProgressManager.Instance._timeWhenChallengeDone = DateTime.Now;
+        _currChallengeDate = DateTime.Now;
+        _challengeAvailable = false;
+
+        int category = UnityEngine.Random.Range(1,_categoryLevelFiles.Count);
+        int number = UnityEngine.Random.Range(1, _levelsGroup._levels[category].Count);
+        _categoryLevel = category;
+       _doingChallenge = true;
+        MoveToLevel(number);
+        return true;
+    }
     public void NextLevel()
     {
         _level++;
@@ -127,28 +183,34 @@ public class GameManager : MonoBehaviour
         }
         //SceneManager.LoadScene(levelScene);
     }
-
+    [HideInInspector]
+    public string gameID;
     // BOTONES
 
     public void ClickBack()
     {
         SoundManager.Instance.PlayBack();
+        if (_doingChallenge)
+            GoMainMenu();
+        else
+            LoadLevelSelector(_categoryLevel);
     }
     public void ClickHint()
     {
-        if (_playerMoney >= _hintPrice)
+        if (ProgressManager.Instance._virtualCoin >= _hintPrice)
         {
             FindObjectOfType<BoardManager>().UserWantHint();
-            _playerMoney -= _hintPrice;
-            _playerMoneyText.text = _playerMoney.ToString();
+            ProgressManager.Instance._virtualCoin -= _hintPrice;
+            HUDManager.Instance.UpdateMoneyText();
+
         }
         else
         {
             SoundManager.Instance.PlayNotEnoughMoney();
-            Debug.Log("No tienes dinero suficiente");
+            StartCoroutine(HUDManager.Instance.ShowNotEnoughMoneyText());
         }
     }
-
+    
     public void ClickReplay()
     {
         SoundManager.Instance.PlayReplay();
@@ -159,18 +221,20 @@ public class GameManager : MonoBehaviour
     {
         _categoryLevel = i;
         Debug.Log("me he cambiado al selector de niveles " + i.ToString());
-        SceneManager.LoadScene(levelSelectorSceneIndex);
+        SceneManager.LoadScene(levelSelectorSceneIndex, LoadSceneMode.Single);
     }
 
     public void GoMainMenu()
     {
-        SceneManager.LoadScene(mainMenuScene);
+        SceneManager.LoadScene(mainMenuScene, LoadSceneMode.Single);
     }
-   
     public void MoveToLevel(int number)
     {
-        Debug.Log("me he movido al numero: " + number.ToString());
         _level = number;
-        SceneManager.LoadScene(levelScene);
+        SceneManager.LoadScene(levelScene, LoadSceneMode.Single);
+        Debug.Log("El number es: " + number);
     }
+    
+    
+
 }

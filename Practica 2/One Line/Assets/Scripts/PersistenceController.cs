@@ -2,11 +2,14 @@
 using System.Security.Cryptography;
 using System.Text;
 using System;
+using UnityEngine;
 
 public class PersistenceController
 {
-    private const string fileName = "prgs.json";
-    private const string destination = fileName;
+    private const string fileName = "/prgs.json";
+    private string destination = Application.persistentDataPath + fileName;
+    public string ActualGameID = "784512";
+    private byte[] FileBytes;
 
     public void SaveFile(SerializationObject obj)
     {
@@ -26,9 +29,9 @@ public class PersistenceController
 
         string jsonToChiper = ProgressManager.Instance.GetJson(obj);
         byte[] fileBytesToChiper =  Encoding.UTF8.GetBytes(jsonToChiper);
-
+        ActualGameID = GameManager.Instance.gameID;
+        FileBytes = Encoding.UTF8.GetBytes(ActualGameID);
         string hashResult = ConvertObject(fileBytesToChiper);
-
 
         chiperObject.obj = obj;
         chiperObject._result = hashResult;
@@ -39,7 +42,7 @@ public class PersistenceController
 
     public void LoadFile()
     {
-        string destination = fileName;
+       
 
         if (!File.Exists(destination))
             return;
@@ -51,6 +54,8 @@ public class PersistenceController
        
         string testObjJson = ProgressManager.Instance.GetJson(ReadedObj);
         byte[] fileBytes = Encoding.UTF8.GetBytes(testObjJson);
+        ActualGameID = GameManager.Instance.gameID;
+        FileBytes = Encoding.UTF8.GetBytes(ActualGameID);
 
         string testResult = ConvertObject(fileBytes);
 
@@ -62,7 +67,7 @@ public class PersistenceController
 
         else
         {
-            //TODO:: hacer algo para que el jugador llore
+            ProgressManager.Instance.ResetProgress(); 
         }
     }
 
@@ -70,11 +75,18 @@ public class PersistenceController
     {
         StringBuilder sb = new StringBuilder();
 
+        byte[] aux = new byte[FileBytes.Length + fileBytes.Length];
+        aux = fileBytes;
+        FileBytes.CopyTo(aux, FileBytes.Length);
         using (SHA256Managed sha256 = new SHA256Managed())
         {
-            byte[] hash = sha256.ComputeHash(fileBytes);
+            byte[] hash = sha256.ComputeHash(aux);
             foreach (Byte b in hash)
+            {
+                
                 sb.Append(b.ToString("X2"));
+
+            }
         }
 
         return sb.ToString();

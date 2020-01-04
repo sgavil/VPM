@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Advertisements;
+using System.Text;
+using System;
 
 public class AdsManager : MonoBehaviour, IUnityAdsListener
 {
@@ -9,7 +11,8 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
 
     private bool isTest = true;
 
-    
+    private bool challengeAd = false;
+    private bool duplicateCoins = false;
 
 
 #if UNITY_ANDROID 
@@ -18,33 +21,40 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
 
     void Awake()
     {
-        if (Instance != null && Instance != this)
+        if (Instance == null)
         {
-            Destroy(this.gameObject);
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+
         }
-
-        Instance = this;
-
-    }
-    void Start()
-    {
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
 
         Advertisement.AddListener(this);
         Advertisement.Initialize(gameID, true);
+        CheckID();
     }
+
 
 
     public void OnUnityAdsReady(string placementId)
     {
         // Optional actions to take when the end-users triggers an ad.
-       // Advertisement.Show();
+        // Advertisement.Show();
     }
-
+    public void DuplicateCoinsAds()
+    {
+        duplicateCoins = true;
+        showRewardedAd();
+    }
     public void showRewardedAd()
     {
 
         Advertisement.Show();
-        
+
     }
     public void OnUnityAdsDidError(string message)
     {
@@ -55,19 +65,45 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
     {
         // Optional actions to take when the end-users triggers an ad.
     }
+    [HideInInspector]
+    public string adsIDS = "ag78$44%%S";
 
     public void OnUnityAdsDidFinish(string placementId, ShowResult showResult)
     {
         if (showResult == ShowResult.Finished)
         {
-            // Reward the user for watching the ad to completion.
+            if (duplicateCoins)
+            {
+                ProgressManager.Instance.AddDuplicatedChallengeMoney();
+                duplicateCoins = false;
+                return;
+            }
+            if (challengeAd)
+            {
+                GameManager.Instance.PlayChallenge(true);
+                challengeAd = false;
+                return;
+            }
             addMoney();
             Debug.Log("anuncio acabado completo");
+
+
         }
         else if (showResult == ShowResult.Skipped)
         {
-            // Do not reward the user for skipping the ad.
-            Debug.Log("El usuario ha pasado el anuncio, no debe haber reward");
+
+            if (challengeAd)
+            {
+                GameManager.Instance.AddSkippedWhileChallenge();
+                challengeAd = false;
+
+            }
+            if (duplicateCoins)
+            {
+                ProgressManager.Instance.AddChallengeCoins();
+                duplicateCoins = false;
+
+            }
 
         }
         else if (showResult == ShowResult.Failed)
@@ -76,8 +112,24 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
         }
     }
 
+    public void ChallengeAd()
+    {
+        challengeAd = true;
+       showRewardedAd();
+    }
+
+    private void CheckID()
+    {
+        StringBuilder sBuilder = new StringBuilder(GameManager.Instance.GameID.ToString().Length);
+        foreach (char c in adsIDS)
+        {
+            sBuilder.Append(c ^ GameManager.Instance.GameID);
+        }
+        GameManager.Instance.gameID = sBuilder.ToString();
+    }
     private void addMoney()
     {
-        GameManager.Instance.updateMoneyAdViewed(20);
+        ProgressManager.Instance.UpdateMoneyAdViewed(GameManager.Instance._adsMoneyObtained);
     }
+
 }

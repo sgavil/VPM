@@ -11,32 +11,44 @@ public class SerializationObject
 {
     public List<int> _levelsCompleted;
 
-    public int _virtualCoin = 55;
-    public bool _adsBought = false;
-    public float _timeLeftToNextChallenge = 21.0f;
-   
+    public int _virtualCoin;
+    public bool _adsBought;
 
-    public SerializationObject(List<int> levelsCompleted, int virtualCoin, bool adsBought, float timeLeftToNextChallenge)
+    public int _challengeHour;
+    public int _challengeMinutes;
+    public int _challengeSeconds;
+
+    public int _challengeDay;
+    public int _challengeMonth;
+    public int _challengeYear;
+
+    public string _serializationVersion;
+    public int _completedChallenges;
+
+    public SerializationObject(List<int> levelsCompleted, int virtualCoin, bool adsBought, string serializationVersion, int completedChallenges, DateTime _challengeDate)
     {
         _levelsCompleted = levelsCompleted;
         _virtualCoin = virtualCoin;
         _adsBought = adsBought;
-        _timeLeftToNextChallenge = timeLeftToNextChallenge;
+        _serializationVersion = serializationVersion;
+        _completedChallenges = completedChallenges;
+
+        _challengeHour = _challengeDate.Hour;
+        _challengeMinutes = _challengeDate.Minute;
+        _challengeSeconds = _challengeDate.Second;
+
+        _challengeDay = _challengeDate.Day;
+        _challengeMonth = _challengeDate.Month;
+        _challengeYear = _challengeDate.Year;
     }
-    public SerializationObject()
+    public DateTime getDate()
     {
-        _levelsCompleted = new List<int>();
-        _virtualCoin = 0;
-        _adsBought = false;
-        _timeLeftToNextChallenge = 30.0f; //TODO
-
-    }
-
-  
-}
+        return new DateTime(_challengeYear, _challengeMonth, _challengeDay, _challengeHour, _challengeMinutes, _challengeSeconds);
+    }   
+}      
 
 public class SerializationObjectChiper
-{
+{      
     public SerializationObject obj;
     public string _result = "";
 }

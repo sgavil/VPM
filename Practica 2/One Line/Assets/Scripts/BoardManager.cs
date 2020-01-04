@@ -41,6 +41,10 @@ public class BoardManager : MonoBehaviour
     [Tooltip("Canvas que se muestra al completar el nivel")]
     public GameObject _nextLevelCanvas;
 
+    [Tooltip("Canvas que se muestra al completar un reto")]
+    public GameObject _completedChallengeCanvas;
+
+
     [Tooltip("Transform donde se agruparan todos los tiles")]
     public Transform _tilesGroup;
 
@@ -235,7 +239,10 @@ public class BoardManager : MonoBehaviour
 
         ScaleGridAndSetPosition();
     }
-
+    public void GoBackToInitial()
+    {
+        GoBack(_firsTile._x, _firsTile._y);
+    }
     private void CreateHint(int x, int y, float posX, float posY)
     {
         if (x + 1 < _boardWidth && _levelData._layout[y][x + 1] != '0')
@@ -551,6 +558,18 @@ public class BoardManager : MonoBehaviour
     private void LevelFinished()
     {
         _levelFinished = true;
+        if (GameManager.Instance._doingChallenge)
+        {
+            _completedChallengeCanvas.SetActive(true);
+            return;
+        }
+            
+
+        if (ProgressManager.Instance.GetUnlockedLevelsOfCategory(GameManager.Instance._categoryLevel) <= GameManager.Instance._level)
+        {
+            ProgressManager.Instance.LevelCompleted(GameManager.Instance._categoryLevel - 1);
+        }
+       
         if (_nextLevelCanvas != null)
         {
             _nextLevelCanvas.SetActive(true);
