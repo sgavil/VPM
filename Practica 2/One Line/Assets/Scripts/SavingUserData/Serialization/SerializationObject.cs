@@ -22,10 +22,19 @@ public class SerializationObject
     public int _challengeMonth;
     public int _challengeYear;
 
+    public int _dailyRewardHour;
+    public int _dailyRewardMinutes;
+    public int _dailyRewardSeconds;
+
+    public int _dailyRewardDay;
+    public int _dailyRewardMonth;
+    public int _dailyRewardYear;
+
     public string _serializationVersion;
     public int _completedChallenges;
 
-    public SerializationObject(List<int> levelsCompleted, int virtualCoin, bool adsBought, string serializationVersion, int completedChallenges, DateTime _challengeDate)
+    public SerializationObject(List<int> levelsCompleted, int virtualCoin, bool adsBought,
+        string serializationVersion, int completedChallenges, DateTime _challengeDate, DateTime _dailyRewardDate)
     {
         _levelsCompleted = levelsCompleted;
         _virtualCoin = virtualCoin;
@@ -40,11 +49,25 @@ public class SerializationObject
         _challengeDay = _challengeDate.Day;
         _challengeMonth = _challengeDate.Month;
         _challengeYear = _challengeDate.Year;
+
+
+        _dailyRewardHour = _dailyRewardDate.Hour;
+        _dailyRewardMinutes = _dailyRewardDate.Minute;
+        _dailyRewardSeconds= _dailyRewardDate.Second;
+
+        _dailyRewardDay = _dailyRewardDate.Day;
+        _dailyRewardMonth= _dailyRewardDate.Month;
+        _dailyRewardYear = _dailyRewardDate.Year;
+
     }
-    public DateTime getDate()
+    public DateTime getChallengeDate()
     {
         return new DateTime(_challengeYear, _challengeMonth, _challengeDay, _challengeHour, _challengeMinutes, _challengeSeconds);
-    }   
+    }
+    public DateTime getDailyRewardDate()
+    {
+        return new DateTime(_dailyRewardYear, _dailyRewardMonth, _dailyRewardDay, _dailyRewardHour, _dailyRewardMinutes, _dailyRewardSeconds);
+    }
 }      
 
 public class SerializationObjectChiper

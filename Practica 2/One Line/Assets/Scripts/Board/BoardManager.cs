@@ -48,12 +48,15 @@ public class BoardManager : MonoBehaviour
     [Tooltip("Transform donde se agruparan todos los tiles")]
     public Transform _tilesGroup;
 
+    [HideInInspector]
+    public bool doingScalingDown = false;
+    public bool doingScalingUp = false;
     #endregion
 
     #region ATRIBUTOS PRIVADOS
 
 
-    private bool _levelFinished = false;     //Indica si se ha completado el nivel o no
+    public bool _levelFinished = false;     //Indica si se ha completado el nivel o no
     
     // INFORMACION NECESARIA PARA LA CREACION DEL NIVEL
 
@@ -115,13 +118,19 @@ public class BoardManager : MonoBehaviour
     private void Start()
     {
         PrepareLevel();
+        StartCoroutine("startScaleUpAnim");
     }
 
     private void Update()
     {
-        if(!_levelFinished)
+        if(!_levelFinished && !GameManager.Instance._challengeFailed)
             InputController();
-
+        if (GameManager.Instance._challengeFailed)
+        {
+            _levelFinished = true;
+            GameManager.Instance._challengeFailed = false;
+        }
+            
         if (GameManager.Instance.IsScreenSizeChanged())
         {
             ScaleGridAndSetPosition();
@@ -154,7 +163,6 @@ public class BoardManager : MonoBehaviour
     {
         _boardWidth = _levelData._width;
         _boardHeight = _levelData._height;
-        Debug.Log(_boardHeight + " " + _boardWidth);
     }
 
     /// <summary>
@@ -561,6 +569,7 @@ public class BoardManager : MonoBehaviour
         if (GameManager.Instance._doingChallenge)
         {
             _completedChallengeCanvas.SetActive(true);
+            GameManager.Instance._doingChallenge = false;
             return;
         }
             
@@ -572,17 +581,35 @@ public class BoardManager : MonoBehaviour
        
         if (_nextLevelCanvas != null)
         {
-            _nextLevelCanvas.SetActive(true);
+            StartCoroutine("startScaleDownAnim");
         }
     }
 
     public void NextLevel()
     {
         _nextLevelCanvas.SetActive(false);
-        _levelFinished = false;
+        
         GameManager.Instance.NextLevel();
         PrepareLevel();
+        StartCoroutine("startScaleUpAnim");
 
+    }
+    IEnumerator startScaleDownAnim()
+    {
+        doingScalingDown = true;
+        yield return new WaitForSeconds(3);
+        doingScalingDown = false;
+        _nextLevelCanvas.SetActive(true);
+        AdsManager.Instance.showTransitionAd();
+       
+
+    }
+    IEnumerator startScaleUpAnim()
+    {
+        doingScalingUp = true;
+        yield return new WaitForSeconds(3);
+        doingScalingUp = false;
+        _levelFinished = false;
     }
     private void PrepareLevel()
     {

@@ -1,9 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.IO;
-using System.Security.Cryptography;
-using System.Text;
 using System;
 
 
@@ -20,6 +17,7 @@ public class ProgressManager : MonoBehaviour
     public string _serializationVersion = "0.01";
     public int _completedChallenges = 0;
     public DateTime _timeWhenChallengeDone;
+    public DateTime _timeWhenDailyRewardOpened;
 
     [HideInInspector]
     public string progressID;
@@ -84,8 +82,9 @@ public class ProgressManager : MonoBehaviour
         levelsCompleted = obj._levelsCompleted;
         _virtualCoin = obj._virtualCoin;
         _adsBought = obj._adsBought;
-        _timeWhenChallengeDone = obj.getDate();
+        _timeWhenChallengeDone = obj.getChallengeDate();
         _serializationVersion = obj._serializationVersion;
+        _timeWhenDailyRewardOpened = obj.getDailyRewardDate();
 
         _completedChallenges = obj._completedChallenges;
 
@@ -95,7 +94,7 @@ public class ProgressManager : MonoBehaviour
     {
 
         SerializationObject sObj = new SerializationObject(levelsCompleted, _virtualCoin, _adsBought,
-             _serializationVersion, _completedChallenges, _timeWhenChallengeDone);
+             _serializationVersion, _completedChallenges, _timeWhenChallengeDone,_timeWhenDailyRewardOpened);
 
         persistenceController.SaveFile(sObj);
     }
@@ -127,14 +126,17 @@ public class ProgressManager : MonoBehaviour
         _completedChallenges = 0;
 
     }
-    public void AddDuplicatedChallengeMoney()
+    
+    public void DailyRewardOpened()
     {
-        _virtualCoin += GameManager.Instance._challengeMoneyObtained * 2;
+        _timeWhenDailyRewardOpened = DateTime.Now;
     }
-    public void AddChallengeCoins()
+    public void AddMoney(int n)
     {
-        _virtualCoin += GameManager.Instance._challengeMoneyObtained;
-
+        _virtualCoin += n;
     }
-
+    public void AddMoney(int n, int multiplicationFactor)
+    {
+        _virtualCoin += n * multiplicationFactor;
+    }
 }

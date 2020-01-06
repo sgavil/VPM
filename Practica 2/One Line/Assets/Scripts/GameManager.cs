@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public List<TextAsset> _categoryLevelFiles;
 
     public LevelsGroup _levelsGroup;
+    public bool _challengeFailed = false;
 
 
     [Header("Atributos del reto")]
@@ -28,14 +29,18 @@ public class GameManager : MonoBehaviour
     public int _challengeSeconds;
     public bool _doingChallenge = false;
     public bool _challengeAvailable = true;
-    
+    [HideInInspector]
+    public float _currChallengeSeconds;
 
     [HideInInspector]
     public string _challengeLeftTimeText;
 
     [Tooltip("Tiempo que tiene que esperar el jugador para poder volver a jugar un reto en minutos")]
     public float _challengeTime;
+    public float _dailyRewardTime;
+
     public DateTime _currChallengeDate;
+    public DateTime _currDailyRewardDate;
 
     [Header("Control de nivel y dificultad")]
     [Tooltip("Número de la categoría del nivel al que quieres acceder.")]
@@ -52,9 +57,12 @@ public class GameManager : MonoBehaviour
 
     [Tooltip("Dinero obtenido al ver un anuncio.")]
     public int _adsMoneyObtained;
+    public int _dailyRewardMoney;
 
     [HideInInspector]
     public int GameID = 47810; //Game I
+
+    public bool _dailyRewardActive = true;
 
     private bool _screenSizeIsChanged = false;
     //---------------------------------------------------
@@ -75,51 +83,92 @@ public class GameManager : MonoBehaviour
         _levelsGroup = new LevelsGroup();
         _levelsGroup.LoadLevelsFromJSON(_categoryLevelFiles);
         DontDestroyOnLoad(this);
+        _dailyRewardActive = true;
     }
     public void Start()
     {
         _currChallengeDate = ProgressManager.Instance._timeWhenChallengeDone;
-        _challengeTime *= 60; //Pasamos el tiempo a segundos
+      //  _challengeTime *= 60; //Pasamos el tiempo a segundos
 
     }
     private void Update()
     {
+        Debug.Log("AAAAAAA " + _dailyRewardActive);
         CheckChallengeDate();
+        CheckDailyRewardDate();
+
+        UpdateChallengeCounter();
     }
+
+    private void UpdateChallengeCounter()
+    {
+        if (_doingChallenge)
+        {
+            _currChallengeSeconds -= Time.deltaTime;
+            if (_currChallengeSeconds <= 0)
+            {
+                _currChallengeSeconds = 0;
+                ChallengeFailed();
+            }
+        }
+    }
+
+    private void CheckDailyRewardDate()
+    {
+        DateTime actualDate = DateTime.Now;
+        _currDailyRewardDate = ProgressManager.Instance._timeWhenDailyRewardOpened;
+        TimeSpan diff = actualDate - _currDailyRewardDate;
+        
+        if (diff.TotalHours >= _dailyRewardTime)
+        {
+            _dailyRewardActive = true;
+        }
+        
+    }
+
     private void CheckChallengeDate()
     {
         DateTime actualDate = DateTime.Now;
         TimeSpan diff =  actualDate - _currChallengeDate;
 
 
-        if (diff.TotalSeconds >= _challengeTime)
+        if (diff.TotalMinutes >= _challengeTime)
         {
             _challengeAvailable = true;
             HUDManager.Instance.DisableChallengePanel();
         }
         else
         {
-            float time = _challengeTime - (float)diff.TotalSeconds;
+            float time = _challengeTime*60 - (float)diff.TotalSeconds;
 
             string minutes = Mathf.Floor(time / 60).ToString("00");
             string seconds = (time % 60).ToString("00");
             string fraction = ((time * 100) % 100).ToString("000");
-            _challengeLeftTimeText = minutes + ":" + seconds.ToString();
-            Debug.Log(_challengeLeftTimeText);
+            _challengeLeftTimeText = minutes + ":" + seconds;
         }
 
 
     }
 
-    public void ChallengeCompleted()
+   
+
+    public void ChallengeCompleted(bool duplicateCoins)
     {
+        
         ProgressManager.Instance._completedChallenges++;
-        ProgressManager.Instance.AddChallengeCoins();
+        if(!duplicateCoins)
+            ProgressManager.Instance.AddMoney(_challengeMoneyObtained);
         
         _doingChallenge = false;
         GoMainMenu();
     }
+    public void ChallengeFailed()
+    {
+        _doingChallenge = false;
+        HUDManager.Instance.ShowFailedChallengeCanvas();
+        _challengeFailed = true;
 
+    }
     public void SetScreenSizeIsChanged(bool b)
     {
         _screenSizeIsChanged = b;
@@ -162,17 +211,23 @@ public class GameManager : MonoBehaviour
         if (!adShown)
             ProgressManager.Instance._virtualCoin -= _challengeCost;
 
+        _challengeFailed = false;
         ProgressManager.Instance._timeWhenChallengeDone = DateTime.Now;
         _currChallengeDate = DateTime.Now;
         _challengeAvailable = false;
+        _currChallengeSeconds = _challengeSeconds;
+        _doingChallenge = true;
+
 
         int category = UnityEngine.Random.Range(1,_categoryLevelFiles.Count);
         int number = UnityEngine.Random.Range(1, _levelsGroup._levels[category].Count);
         _categoryLevel = category;
-       _doingChallenge = true;
         MoveToLevel(number);
         return true;
     }
+
+
+
     public void NextLevel()
     {
         _level++;
@@ -181,17 +236,20 @@ public class GameManager : MonoBehaviour
             _categoryLevel++;
             _level = 0;
         }
-        //SceneManager.LoadScene(levelScene);
     }
+
     [HideInInspector]
     public string gameID;
-    // BOTONES
 
     public void ClickBack()
     {
         SoundManager.Instance.PlayBack();
         if (_doingChallenge)
+        {
+            _doingChallenge = false;
             GoMainMenu();
+        }
+            
         else
             LoadLevelSelector(_categoryLevel);
     }
@@ -220,7 +278,6 @@ public class GameManager : MonoBehaviour
     public void LoadLevelSelector(int i)
     {
         _categoryLevel = i;
-        Debug.Log("me he cambiado al selector de niveles " + i.ToString());
         SceneManager.LoadScene(levelSelectorSceneIndex, LoadSceneMode.Single);
     }
 
@@ -232,7 +289,6 @@ public class GameManager : MonoBehaviour
     {
         _level = number;
         SceneManager.LoadScene(levelScene, LoadSceneMode.Single);
-        Debug.Log("El number es: " + number);
     }
     
     

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ChallengeCanvasController : MonoBehaviour
 {
@@ -10,15 +11,21 @@ public class ChallengeCanvasController : MonoBehaviour
     public Text _challengeMoneyObtainedText;
     public Text _challengeMedalsObtainedText;
     public Text _challengeSecondsText;
+   
 
     [Header("Textos canvas reto completado")]
-    public Text _obtainedCoinsText;
-    public Text _obtainedMedalsText;
+    public TextMeshProUGUI _obtainedCoinsText;
+    public TextMeshProUGUI _obtainedMedalsText;
+
+    
 
     private void Start()
     {
         if (!GameManager.Instance._doingChallenge)
         {
+            if (_challengeCostText == null)
+                return;
+
             _challengeCostText.text = GameManager.Instance._challengeCost.ToString();
             _challengeMoneyObtainedText.text = "+" + GameManager.Instance._challengeMoneyObtained.ToString();
             _challengeMedalsObtainedText.text = "+" + GameManager.Instance._challengeMedalsObtained.ToString();
@@ -35,12 +42,14 @@ public class ChallengeCanvasController : MonoBehaviour
     public void DisableCanvas()
     {
         gameObject.SetActive(false);
+        HUDManager.Instance.ActivatePanel(false);
     }
 
     public void PlayChallenge()
     {
         if (GameManager.Instance.PlayChallenge(false))
             DisableCanvas();
+        else StartCoroutine(HUDManager.Instance.ShowNotEnoughMoneyText());
     }
     public void WatchChallengeAd()
     {
@@ -51,12 +60,16 @@ public class ChallengeCanvasController : MonoBehaviour
     public void ChallengeCompleted()
     {
         DisableCanvas();
-        GameManager.Instance.ChallengeCompleted();
+        GameManager.Instance.ChallengeCompleted(false);
     }
+    
     public void DuplicateCoins()
     {
         DisableCanvas();
         AdsManager.Instance.DuplicateCoinsAds();
+        GameManager.Instance.ChallengeCompleted(true);
+
 
     }
+
 }

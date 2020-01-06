@@ -13,6 +13,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
 
     private bool challengeAd = false;
     private bool duplicateCoins = false;
+    private bool transitionAd = false;
 
 
 #if UNITY_ANDROID 
@@ -35,6 +36,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
 
         Advertisement.AddListener(this);
         Advertisement.Initialize(gameID, true);
+        Debug.Log("Ads manager inicializado correctamente");
         CheckID();
     }
 
@@ -56,6 +58,11 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
         Advertisement.Show();
 
     }
+    public void showTransitionAd()
+    {
+        transitionAd = true;
+        Advertisement.Show();
+    }
     public void OnUnityAdsDidError(string message)
     {
         // Log the error.
@@ -74,8 +81,9 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
         {
             if (duplicateCoins)
             {
-                ProgressManager.Instance.AddDuplicatedChallengeMoney();
+                ProgressManager.Instance.AddMoney(GameManager.Instance._challengeMoneyObtained, 2);
                 duplicateCoins = false;
+                HUDManager.Instance.UpdateMoneyText();
                 return;
             }
             if (challengeAd)
@@ -84,8 +92,13 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
                 challengeAd = false;
                 return;
             }
+            if (transitionAd)
+            {
+                transitionAd = false;
+                return;
+            }
             addMoney();
-            Debug.Log("anuncio acabado completo");
+
 
 
         }
@@ -100,8 +113,10 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
             }
             if (duplicateCoins)
             {
-                ProgressManager.Instance.AddChallengeCoins();
+                ProgressManager.Instance.AddMoney(GameManager.Instance._challengeMoneyObtained);
+                HUDManager.Instance.UpdateMoneyText();
                 duplicateCoins = false;
+                
 
             }
 
