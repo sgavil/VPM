@@ -1,0 +1,10 @@
+<map id="AdsManager.ShowRewardedAd" name="AdsManager.ShowRewardedAd">
+<area shape="rect" id="node1" title="Genera un anuncio común para el usuario" alt="" coords="505,111,709,138"/>
+<area shape="rect" id="node2" href="$class_ads_manager.html#aa54deec5944f772e29eec2fb4a12fdfd" title="Genera un anuncio para poder jugar un reto gratis" alt="" coords="267,37,439,63"/>
+<area shape="rect" id="node4" href="$class_ads_manager.html#ac5ec82a220dcee550e9ba7ff7608c5ea" title="Genera un anuncio para duplicar las monedas del jugador" alt="" coords="248,111,457,138"/>
+<area shape="rect" id="node8" href="$class_h_u_d_manager.html#a87ddf793fdfccd9a29c5d463c582d5df" title="Muestra un anuncio" alt="" coords="249,162,457,189"/>
+<area shape="rect" id="node3" href="$class_challenge_canvas_controller.html#af938a190172057cd4b700694b4605a50" title="Muestra un anuncio para poder jugar el reto y desactiva el canvas" alt="" coords="13,5,193,47"/>
+<area shape="rect" id="node5" href="$class_daily_reward_canvas_controller.html#a69bfbdecc6b7c169b9a62861ada41801" title="Actualiza la cantidad de dinero actual con el dinero de la recompensa" alt="" coords="5,71,200,112"/>
+<area shape="rect" id="node6" href="$class_challenge_canvas_controller.html#a6e3cc083f80852ad86c8293127058911" title="Se llama cuando se decide duplicar el premio obtenido al completar el reto" alt="" coords="13,136,193,177"/>
+<area shape="rect" id="node7" href="$class_daily_reward_canvas_controller.html#afee2a54b8ce99b0378be82be958368d1" title="Muestra un anuncio para duplicar las monedas" alt="" coords="5,201,200,243"/>
+</map>

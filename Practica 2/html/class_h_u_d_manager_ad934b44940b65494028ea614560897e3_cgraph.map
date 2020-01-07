@@ -1,0 +1,5 @@
+<map id="HUDManager.ShowDailyRewardCanvas" name="HUDManager.ShowDailyRewardCanvas">
+<area shape="rect" id="node1" title="Muestra el canvas de la recompensa diaria" alt="" coords="5,27,212,69"/>
+<area shape="rect" id="node2" href="$class_h_u_d_manager.html#a6330ca3efd9224256a9a7fed90339e3b" title="Permite controlar la activacion y desactivacion del panel principal" alt="" coords="269,5,451,32"/>
+<area shape="rect" id="node3" href="$class_progress_manager.html#a979801077d7fa09ce8e1a8913b3e007c" title="Actualiza la fecha de la última recompensa diaria recogida a el momento en el que es llamado" alt="" coords="260,57,460,98"/>
+</map>

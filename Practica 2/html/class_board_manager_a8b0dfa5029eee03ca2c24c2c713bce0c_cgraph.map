@@ -1,0 +1,5 @@
+<map id="BoardManager.NextLevel" name="BoardManager.NextLevel">
+<area shape="rect" id="node1" title="Controla el paso al siguiente nivel, activando el canvas de siguiente nivel, avisando al Game Manager..." alt="" coords="5,5,172,32"/>
+<area shape="rect" id="node2" href="$class_game_manager.html#a659eaf083079d1f54c7c413780ec4585" title="Aumenta el contador del nivel, si ha completado todos los de la categoria pasa a la siguiente categor..." alt="" coords="220,5,387,32"/>
+<area shape="rect" id="node3" href="$class_levels_group.html#a13408c31f368df7f0969d8ebbc01a38b" title="Devuelve el número de niveles que contiene una categoria" alt="" coords="435,5,647,32"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="DailyRewardCanvasController.ShowAd" name="DailyRewardCanvasController.ShowAd">
+<area shape="rect" id="node1" title="Muestra un anuncio para duplicar las monedas" alt="" coords="5,5,200,47"/>
+<area shape="rect" id="node2" href="$class_ads_manager.html#ac5ec82a220dcee550e9ba7ff7608c5ea" title="Genera un anuncio para duplicar las monedas del jugador" alt="" coords="248,13,457,39"/>
+<area shape="rect" id="node3" href="$class_ads_manager.html#ac309e2d221e3b536ad131f8c42fa6903" title="Genera un anuncio común para el usuario" alt="" coords="505,13,709,39"/>
+</map>

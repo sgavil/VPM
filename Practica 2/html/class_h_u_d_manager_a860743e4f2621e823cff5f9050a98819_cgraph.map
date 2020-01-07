@@ -1,0 +1,4 @@
+<map id="HUDManager.ShowChallengeCanvas" name="HUDManager.ShowChallengeCanvas">
+<area shape="rect" id="node1" title="Muestra el canvas del reto" alt="" coords="5,5,197,47"/>
+<area shape="rect" id="node2" href="$class_h_u_d_manager.html#a6330ca3efd9224256a9a7fed90339e3b" title="Permite controlar la activacion y desactivacion del panel principal" alt="" coords="245,13,428,39"/>
+</map>

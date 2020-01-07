@@ -1,0 +1,4 @@
+<map id="GameManager.ClickReplay" name="GameManager.ClickReplay">
+<area shape="rect" id="node1" title="Llama al replay del tablero para deshacer todos los tiles marcados" alt="" coords="5,5,185,32"/>
+<area shape="rect" id="node2" href="$class_board_manager.html#a703f52d59e9f019e483306b99576f862" title="Método que resetea el tablero al estado inicial" alt="" coords="233,5,384,32"/>
+</map>

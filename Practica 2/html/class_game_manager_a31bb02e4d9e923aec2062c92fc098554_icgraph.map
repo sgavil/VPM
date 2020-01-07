@@ -1,0 +1,7 @@
+<map id="GameManager.MoveToLevel" name="GameManager.MoveToLevel">
+<area shape="rect" id="node1" title="Carga la escena del nivel" alt="" coords="484,31,668,57"/>
+<area shape="rect" id="node2" href="$class_h_u_d_manager.html#a66b5bd10cb374f90c8717efea6e6b108" title="Carga un nivel" alt="" coords="251,5,427,32"/>
+<area shape="rect" id="node3" href="$class_game_manager.html#a3fb7ced499c387850f267619f140e5f2" title="Carga el juego de un reto, teniendo en cuenta si se ha entrado al reto gastando monedas o viendo un v..." alt="" coords="241,56,436,83"/>
+<area shape="rect" id="node4" href="$class_ads_manager.html#a21b9570a1696d968ce607ce99a6f5dc1" title="Método llamado cuando un anuncio finaliza, se comprueba si el usuario lo ha terminado o lo ha pasado ..." alt="" coords="5,15,193,57"/>
+<area shape="rect" id="node5" href="$class_challenge_canvas_controller.html#ad9ce13ef49eda2260d01ac03620058b4" title="Si se puede jugar el reto desactiva el canvas y se va a la pantalla del reto, si no,..." alt="" coords="9,81,189,122"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="PersistenceController.LoadFile" name="PersistenceController.LoadFile">
+<area shape="rect" id="node1" title="Carga el archivo del progreso del juego y actualiza los valores del manager de progreso" alt="" coords="5,81,204,108"/>
+<area shape="rect" id="node2" href="$class_progress_manager.html#aa1f83f2a787ef60ea437f965980dacd1" title="Crea un objeto de serialización cifrado a traves de un json y lo devuelve" alt="" coords="252,5,491,32"/>
+<area shape="rect" id="node3" href="$class_progress_manager.html#a45c7091a9aa73ea28c055a027e2670de" title="Obtiene el json de un Objeto de serializacion" alt="" coords="283,56,459,83"/>
+<area shape="rect" id="node4" href="$class_progress_manager.html#a8376a8fa43220319c03e0b2ebf3afeb0" title="Resetea el progreso del jugador" alt="" coords="264,107,479,133"/>
+<area shape="rect" id="node5" href="$class_progress_manager.html#abc3ff61e08034c6371b6983801cda294" title="Actualiza los valores actuales a los que se obtienen por parámetro" alt="" coords="267,157,476,184"/>
+</map>

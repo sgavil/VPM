@@ -1,0 +1,5 @@
+<map id="GameManager.ChallengeCompleted" name="GameManager.ChallengeCompleted">
+<area shape="rect" id="node1" title="Llamado cuando se ha completado un reto" alt="" coords="5,31,236,57"/>
+<area shape="rect" id="node2" href="$class_progress_manager.html#a43e7fcdb241b1fbb36d6a05b6de18baa" title="Agrega dinero al dinero actual" alt="" coords="284,5,475,32"/>
+<area shape="rect" id="node3" href="$class_game_manager.html#a2c5ba723880aeb79b1142071dbaacb1d" title="Carga la escena del menu principal" alt="" coords="285,56,473,83"/>
+</map>

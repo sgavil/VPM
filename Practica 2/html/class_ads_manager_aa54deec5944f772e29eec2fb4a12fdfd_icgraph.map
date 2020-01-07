@@ -1,0 +1,4 @@
+<map id="AdsManager.ChallengeAd" name="AdsManager.ChallengeAd">
+<area shape="rect" id="node1" title="Genera un anuncio para poder jugar un reto gratis" alt="" coords="233,13,405,39"/>
+<area shape="rect" id="node2" href="$class_challenge_canvas_controller.html#af938a190172057cd4b700694b4605a50" title="Muestra un anuncio para poder jugar el reto y desactiva el canvas" alt="" coords="5,5,185,47"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="GameManager.PlayChallenge" name="GameManager.PlayChallenge">
+<area shape="rect" id="node1" title="Carga el juego de un reto, teniendo en cuenta si se ha entrado al reto gastando monedas o viendo un v..." alt="" coords="241,46,436,73"/>
+<area shape="rect" id="node2" href="$class_ads_manager.html#a21b9570a1696d968ce607ce99a6f5dc1" title="Método llamado cuando un anuncio finaliza, se comprueba si el usuario lo ha terminado o lo ha pasado ..." alt="" coords="5,5,193,47"/>
+<area shape="rect" id="node3" href="$class_challenge_canvas_controller.html#ad9ce13ef49eda2260d01ac03620058b4" title="Si se puede jugar el reto desactiva el canvas y se va a la pantalla del reto, si no,..." alt="" coords="9,71,189,112"/>
+</map>

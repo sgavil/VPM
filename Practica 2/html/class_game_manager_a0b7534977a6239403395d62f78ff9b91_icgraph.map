@@ -1,0 +1,6 @@
+<map id="GameManager.LoadLevelSelector" name="GameManager.LoadLevelSelector">
+<area shape="rect" id="node1" title="Carga la escena del selector de niveles de una categoría espécifica" alt="" coords="488,31,704,57"/>
+<area shape="rect" id="node2" href="$class_game_manager.html#ad5fc8f537eac39078ab3b532ad11d322" title="Vuelve a la pantalla anterior" alt="" coords="243,5,413,32"/>
+<area shape="rect" id="node4" href="$class_h_u_d_manager.html#a5f9b0c2408ab02b64c8fa25f527f938c" title="Pulsacion de boton para moverse a un selector de nivel" alt="" coords="216,56,440,83"/>
+<area shape="rect" id="node3" href="$class_h_u_d_manager.html#a192276f7b97ab50840d9e491ed9dde34" title="Permite a los botones volver atrás" alt="" coords="5,5,168,32"/>
+</map>

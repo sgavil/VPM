@@ -1,0 +1,4 @@
+<map id="LevelsGroup.GetAvailableSpace" name="LevelsGroup.GetAvailableSpace">
+<area shape="rect" id="node1" title="Devuelve el espacio dispoble para los niveles de una categoria." alt="" coords="236,5,405,47"/>
+<area shape="rect" id="node2" href="$class_game_manager.html#a057ded4ff272e782d7422b168c9a4e93" title="Devuelve el tamaño disponible" alt="" coords="5,5,188,47"/>
+</map>

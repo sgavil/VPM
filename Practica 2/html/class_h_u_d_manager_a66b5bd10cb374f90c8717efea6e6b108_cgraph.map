@@ -1,0 +1,4 @@
+<map id="HUDManager.MoveToLevel" name="HUDManager.MoveToLevel">
+<area shape="rect" id="node1" title="Carga un nivel" alt="" coords="5,5,181,32"/>
+<area shape="rect" id="node2" href="$class_game_manager.html#a31bb02e4d9e923aec2062c92fc098554" title="Carga la escena del nivel" alt="" coords="229,5,413,32"/>
+</map>

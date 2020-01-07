@@ -1,0 +1,4 @@
+<map id="ProgressManager.ResetProgress" name="ProgressManager.ResetProgress">
+<area shape="rect" id="node1" title="Resetea el progreso del jugador" alt="" coords="252,5,467,32"/>
+<area shape="rect" id="node2" href="$class_persistence_controller.html#aae049dd0b0154a1d94239ca76029f3a2" title="Carga el archivo del progreso del juego y actualiza los valores del manager de progreso" alt="" coords="5,5,204,32"/>
+</map>

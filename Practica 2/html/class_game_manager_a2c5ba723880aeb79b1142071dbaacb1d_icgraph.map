@@ -1,0 +1,12 @@
+<map id="GameManager.GoMainMenu" name="GameManager.GoMainMenu">
+<area shape="rect" id="node1" title="Carga la escena del menu principal" alt="" coords="527,170,715,197"/>
+<area shape="rect" id="node2" href="$class_game_manager.html#a0ff87b62b15a4ae08fab7bd58f2e6f04" title="Ocurre cuando se ha intentado jugar un reto viendo un video y el usuario lo ha saltado" alt="" coords="256,41,471,83"/>
+<area shape="rect" id="node4" href="$class_game_manager.html#a0897df792b47a880e6920c1a2ba70eb4" title="Llamado cuando se ha completado un reto" alt="" coords="248,143,479,170"/>
+<area shape="rect" id="node7" href="$class_game_manager.html#ad5fc8f537eac39078ab3b532ad11d322" title="Vuelve a la pantalla anterior" alt="" coords="278,195,449,222"/>
+<area shape="rect" id="node9" href="$class_h_u_d_manager.html#aef2cad7a8880930286608cf77954a99c" title="Metodo llamado para volver al menu principal" alt="" coords="273,250,453,277"/>
+<area shape="rect" id="node3" href="$class_ads_manager.html#a21b9570a1696d968ce607ce99a6f5dc1" title="Método llamado cuando un anuncio finaliza, se comprueba si el usuario lo ha terminado o lo ha pasado ..." alt="" coords="9,5,197,47"/>
+<area shape="rect" id="node5" href="$class_challenge_canvas_controller.html#ac5716c9337b09dbdfc33f425519f4e0f" title="Avisa al game manager de que se ha completado el reto" alt="" coords="13,71,193,112"/>
+<area shape="rect" id="node6" href="$class_challenge_canvas_controller.html#a6e3cc083f80852ad86c8293127058911" title="Se llama cuando se decide duplicar el premio obtenido al completar el reto" alt="" coords="13,136,193,177"/>
+<area shape="rect" id="node8" href="$class_h_u_d_manager.html#a192276f7b97ab50840d9e491ed9dde34" title="Permite a los botones volver atrás" alt="" coords="21,202,184,229"/>
+<area shape="rect" id="node10" href="$class_h_u_d_manager.html#a805aa28afc06b0bd7835fd92154be9ef" title="Metodo llamado cuando el reto se falla" alt="" coords="5,253,200,279"/>
+</map>

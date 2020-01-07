@@ -1,0 +1,6 @@
+<map id="AdsManager.DuplicateCoinsAds" name="AdsManager.DuplicateCoinsAds">
+<area shape="rect" id="node1" title="Genera un anuncio para duplicar las monedas del jugador" alt="" coords="248,78,457,105"/>
+<area shape="rect" id="node2" href="$class_daily_reward_canvas_controller.html#a69bfbdecc6b7c169b9a62861ada41801" title="Actualiza la cantidad de dinero actual con el dinero de la recompensa" alt="" coords="5,5,200,47"/>
+<area shape="rect" id="node3" href="$class_challenge_canvas_controller.html#a6e3cc083f80852ad86c8293127058911" title="Se llama cuando se decide duplicar el premio obtenido al completar el reto" alt="" coords="13,71,193,112"/>
+<area shape="rect" id="node4" href="$class_daily_reward_canvas_controller.html#afee2a54b8ce99b0378be82be958368d1" title="Muestra un anuncio para duplicar las monedas" alt="" coords="5,136,200,177"/>
+</map>

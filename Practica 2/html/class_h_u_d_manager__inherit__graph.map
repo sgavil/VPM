@@ -1,0 +1,4 @@
+<map id="HUDManager" name="HUDManager">
+<area shape="rect" id="node1" title="Manager que permite el control de las pulsaciones los botones y la aparicion y desaparicion de canvas" alt="" coords="11,80,110,107"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,5,116,32"/>
+</map>

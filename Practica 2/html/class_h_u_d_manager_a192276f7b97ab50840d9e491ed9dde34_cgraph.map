@@ -1,0 +1,6 @@
+<map id="HUDManager.ClickBack" name="HUDManager.ClickBack">
+<area shape="rect" id="node1" title="Permite a los botones volver atrás" alt="" coords="5,31,168,57"/>
+<area shape="rect" id="node2" href="$class_game_manager.html#ad5fc8f537eac39078ab3b532ad11d322" title="Vuelve a la pantalla anterior" alt="" coords="216,31,387,57"/>
+<area shape="rect" id="node3" href="$class_game_manager.html#a2c5ba723880aeb79b1142071dbaacb1d" title="Carga la escena del menu principal" alt="" coords="449,5,637,32"/>
+<area shape="rect" id="node4" href="$class_game_manager.html#a0b7534977a6239403395d62f78ff9b91" title="Carga la escena del selector de niveles de una categoría espécifica" alt="" coords="435,56,651,83"/>
+</map>

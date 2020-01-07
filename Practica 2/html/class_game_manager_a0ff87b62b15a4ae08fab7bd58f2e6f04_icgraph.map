@@ -1,0 +1,4 @@
+<map id="GameManager.AddSkippedWhileChallenge" name="GameManager.AddSkippedWhileChallenge">
+<area shape="rect" id="node1" title="Ocurre cuando se ha intentado jugar un reto viendo un video y el usuario lo ha saltado" alt="" coords="241,5,456,47"/>
+<area shape="rect" id="node2" href="$class_ads_manager.html#a21b9570a1696d968ce607ce99a6f5dc1" title="Método llamado cuando un anuncio finaliza, se comprueba si el usuario lo ha terminado o lo ha pasado ..." alt="" coords="5,5,193,47"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="BoardManager" name="BoardManager">
+<area shape="rect" id="node1" title="Clase que controla toda la gestión del tablero: Escalado, posicionamiento, fin del nivel,..." alt="" coords="7,80,114,107"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,5,116,32"/>
+</map>

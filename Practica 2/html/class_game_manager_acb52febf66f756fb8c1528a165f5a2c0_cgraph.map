@@ -1,0 +1,4 @@
+<map id="GameManager.GetLevel" name="GameManager.GetLevel">
+<area shape="rect" id="node1" title="Devuelve el nivel los datos del nivel elegido por el jugador" alt="" coords="5,5,167,32"/>
+<area shape="rect" id="node2" href="$class_levels_group.html#afbd25be39f891a990d4413680f3a4b1f" title="Devuelve el nivel los datos del nivel elegido por el jugador" alt="" coords="215,5,361,32"/>
+</map>

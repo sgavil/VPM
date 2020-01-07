@@ -1,0 +1,5 @@
+<map id="GameManager.PlayChallenge" name="GameManager.PlayChallenge">
+<area shape="rect" id="node1" title="Carga el juego de un reto, teniendo en cuenta si se ha entrado al reto gastando monedas o viendo un v..." alt="" coords="5,31,200,57"/>
+<area shape="rect" id="node2" href="$class_levels_group.html#a13408c31f368df7f0969d8ebbc01a38b" title="Devuelve el número de niveles que contiene una categoria" alt="" coords="248,5,460,32"/>
+<area shape="rect" id="node3" href="$class_game_manager.html#a31bb02e4d9e923aec2062c92fc098554" title="Carga la escena del nivel" alt="" coords="262,56,446,83"/>
+</map>

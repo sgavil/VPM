@@ -1,0 +1,4 @@
+<map id="AdsManager.ChallengeAd" name="AdsManager.ChallengeAd">
+<area shape="rect" id="node1" title="Genera un anuncio para poder jugar un reto gratis" alt="" coords="5,5,177,32"/>
+<area shape="rect" id="node2" href="$class_ads_manager.html#ac309e2d221e3b536ad131f8c42fa6903" title="Genera un anuncio común para el usuario" alt="" coords="225,5,429,32"/>
+</map>

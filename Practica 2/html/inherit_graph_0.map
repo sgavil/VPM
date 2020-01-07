@@ -1,0 +1,19 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,129,32"/>
+<area shape="rect" id="node2" href="$class_ads_manager.html" title="Genera los anuncios de la aplicación y controla si el usuario lo has pasado o los ha terminado correc..." alt="" coords="225,5,320,32"/>
+<area shape="rect" id="node3" title=" " alt="" coords="12,360,123,387"/>
+<area shape="rect" id="node4" href="$class_board_manager.html" title="Clase que controla toda la gestión del tablero: Escalado, posicionamiento, fin del nivel,..." alt="" coords="219,56,326,83"/>
+<area shape="rect" id="node5" href="$class_canvas_size.html" title="Clase encargada del rescalado del canvas en funcion del dispositivo, calcula el tamaño del canvas sup..." alt="" coords="227,107,318,133"/>
+<area shape="rect" id="node6" href="$class_challenge_canvas_controller.html" title="Controla el canvas que aparece cuando se pulsa el boton de realizar un reto y el que aparece cuando s..." alt="" coords="185,157,361,184"/>
+<area shape="rect" id="node7" href="$class_daily_reward_canvas_controller.html" title="Controla el canvas que aparece cuando se quiere recoger una recompensa diaria" alt="" coords="177,208,368,235"/>
+<area shape="rect" id="node8" href="$class_game_manager.html" title="Manager del juego, posee los valores como dinero que se añade al realizar acciones,..." alt="" coords="219,259,326,285"/>
+<area shape="rect" id="node9" href="$class_hint.html" title="Clase que controla la activación/desactivación de las ayudas para completar el camino" alt="" coords="250,309,295,336"/>
+<area shape="rect" id="node10" href="$class_h_u_d_manager.html" title="Manager que permite el control de las pulsaciones los botones y la aparicion y desaparicion de canvas" alt="" coords="223,360,322,387"/>
+<area shape="rect" id="node11" href="$class_level_canvas_controller.html" title="Controla el canvas que aparece cuando se esta jugando un nivel" alt="" coords="199,411,347,437"/>
+<area shape="rect" id="node12" href="$class_level_selector.html" title="Controla el selector de niveles, instanciando los iconos de nivel de la categoria marcada por el Game..." alt="" coords="223,461,322,488"/>
+<area shape="rect" id="node13" href="$class_level_selector_button.html" title="Componente añadido a un boton para que pueda seleccionar a que nivel se mueve" alt="" coords="204,512,341,539"/>
+<area shape="rect" id="node14" href="$class_progress_manager.html" title="Controla el progreso del juego y sirve como comunicación entre la serialización y la persistencia de ..." alt="" coords="211,563,335,589"/>
+<area shape="rect" id="node15" href="$class_resource_manager.html" title="Manager que gestiona los distintos scriptable objects de los tiles" alt="" coords="209,613,336,640"/>
+<area shape="rect" id="node16" href="$class_sound_manager.html" title="Clase que permite reproducir sonidos" alt="" coords="218,664,327,691"/>
+<area shape="rect" id="node17" href="$class_tile.html" title=" " alt="" coords="251,715,294,741"/>
+</map>

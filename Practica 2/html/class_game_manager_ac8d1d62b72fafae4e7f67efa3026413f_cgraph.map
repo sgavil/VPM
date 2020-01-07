@@ -1,0 +1,4 @@
+<map id="GameManager.GetSize" name="GameManager.GetSize">
+<area shape="rect" id="node1" title="Devuelve el tamaño de una categoria" alt="" coords="5,5,164,32"/>
+<area shape="rect" id="node2" href="$class_levels_group.html#aa00bf87c6c0a81cd81c08dbddc624710" title="Devuelve el tamaño del nivel correspondiente a una categoria" alt="" coords="212,5,356,32"/>
+</map>

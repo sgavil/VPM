@@ -1,0 +1,4 @@
+<map id="LevelSelector" name="LevelSelector">
+<area shape="rect" id="node1" title="Controla el selector de niveles, instanciando los iconos de nivel de la categoria marcada por el Game..." alt="" coords="11,80,110,107"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,5,116,32"/>
+</map>

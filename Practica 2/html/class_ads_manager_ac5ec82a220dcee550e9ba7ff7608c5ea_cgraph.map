@@ -1,0 +1,4 @@
+<map id="AdsManager.DuplicateCoinsAds" name="AdsManager.DuplicateCoinsAds">
+<area shape="rect" id="node1" title="Genera un anuncio para duplicar las monedas del jugador" alt="" coords="5,5,215,32"/>
+<area shape="rect" id="node2" href="$class_ads_manager.html#ac309e2d221e3b536ad131f8c42fa6903" title="Genera un anuncio común para el usuario" alt="" coords="263,5,467,32"/>
+</map>

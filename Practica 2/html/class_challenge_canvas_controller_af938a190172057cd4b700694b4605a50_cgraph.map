@@ -1,0 +1,7 @@
+<map id="ChallengeCanvasController.WatchChallengeAd" name="ChallengeCanvasController.WatchChallengeAd">
+<area shape="rect" id="node1" title="Muestra un anuncio para poder jugar el reto y desactiva el canvas" alt="" coords="5,27,185,69"/>
+<area shape="rect" id="node2" href="$class_ads_manager.html#aa54deec5944f772e29eec2fb4a12fdfd" title="Genera un anuncio para poder jugar un reto gratis" alt="" coords="237,5,409,32"/>
+<area shape="rect" id="node4" href="$class_challenge_canvas_controller.html#a1884d5aba447ab4c64b85bf6b77a7f9a" title="Desactiva el canvas" alt="" coords="233,57,413,98"/>
+<area shape="rect" id="node3" href="$class_ads_manager.html#ac309e2d221e3b536ad131f8c42fa6903" title="Genera un anuncio común para el usuario" alt="" coords="461,5,665,32"/>
+<area shape="rect" id="node5" href="$class_h_u_d_manager.html#a6330ca3efd9224256a9a7fed90339e3b" title="Permite controlar la activacion y desactivacion del panel principal" alt="" coords="472,64,655,91"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="HUDManager.ShowRewardedAd" name="HUDManager.ShowRewardedAd">
+<area shape="rect" id="node1" title="Muestra un anuncio" alt="" coords="5,5,213,32"/>
+<area shape="rect" id="node2" href="$class_ads_manager.html#ac309e2d221e3b536ad131f8c42fa6903" title="Genera un anuncio común para el usuario" alt="" coords="261,5,465,32"/>
+</map>

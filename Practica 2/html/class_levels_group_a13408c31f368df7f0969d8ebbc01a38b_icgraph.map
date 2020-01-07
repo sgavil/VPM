@@ -1,0 +1,8 @@
+<map id="LevelsGroup.GetNumberOfLevels" name="LevelsGroup.GetNumberOfLevels">
+<area shape="rect" id="node1" title="Devuelve el número de niveles que contiene una categoria" alt="" coords="484,37,696,64"/>
+<area shape="rect" id="node2" href="$class_game_manager.html#a659eaf083079d1f54c7c413780ec4585" title="Aumenta el contador del nivel, si ha completado todos los de la categoria pasa a la siguiente categor..." alt="" coords="255,9,422,36"/>
+<area shape="rect" id="node4" href="$class_game_manager.html#a3fb7ced499c387850f267619f140e5f2" title="Carga el juego de un reto, teniendo en cuenta si se ha entrado al reto gastando monedas o viendo un v..." alt="" coords="241,64,436,91"/>
+<area shape="rect" id="node3" href="$class_board_manager.html#a8b0dfa5029eee03ca2c24c2c713bce0c" title="Controla el paso al siguiente nivel, activando el canvas de siguiente nivel, avisando al Game Manager..." alt="" coords="16,5,183,32"/>
+<area shape="rect" id="node5" href="$class_ads_manager.html#a21b9570a1696d968ce607ce99a6f5dc1" title="Método llamado cuando un anuncio finaliza, se comprueba si el usuario lo ha terminado o lo ha pasado ..." alt="" coords="5,57,193,98"/>
+<area shape="rect" id="node6" href="$class_challenge_canvas_controller.html#ad9ce13ef49eda2260d01ac03620058b4" title="Si se puede jugar el reto desactiva el canvas y se va a la pantalla del reto, si no,..." alt="" coords="9,122,189,163"/>
+</map>

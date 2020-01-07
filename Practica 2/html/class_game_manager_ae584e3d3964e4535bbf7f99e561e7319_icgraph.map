@@ -1,0 +1,4 @@
+<map id="GameManager.ClickHint" name="GameManager.ClickHint">
+<area shape="rect" id="node1" title="Gestiona la petición de ayuda del usuario , si tiene dinero para pagarlo muestra parte de la solucion..." alt="" coords="247,5,409,32"/>
+<area shape="rect" id="node2" href="$class_h_u_d_manager.html#af4c1a73e7bb491e5186c62a7ca69fc89" title="Llamado cuando se pulsa el boton de pedir una pista" alt="" coords="5,5,199,32"/>
+</map>

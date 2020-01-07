@@ -1,0 +1,4 @@
+<map id="LevelCanvasController" name="LevelCanvasController">
+<area shape="rect" id="node1" title="Controla el canvas que aparece cuando se esta jugando un nivel" alt="" coords="5,80,153,107"/>
+<area shape="rect" id="node2" title=" " alt="" coords="24,5,135,32"/>
+</map>

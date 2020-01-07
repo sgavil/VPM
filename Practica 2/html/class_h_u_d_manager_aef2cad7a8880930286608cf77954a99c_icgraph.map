@@ -1,0 +1,4 @@
+<map id="HUDManager.GoMainMenu" name="HUDManager.GoMainMenu">
+<area shape="rect" id="node1" title="Metodo llamado para volver al menu principal" alt="" coords="248,5,428,32"/>
+<area shape="rect" id="node2" href="$class_h_u_d_manager.html#a805aa28afc06b0bd7835fd92154be9ef" title="Metodo llamado cuando el reto se falla" alt="" coords="5,5,200,32"/>
+</map>

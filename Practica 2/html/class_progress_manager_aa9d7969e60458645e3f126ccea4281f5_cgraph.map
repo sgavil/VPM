@@ -1,0 +1,5 @@
+<map id="ProgressManager.SaveProgress" name="ProgressManager.SaveProgress">
+<area shape="rect" id="node1" title="Crea un objeto de serializacion con los valores actuales y guarda el progreso" alt="" coords="5,5,213,32"/>
+<area shape="rect" id="node2" href="$class_persistence_controller.html#aae92becd665eab97b1d5c323abf806ed" title="Genera y guarda el archivo de progreso" alt="" coords="261,5,460,32"/>
+<area shape="rect" id="node3" href="$class_progress_manager.html#a45c7091a9aa73ea28c055a027e2670de" title="Obtiene el json de un Objeto de serializacion" alt="" coords="508,5,684,32"/>
+</map>

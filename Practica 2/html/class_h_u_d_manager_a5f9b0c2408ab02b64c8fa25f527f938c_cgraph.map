@@ -1,0 +1,4 @@
+<map id="HUDManager.MoveToLevelSelector" name="HUDManager.MoveToLevelSelector">
+<area shape="rect" id="node1" title="Pulsacion de boton para moverse a un selector de nivel" alt="" coords="5,5,229,32"/>
+<area shape="rect" id="node2" href="$class_game_manager.html#a0b7534977a6239403395d62f78ff9b91" title="Carga la escena del selector de niveles de una categoría espécifica" alt="" coords="277,5,493,32"/>
+</map>

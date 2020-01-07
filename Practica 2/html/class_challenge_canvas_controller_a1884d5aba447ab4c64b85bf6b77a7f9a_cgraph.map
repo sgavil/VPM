@@ -1,0 +1,4 @@
+<map id="ChallengeCanvasController.DisableCanvas" name="ChallengeCanvasController.DisableCanvas">
+<area shape="rect" id="node1" title="Desactiva el canvas" alt="" coords="5,5,185,47"/>
+<area shape="rect" id="node2" href="$class_h_u_d_manager.html#a6330ca3efd9224256a9a7fed90339e3b" title="Permite controlar la activacion y desactivacion del panel principal" alt="" coords="233,13,416,39"/>
+</map>

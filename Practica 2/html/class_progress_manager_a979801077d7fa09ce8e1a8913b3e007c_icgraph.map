@@ -1,0 +1,4 @@
+<map id="ProgressManager.DailyRewardOpened" name="ProgressManager.DailyRewardOpened">
+<area shape="rect" id="node1" title="Actualiza la fecha de la última recompensa diaria recogida a el momento en el que es llamado" alt="" coords="260,5,460,47"/>
+<area shape="rect" id="node2" href="$class_h_u_d_manager.html#ad934b44940b65494028ea614560897e3" title="Muestra el canvas de la recompensa diaria" alt="" coords="5,5,212,47"/>
+</map>

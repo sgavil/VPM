@@ -1,0 +1,8 @@
+<map id="DailyRewardCanvasController.AddDailyRewardMoney" name="DailyRewardCanvasController.AddDailyRewardMoney">
+<area shape="rect" id="node1" title="Actualiza la cantidad de dinero actual con el dinero de la recompensa" alt="" coords="5,74,200,115"/>
+<area shape="rect" id="node2" href="$class_h_u_d_manager.html#a6330ca3efd9224256a9a7fed90339e3b" title="Permite controlar la activacion y desactivacion del panel principal" alt="" coords="261,5,444,32"/>
+<area shape="rect" id="node3" href="$class_progress_manager.html#a43e7fcdb241b1fbb36d6a05b6de18baa" title="Agrega dinero al dinero actual" alt="" coords="257,56,448,83"/>
+<area shape="rect" id="node4" href="$class_ads_manager.html#ac5ec82a220dcee550e9ba7ff7608c5ea" title="Genera un anuncio para duplicar las monedas del jugador" alt="" coords="248,107,457,133"/>
+<area shape="rect" id="node6" href="$class_h_u_d_manager.html#a98179c5af2c185913acf91e6ab2c588b" title="Actualiza el texto del dinero" alt="" coords="249,157,457,184"/>
+<area shape="rect" id="node5" href="$class_ads_manager.html#ac309e2d221e3b536ad131f8c42fa6903" title="Genera un anuncio común para el usuario" alt="" coords="505,107,709,133"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="GameManager.AddSkippedWhileChallenge" name="GameManager.AddSkippedWhileChallenge">
+<area shape="rect" id="node1" title="Ocurre cuando se ha intentado jugar un reto viendo un video y el usuario lo ha saltado" alt="" coords="5,5,220,47"/>
+<area shape="rect" id="node2" href="$class_game_manager.html#a2c5ba723880aeb79b1142071dbaacb1d" title="Carga la escena del menu principal" alt="" coords="268,13,456,39"/>
+</map>

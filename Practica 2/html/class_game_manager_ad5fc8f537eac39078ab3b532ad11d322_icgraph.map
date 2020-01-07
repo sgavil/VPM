@@ -1,0 +1,4 @@
+<map id="GameManager.ClickBack" name="GameManager.ClickBack">
+<area shape="rect" id="node1" title="Vuelve a la pantalla anterior" alt="" coords="216,5,387,32"/>
+<area shape="rect" id="node2" href="$class_h_u_d_manager.html#a192276f7b97ab50840d9e491ed9dde34" title="Permite a los botones volver atrás" alt="" coords="5,5,168,32"/>
+</map>

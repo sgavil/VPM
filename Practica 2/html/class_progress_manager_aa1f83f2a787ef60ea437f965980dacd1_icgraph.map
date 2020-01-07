@@ -1,0 +1,4 @@
+<map id="ProgressManager.GetChiperfromJson" name="ProgressManager.GetChiperfromJson">
+<area shape="rect" id="node1" title="Crea un objeto de serialización cifrado a traves de un json y lo devuelve" alt="" coords="252,5,491,32"/>
+<area shape="rect" id="node2" href="$class_persistence_controller.html#aae049dd0b0154a1d94239ca76029f3a2" title="Carga el archivo del progreso del juego y actualiza los valores del manager de progreso" alt="" coords="5,5,204,32"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="HUDManager.GoMainMenu" name="HUDManager.GoMainMenu">
+<area shape="rect" id="node1" title="Metodo llamado para volver al menu principal" alt="" coords="5,5,185,32"/>
+<area shape="rect" id="node2" href="$class_game_manager.html#a2c5ba723880aeb79b1142071dbaacb1d" title="Carga la escena del menu principal" alt="" coords="233,5,421,32"/>
+</map>

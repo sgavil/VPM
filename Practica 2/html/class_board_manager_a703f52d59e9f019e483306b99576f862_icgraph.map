@@ -1,0 +1,7 @@
+<map id="BoardManager.Replay" name="BoardManager.Replay">
+<area shape="rect" id="node1" title="Método que resetea el tablero al estado inicial" alt="" coords="696,31,847,57"/>
+<area shape="rect" id="node2" href="$class_game_manager.html#a87dbf0738ea324c93996a0e3585488b6" title="Llama al replay del tablero para deshacer todos los tiles marcados" alt="" coords="463,5,643,32"/>
+<area shape="rect" id="node3" href="$class_board_manager.html#a9f98b446a72f229788fbf7359a35e092" title="Crea el camino cuando el jugador pide una ayuda. La longitud del camino esta determinada por la varia..." alt="" coords="457,56,648,83"/>
+<area shape="rect" id="node4" href="$class_game_manager.html#ae584e3d3964e4535bbf7f99e561e7319" title="Gestiona la petición de ayuda del usuario , si tiene dinero para pagarlo muestra parte de la solucion..." alt="" coords="247,56,409,83"/>
+<area shape="rect" id="node5" href="$class_h_u_d_manager.html#af4c1a73e7bb491e5186c62a7ca69fc89" title="Llamado cuando se pulsa el boton de pedir una pista" alt="" coords="5,56,199,83"/>
+</map>

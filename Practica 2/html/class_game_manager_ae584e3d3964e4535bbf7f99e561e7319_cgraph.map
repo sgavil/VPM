@@ -1,0 +1,8 @@
+<map id="GameManager.ClickHint" name="GameManager.ClickHint">
+<area shape="rect" id="node1" title="Gestiona la petición de ayuda del usuario , si tiene dinero para pagarlo muestra parte de la solucion..." alt="" coords="5,93,168,120"/>
+<area shape="rect" id="node2" href="$class_board_manager.html#adf8a53b1d3c7ff153913987d6bbdb0b0" title="Comprueba si se han mostrado todas las ayudas posibles de un tablero" alt="" coords="219,5,421,32"/>
+<area shape="rect" id="node3" href="$class_h_u_d_manager.html#a2ea9da9b7acebe0ebb43a93356856951" title="Muestra la animacion cuando no se tiene dinero para comprar algo" alt="" coords="221,57,419,98"/>
+<area shape="rect" id="node4" href="$class_h_u_d_manager.html#a98179c5af2c185913acf91e6ab2c588b" title="Actualiza el texto del dinero" alt="" coords="216,123,424,149"/>
+<area shape="rect" id="node5" href="$class_board_manager.html#a9f98b446a72f229788fbf7359a35e092" title="Crea el camino cuando el jugador pide una ayuda. La longitud del camino esta determinada por la varia..." alt="" coords="225,173,415,200"/>
+<area shape="rect" id="node6" href="$class_board_manager.html#a703f52d59e9f019e483306b99576f862" title="Método que resetea el tablero al estado inicial" alt="" coords="472,173,623,200"/>
+</map>

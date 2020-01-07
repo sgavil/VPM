@@ -1,0 +1,6 @@
+<map id="ProgressManager.GetJson" name="ProgressManager.GetJson">
+<area shape="rect" id="node1" title="Obtiene el json de un Objeto de serializacion" alt="" coords="508,31,684,57"/>
+<area shape="rect" id="node2" href="$class_persistence_controller.html#aae049dd0b0154a1d94239ca76029f3a2" title="Carga el archivo del progreso del juego y actualiza los valores del manager de progreso" alt="" coords="261,5,460,32"/>
+<area shape="rect" id="node3" href="$class_persistence_controller.html#aae92becd665eab97b1d5c323abf806ed" title="Genera y guarda el archivo de progreso" alt="" coords="261,56,460,83"/>
+<area shape="rect" id="node4" href="$class_progress_manager.html#aa9d7969e60458645e3f126ccea4281f5" title="Crea un objeto de serializacion con los valores actuales y guarda el progreso" alt="" coords="5,56,213,83"/>
+</map>

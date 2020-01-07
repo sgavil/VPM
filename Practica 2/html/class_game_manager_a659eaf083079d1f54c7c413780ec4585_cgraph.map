@@ -1,0 +1,4 @@
+<map id="GameManager.NextLevel" name="GameManager.NextLevel">
+<area shape="rect" id="node1" title="Aumenta el contador del nivel, si ha completado todos los de la categoria pasa a la siguiente categor..." alt="" coords="5,5,172,32"/>
+<area shape="rect" id="node2" href="$class_levels_group.html#a13408c31f368df7f0969d8ebbc01a38b" title="Devuelve el número de niveles que contiene una categoria" alt="" coords="220,5,432,32"/>
+</map>

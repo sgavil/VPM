@@ -1,0 +1,8 @@
+<map id="ChallengeCanvasController.ChallengeCompleted" name="ChallengeCanvasController.ChallengeCompleted">
+<area shape="rect" id="node1" title="Avisa al game manager de que se ha completado el reto" alt="" coords="5,74,185,115"/>
+<area shape="rect" id="node2" href="$class_game_manager.html#a0897df792b47a880e6920c1a2ba70eb4" title="Llamado cuando se ha completado un reto" alt="" coords="233,52,464,79"/>
+<area shape="rect" id="node5" href="$class_challenge_canvas_controller.html#a1884d5aba447ab4c64b85bf6b77a7f9a" title="Desactiva el canvas" alt="" coords="259,103,439,145"/>
+<area shape="rect" id="node3" href="$class_progress_manager.html#a43e7fcdb241b1fbb36d6a05b6de18baa" title="Agrega dinero al dinero actual" alt="" coords="512,5,703,32"/>
+<area shape="rect" id="node4" href="$class_game_manager.html#a2c5ba723880aeb79b1142071dbaacb1d" title="Carga la escena del menu principal" alt="" coords="513,56,701,83"/>
+<area shape="rect" id="node6" href="$class_h_u_d_manager.html#a6330ca3efd9224256a9a7fed90339e3b" title="Permite controlar la activacion y desactivacion del panel principal" alt="" coords="516,111,699,137"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="ChallengeCanvasController.PlayChallenge" name="ChallengeCanvasController.PlayChallenge">
+<area shape="rect" id="node1" title="Si se puede jugar el reto desactiva el canvas y se va a la pantalla del reto, si no,..." alt="" coords="5,64,185,105"/>
+<area shape="rect" id="node2" href="$class_challenge_canvas_controller.html#a1884d5aba447ab4c64b85bf6b77a7f9a" title="Desactiva el canvas" alt="" coords="243,5,423,47"/>
+<area shape="rect" id="node4" href="$class_game_manager.html#a3fb7ced499c387850f267619f140e5f2" title="Carga el juego de un reto, teniendo en cuenta si se ha entrado al reto gastando monedas o viendo un v..." alt="" coords="235,71,430,98"/>
+<area shape="rect" id="node7" href="$class_h_u_d_manager.html#a2ea9da9b7acebe0ebb43a93356856951" title="Muestra la animacion cuando no se tiene dinero para comprar algo" alt="" coords="233,123,432,164"/>
+<area shape="rect" id="node3" href="$class_h_u_d_manager.html#a6330ca3efd9224256a9a7fed90339e3b" title="Permite controlar la activacion y desactivacion del panel principal" alt="" coords="495,13,677,39"/>
+<area shape="rect" id="node5" href="$class_levels_group.html#a13408c31f368df7f0969d8ebbc01a38b" title="Devuelve el número de niveles que contiene una categoria" alt="" coords="480,67,692,94"/>
+<area shape="rect" id="node6" href="$class_game_manager.html#a31bb02e4d9e923aec2062c92fc098554" title="Carga la escena del nivel" alt="" coords="494,118,678,145"/>
+</map>

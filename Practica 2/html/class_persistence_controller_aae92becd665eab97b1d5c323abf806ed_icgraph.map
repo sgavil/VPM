@@ -1,0 +1,4 @@
+<map id="PersistenceController.SaveFile" name="PersistenceController.SaveFile">
+<area shape="rect" id="node1" title="Genera y guarda el archivo de progreso" alt="" coords="261,5,460,32"/>
+<area shape="rect" id="node2" href="$class_progress_manager.html#aa9d7969e60458645e3f126ccea4281f5" title="Crea un objeto de serializacion con los valores actuales y guarda el progreso" alt="" coords="5,5,213,32"/>
+</map>

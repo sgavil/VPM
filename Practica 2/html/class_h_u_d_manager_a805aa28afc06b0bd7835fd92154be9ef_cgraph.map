@@ -1,0 +1,5 @@
+<map id="HUDManager.ChallengeFailed" name="HUDManager.ChallengeFailed">
+<area shape="rect" id="node1" title="Metodo llamado cuando el reto se falla" alt="" coords="5,5,200,32"/>
+<area shape="rect" id="node2" href="$class_h_u_d_manager.html#aef2cad7a8880930286608cf77954a99c" title="Metodo llamado para volver al menu principal" alt="" coords="248,5,428,32"/>
+<area shape="rect" id="node3" href="$class_game_manager.html#a2c5ba723880aeb79b1142071dbaacb1d" title="Carga la escena del menu principal" alt="" coords="476,5,664,32"/>
+</map>
