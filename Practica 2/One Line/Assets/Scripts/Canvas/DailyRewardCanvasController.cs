@@ -25,9 +25,11 @@ public class DailyRewardCanvasController : MonoBehaviour
     public void AddDailyRewardMoney(bool duplicated)
     {
         if (duplicated)
-            ProgressManager.Instance.AddMoney(GameManager.Instance._dailyRewardMoney, 2);
+            AdsManager.Instance.DuplicateCoinsAds();
+            //ProgressManager.Instance.AddMoney(GameManager.Instance._dailyRewardMoney, 2);
 
         else ProgressManager.Instance.AddMoney(GameManager.Instance._dailyRewardMoney);
+
         HUDManager.Instance.UpdateMoneyText();
         HUDManager.Instance.ActivatePanel(false);
         rewardCanvas.SetActive(false);

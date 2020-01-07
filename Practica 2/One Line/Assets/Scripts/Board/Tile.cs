@@ -28,16 +28,20 @@ public class Tile : MonoBehaviour
     {
         if (_boardManager.doingScalingDown)
         {
+            _animator.SetBool("ScaleUp", false);
             _animator.SetBool("ScaleDown", true);
-           
-        }
-        else _animator.SetBool("ScaleDown", false);
 
-        if (_boardManager.doingScalingUp)
+
+
+        }
+        //else _animator.SetBool("ScaleDown", false);
+
+        else if (_boardManager.doingScalingUp)
         {
+            _animator.SetBool("ScaleDown", false);
             _animator.SetBool("ScaleUp", true);
         }
-        else _animator.SetBool("ScaleUp", false);
+        //else _animator.SetBool("ScaleUp", false);
     }
 
 

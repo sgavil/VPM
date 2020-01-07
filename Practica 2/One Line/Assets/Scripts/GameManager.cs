@@ -62,9 +62,12 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public int GameID = 47810; //Game I
 
-    public bool _dailyRewardActive = true;
+    public bool _dailyRewardActive;
 
     private bool _screenSizeIsChanged = false;
+
+    private BoardManager _boardManager;
+
     //---------------------------------------------------
 
     void Awake()
@@ -83,7 +86,6 @@ public class GameManager : MonoBehaviour
         _levelsGroup = new LevelsGroup();
         _levelsGroup.LoadLevelsFromJSON(_categoryLevelFiles);
         DontDestroyOnLoad(this);
-        _dailyRewardActive = true;
     }
     public void Start()
     {
@@ -93,7 +95,6 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-        Debug.Log("AAAAAAA " + _dailyRewardActive);
         CheckChallengeDate();
         CheckDailyRewardDate();
 
@@ -118,7 +119,7 @@ public class GameManager : MonoBehaviour
         DateTime actualDate = DateTime.Now;
         _currDailyRewardDate = ProgressManager.Instance._timeWhenDailyRewardOpened;
         TimeSpan diff = actualDate - _currDailyRewardDate;
-        
+
         if (diff.TotalHours >= _dailyRewardTime)
         {
             _dailyRewardActive = true;
@@ -231,7 +232,7 @@ public class GameManager : MonoBehaviour
     public void NextLevel()
     {
         _level++;
-        if (_level > _levelsGroup._levels[_categoryLevel].Count)
+        if (_level > _levelsGroup._levels[_categoryLevel-1].Count)
         {
             _categoryLevel++;
             _level = 0;
@@ -257,7 +258,12 @@ public class GameManager : MonoBehaviour
     {
         if (ProgressManager.Instance._virtualCoin >= _hintPrice)
         {
-            FindObjectOfType<BoardManager>().UserWantHint();
+            if(_boardManager == null)
+                _boardManager = FindObjectOfType<BoardManager>();
+            if (_boardManager.AllHintsShowed())
+                return;
+
+            _boardManager.UserWantHint();
             ProgressManager.Instance._virtualCoin -= _hintPrice;
             HUDManager.Instance.UpdateMoneyText();
 

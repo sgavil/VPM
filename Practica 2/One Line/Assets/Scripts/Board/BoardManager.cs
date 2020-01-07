@@ -48,6 +48,9 @@ public class BoardManager : MonoBehaviour
     [Tooltip("Transform donde se agruparan todos los tiles")]
     public Transform _tilesGroup;
 
+    [Tooltip("Transform donde se agruparan todos los hints")]
+    public Transform _hintsGroup;
+
     [HideInInspector]
     public bool doingScalingDown = false;
     public bool doingScalingUp = false;
@@ -136,6 +139,7 @@ public class BoardManager : MonoBehaviour
             ScaleGridAndSetPosition();
             GameManager.Instance.SetScreenSizeIsChanged(false);
         }
+        Debug.Log(_hintCont );
     }
 
     /// <summary>
@@ -256,7 +260,7 @@ public class BoardManager : MonoBehaviour
         if (x + 1 < _boardWidth && _levelData._layout[y][x + 1] != '0')
         {
             GameObject hint = (GameObject)Instantiate(_hintGameObject, transform);
-            hint.transform.parent = _tilesGroup;
+            hint.transform.parent = _hintsGroup;
             hint.GetComponent<Hint>().SetClueActive(false);
             hint.SetActive(false);
 
@@ -268,7 +272,7 @@ public class BoardManager : MonoBehaviour
         if (y + 1 < _boardHeight && _levelData._layout[y + 1][x] != '0')
         {
             GameObject hint = (GameObject)Instantiate(_hintGameObject, transform);
-            hint.transform.parent = _tilesGroup;
+            hint.transform.parent = _hintsGroup;
             hint.GetComponent<Hint>().SetClueActive(false);
             hint.SetActive(false);
 
@@ -291,13 +295,13 @@ public class BoardManager : MonoBehaviour
             if (path[1] != postPath[1])
             {
                 hint = Instantiate(_hintHorizontalMatrix[path[0], Mathf.Min(path[1], postPath[1])].gameObject, transform);
-                hint.transform.parent = _tilesGroup;
+                hint.transform.parent = _hintsGroup;
             }
                
             else if (path[0] != postPath[0])
             {
                 hint = Instantiate(_hintVerticalMatrix[Mathf.Min(path[0], postPath[0]), path[1]].gameObject, transform);
-                hint.transform.parent = _tilesGroup;
+                hint.transform.parent = _hintsGroup;
             }
                 
 
@@ -581,6 +585,7 @@ public class BoardManager : MonoBehaviour
        
         if (_nextLevelCanvas != null)
         {
+            ClearHints();
             StartCoroutine("startScaleDownAnim");
         }
     }
@@ -591,7 +596,7 @@ public class BoardManager : MonoBehaviour
         
         GameManager.Instance.NextLevel();
         PrepareLevel();
-        StartCoroutine("startScaleUpAnim");
+       StartCoroutine("startScaleUpAnim");
 
     }
     IEnumerator startScaleDownAnim()
@@ -616,7 +621,7 @@ public class BoardManager : MonoBehaviour
         _levelData = GameManager.Instance.GetLevel();
         _levelAvailableSpace = GameManager.Instance.GetAvailableSpace();
         _levelSize = GameManager.Instance.GetSize();
-
+        _hintCont = 0;
         
 
         _tilesShowing = _tilesShowingWhenUserWantHint;
@@ -637,6 +642,16 @@ public class BoardManager : MonoBehaviour
             Destroy(c.gameObject);
         }
     }
-
+    private void ClearHints()
+    {
+        foreach (Transform c in _hintsGroup)
+        {
+            Destroy(c.gameObject);
+        }
+    }
+    public bool AllHintsShowed()
+    {
+        return _hintCont >= _levelData._path.Count - 1;
+    }
 
 }

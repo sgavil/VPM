@@ -16,8 +16,10 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
     private bool transitionAd = false;
 
 
-#if UNITY_ANDROID 
+#if UNITY_ANDROID
     private string gameID = "3410958";
+#elif UNITY_STANDALONE
+    private string gameID = "0";
 #endif
 
     void Awake()
@@ -36,6 +38,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
 
         Advertisement.AddListener(this);
         Advertisement.Initialize(gameID, true);
+            
         Debug.Log("Ads manager inicializado correctamente");
         CheckID();
     }

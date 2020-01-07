@@ -110,8 +110,6 @@ public class HUDManager : MonoBehaviour
     }
     public void ClickBack()
     {
-
-    
         GameManager.Instance.ClickBack();
     }
     public void UpdateMoneyText()
