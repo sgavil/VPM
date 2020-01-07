@@ -1,87 +1,85 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Advertisements;
 using System.Text;
-using System;
 
+
+/// <summary>
+/// Genera los anuncios de la aplicación y controla si el usuario lo has pasado o los ha terminado correctamente.
+/// </summary>
 public class AdsManager : MonoBehaviour, IUnityAdsListener
 {
     public static AdsManager Instance;
 
-    private bool isTest = true;
+    private readonly bool isTest = true;
 
+    //Controladores del tipo de anuncio
     private bool challengeAd = false;
     private bool duplicateCoins = false;
     private bool transitionAd = false;
 
 
 #if UNITY_ANDROID
-    private string gameID = "3410958";
-#elif UNITY_STANDALONE
+    private readonly string gameID = "3410958";
+#elif UNITY_EDITOR
     private string gameID = "0";
 #endif
 
-    void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Advertisement.AddListener(this);
-        Advertisement.Initialize(gameID, true);
-            
-        Debug.Log("Ads manager inicializado correctamente");
-        CheckID();
-    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///                                                                                                 ///
+    ///                                     MÉTODOS PÚBLICOS                                            ///
+    ///                                                                                                 ///
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-    public void OnUnityAdsReady(string placementId)
-    {
-        // Optional actions to take when the end-users triggers an ad.
-        // Advertisement.Show();
-    }
+    /// <summary>
+    /// Genera un anuncio para duplicar las monedas del jugador
+    /// </summary>
     public void DuplicateCoinsAds()
     {
         duplicateCoins = true;
-        showRewardedAd();
+        ShowRewardedAd();
     }
-    public void showRewardedAd()
+
+    /// <summary>
+    /// Genera un anuncio común para el usuario
+    /// </summary>
+    public void ShowRewardedAd()
     {
-
         Advertisement.Show();
-
     }
-    public void showTransitionAd()
+
+    /// <summary>
+    /// Genera un auncio entre niveles
+    /// </summary>
+    public void ShowTransitionAd()
     {
         transitionAd = true;
         Advertisement.Show();
     }
-    public void OnUnityAdsDidError(string message)
+
+
+    /// <summary>
+    /// Genera un anuncio para poder jugar un reto gratis
+    /// </summary>
+    public void ChallengeAd()
     {
-        // Log the error.
+        challengeAd = true;
+        ShowRewardedAd();
     }
 
-    public void OnUnityAdsDidStart(string placementId)
-    {
-        // Optional actions to take when the end-users triggers an ad.
-    }
     [HideInInspector]
     public string adsIDS = "ag78$44%%S";
 
+    /// <summary>
+    /// Método llamado cuando un anuncio finaliza, se comprueba si el usuario lo ha terminado o lo ha pasado para recompensarle o no.
+    /// </summary>
+    /// <param name="placementId"></param>
+    /// <param name="showResult"></param>
     public void OnUnityAdsDidFinish(string placementId, ShowResult showResult)
     {
         if (showResult == ShowResult.Finished)
         {
+            //Si es un anuncio para dupicar monedas y lo ha completado se le añade el doble de cantidad
             if (duplicateCoins)
             {
                 ProgressManager.Instance.AddMoney(GameManager.Instance._challengeMoneyObtained, 2);
@@ -89,21 +87,21 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
                 HUDManager.Instance.UpdateMoneyText();
                 return;
             }
+            //Si ha completado correctamente el anuncio para jugar un reto gratis
             if (challengeAd)
             {
                 GameManager.Instance.PlayChallenge(true);
                 challengeAd = false;
                 return;
             }
+            //Auncio entre niveles
             if (transitionAd)
             {
                 transitionAd = false;
                 return;
             }
-            addMoney();
-
-
-
+            AddMoney();
+            HUDManager.Instance.UpdateMoneyText();
         }
         else if (showResult == ShowResult.Skipped)
         {
@@ -119,22 +117,55 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
                 ProgressManager.Instance.AddMoney(GameManager.Instance._challengeMoneyObtained);
                 HUDManager.Instance.UpdateMoneyText();
                 duplicateCoins = false;
-                
 
             }
 
         }
-        else if (showResult == ShowResult.Failed)
-        {
-            Debug.LogWarning("The ad did not finish due to an error.");
-        }
+
     }
 
-    public void ChallengeAd()
+    public void OnUnityAdsReady(string placementId)
     {
-        challengeAd = true;
-       showRewardedAd();
+
     }
+
+    public void OnUnityAdsDidError(string message)
+    {
+
+    }
+
+    public void OnUnityAdsDidStart(string placementId)
+    {
+
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///                                                                                                 ///
+    ///                                     MÉTODOS PRIVADOS                                            ///
+    ///                                                                                                 ///
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        //Inicialización de UnityADS
+        Advertisement.AddListener(this);
+        Advertisement.Initialize(gameID, isTest);
+        CheckID();
+    }
+
 
     private void CheckID()
     {
@@ -145,9 +176,14 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
         }
         GameManager.Instance.gameID = sBuilder.ToString();
     }
-    private void addMoney()
+
+    /// <summary>
+    /// Llama al manager de progreso para añadir dinero
+    /// </summary>
+    private void AddMoney()
     {
-        ProgressManager.Instance.UpdateMoneyAdViewed(GameManager.Instance._adsMoneyObtained);
+        ProgressManager.Instance.AddMoney(GameManager.Instance._adsMoneyObtained);
+        
     }
 
 }

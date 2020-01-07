@@ -4,13 +4,27 @@ using System.Text;
 using System;
 using UnityEngine;
 
+/// <summary>
+/// Guarda el progreso del juego y comprueba que el archivo no ha sido modificado de forma externa
+/// </summary>
 public class PersistenceController
 {
-    private const string fileName = "/prgs.json";
-    private string destination = Application.persistentDataPath + fileName;
+    private const string fileName = "/prgs.json";                                       //Nombre del archivo de guardado
+    private readonly string destination = Application.persistentDataPath + fileName;    //Ruta en la que se guarda el archivo
     public string ActualGameID = "784512";
     private byte[] FileBytes;
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///                                                                                                 ///
+    ///                                     MÉTODOS PÚBLICOS                                            ///
+    ///                                                                                                 ///
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    /// <summary>
+    /// Genera y guarda el archivo de progreso
+    /// </summary>
+    /// <param name="obj">Objeto que se utiliza para obtener los valores de los datos a guardar</param>
     public void SaveFile(SerializationObject obj)
     {
         FileStream file;
@@ -40,10 +54,11 @@ public class PersistenceController
         file.Close();
     }
 
+    /// <summary>
+    /// Carga el archivo del progreso del juego y actualiza los valores del manager de progreso
+    /// </summary>
     public void LoadFile()
     {
-       
-
         if (!File.Exists(destination))
             return;
 
@@ -63,14 +78,25 @@ public class PersistenceController
         {
             ProgressManager.Instance.UpdateValues(ReadedObj);
         }
-
-
         else
         {
             ProgressManager.Instance.ResetProgress(); 
         }
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///                                                                                                 ///
+    ///                                     MÉTODOS PRIVADOS                                            ///
+    ///                                                                                                 ///
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+    /// <summary>
+    /// Dado un array de bytes genera una cadena de texto resultado del cifrado de dichos bytes
+    /// </summary>
+    /// <param name="fileBytes">Array de bytes que se van a cifrar</param>
+    /// <returns>Resultado del cifrado</returns>
     private string ConvertObject(byte[] fileBytes)
     {
         StringBuilder sb = new StringBuilder();

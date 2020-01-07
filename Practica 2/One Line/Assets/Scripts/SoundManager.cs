@@ -1,7 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+
+/// <summary>
+/// Clase que permite reproducir sonidos 
+/// </summary>
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;

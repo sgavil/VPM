@@ -1,7 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// Componente añadido a un boton para que pueda seleccionar a que nivel se mueve
+/// </summary>
 public class LevelSelectorButton : MonoBehaviour
 {
     public int levelID;

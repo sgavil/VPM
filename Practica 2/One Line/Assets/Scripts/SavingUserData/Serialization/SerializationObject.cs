@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using System;
-using System.Text;
-using System.IO;
-using System.Security.Cryptography;
+using UnityEngine;
+
 
 [Serializable]
 public class SerializationObject
@@ -14,6 +11,7 @@ public class SerializationObject
     public int _virtualCoin;
     public bool _adsBought;
 
+    //Fecha que guarda el último reto jugado
     public int _challengeHour;
     public int _challengeMinutes;
     public int _challengeSeconds;
@@ -21,6 +19,8 @@ public class SerializationObject
     public int _challengeDay;
     public int _challengeMonth;
     public int _challengeYear;
+
+    //Fecha que guarda la última recompensa diaria recogida
 
     public int _dailyRewardHour;
     public int _dailyRewardMinutes;
@@ -33,6 +33,25 @@ public class SerializationObject
     public string _serializationVersion;
     public int _completedChallenges;
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///                                                                                                 ///
+    ///                                     MÉTODOS PÚBLICOS                                            ///
+    ///                                                                                                 ///
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+    /// <summary>
+    /// Crea un objeto de serializacion con los datos que se quieren mantener en el juego
+    /// </summary>
+    /// <param name="levelsCompleted">Número de niveles completados</param>
+    /// <param name="virtualCoin">Moneda que posee el jugador</param>
+    /// <param name="adsBought">Si ha comprado o no el bloqueador de anuncios</param>
+    /// <param name="serializationVersion">Versión de serialización</param>
+    /// <param name="completedChallenges">Número de retos completados</param>
+    /// <param name="_challengeDate">Fecha en la que se ha jugado el último reto</param>
+    /// <param name="_dailyRewardDate">Fecha en la que se ha recogido la última recompensa diaria</param>
     public SerializationObject(List<int> levelsCompleted, int virtualCoin, bool adsBought,
         string serializationVersion, int completedChallenges, DateTime _challengeDate, DateTime _dailyRewardDate)
     {
@@ -60,18 +79,18 @@ public class SerializationObject
         _dailyRewardYear = _dailyRewardDate.Year;
 
     }
-    public DateTime getChallengeDate()
-    {
-        return new DateTime(_challengeYear, _challengeMonth, _challengeDay, _challengeHour, _challengeMinutes, _challengeSeconds);
-    }
-    public DateTime getDailyRewardDate()
-    {
-        return new DateTime(_dailyRewardYear, _dailyRewardMonth, _dailyRewardDay, _dailyRewardHour, _dailyRewardMinutes, _dailyRewardSeconds);
-    }
+    public DateTime GetChallengeDate() => new DateTime(_challengeYear, _challengeMonth, _challengeDay, _challengeHour, _challengeMinutes, _challengeSeconds);
+
+    public DateTime GetDailyRewardDate() => new DateTime(_dailyRewardYear, _dailyRewardMonth, _dailyRewardDay, _dailyRewardHour, _dailyRewardMinutes, _dailyRewardSeconds);
+
+   
 }      
 
+/// <summary>
+/// Clase que esta formada por un objeto de serializacion y el resultado de su cifrado
+/// </summary>
 public class SerializationObjectChiper
 {      
     public SerializationObject obj;
-    public string _result = "";
+    public string _result = "";     //Resultado del cifrado
 }

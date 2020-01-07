@@ -1,7 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// Clase encargada del rescalado del canvas en funcion del dispositivo, calcula el tamaño del canvas superior e inferior.
+/// </summary>
 public class CanvasSize : MonoBehaviour
 {
 
@@ -10,13 +11,6 @@ public class CanvasSize : MonoBehaviour
 
     [Tooltip("Panel inferior de la aplicacion")]
     public GameObject _bottomPanelGO;
-
-    [Tooltip("Espacio entre los dos paneles superior e inferior")]
-    public RectTransform _middlePanelRect;
-
-    private RectTransform _topPanelRect;
-    private RectTransform _botPanelRect;
-
 
     [Tooltip("Porcentaje de la pantalla que pertenece a los bordes.")]
     public float _emptyDiffHeight;
@@ -31,20 +25,49 @@ public class CanvasSize : MonoBehaviour
     private Vector2 _emptyCanvasSize;
     private Vector3 _centerPositionEmptyCanvas;
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///                                                                                                 ///
+    ///                                     MÉTODOS PÚBLICOS                                            ///
+    ///                                                                                                 ///
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+   
+    /// <summary>
+    /// Devuelve el espacio restante en pantalla que se encuentra entre el HUD superior y el inferior
+    /// </summary>
+    /// <returns>Espacio restante</returns>
+    public Vector2 GetEmptySpaceSize()
+    {
+        return _emptyCanvasSize;
+    }
+
+    /// <summary>
+    /// Devuelve el espacio restante en pantalla del centro de la pantalla
+    /// </summary>
+    /// <returns>Espacio restante</returns>
+    public Vector3 GetEmptySpaceCenterPosition()
+    {
+        return _centerPositionEmptyCanvas;
+    }
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///                                                                                                 ///
+    ///                                     MÉTODOS PRIVADOS                                            ///
+    ///                                                                                                 ///
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _screenSize = new Vector2(0, 0);
-        _topPanelRect = _topPanelGO.GetComponent<RectTransform>();
-        _botPanelRect = _bottomPanelGO.GetComponent<RectTransform>();
 
-        if(_middlePanelRect!=null)
-            calculateMiddleSpace();
         Scaler();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (_screenSize.x != Screen.width || _screenSize.y != Screen.height)
         {
@@ -88,39 +111,8 @@ public class CanvasSize : MonoBehaviour
         _centerPositionEmptyCanvas = new Vector3(_screenSize.x / 2,
             (_screenSize.y / 2) + (_topCanvasSize.y + (emptyHeight / 2) - (_screenSize.y / 2)),
             0.0f);
-       // _middlePanelRect.sizeDelta = _emptyCanvasSize;
-        //_middlePanelRect.position = _centerPositionEmptyCanvas;
-
-        Debug.Log("empty: " + emptyHeight.ToString());
     }
 
-    /// <summary>
-    /// Devuelve el espacio restante en pantalla que se encuentra entre el HUD superior y el inferior
-    /// </summary>
-    /// <returns>Espacio central restante</returns>
-    public Vector2 GetEmptySpaceSize()
-    {
-        return _emptyCanvasSize;
-    }
+   
 
-    public Vector3 GetEmptySpaceCenterPosition()
-    {
-        return _centerPositionEmptyCanvas;
-    }
-    private void calculateMiddleSpace()
-    {
-        float TopPanelWidth = _topPanelRect.rect.width * _topPanelRect.localScale.x;
-        float TopPanelHeight = _topPanelRect.rect.height * _topPanelRect.localScale.y;
-
-        float BotPanelWidth = _botPanelRect.rect.width * _botPanelRect.localScale.x;
-        float BotPanelHeight = _botPanelRect.rect.height * _botPanelRect.localScale.y;
-
-        float destWidth = _screenSize.x;
-        float destHeight = _screenSize.y - TopPanelHeight - BotPanelHeight;
-
-        //_middlePanelRect.rect.Set(0, _topPanelRect.rect.y + TopPanelHeight, TopPanelWidth, destHeight);
-        // _middlePanelRect.position = new Vector3(0, _topPanelRect.rect.y + TopPanelHeight,0);
-        _middlePanelRect.sizeDelta = new Vector2(TopPanelWidth, _topPanelRect.rect.y + TopPanelHeight);
-
-    }
 }

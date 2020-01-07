@@ -66,9 +66,7 @@
     <Compile Include="Assets\Scripts\Board\BlockScriptableObject.cs" />
     <Compile Include="Assets\Scripts\Board\BoardManager.cs" />
     <Compile Include="Assets\Scripts\Board\Hint.cs" />
-    <Compile Include="Assets\Scripts\Board\LevelData.cs" />
     <Compile Include="Assets\Scripts\Board\LevelSelector.cs" />
-    <Compile Include="Assets\Scripts\Board\LevelsGroup.cs" />
     <Compile Include="Assets\Scripts\Board\Tile.cs" />
     <Compile Include="Assets\Scripts\Canvas\CanvasSize.cs" />
     <Compile Include="Assets\Scripts\Canvas\ChallengeCanvasController.cs" />
@@ -77,6 +75,8 @@
     <Compile Include="Assets\Scripts\Canvas\LevelCanvasController.cs" />
     <Compile Include="Assets\Scripts\Canvas\LevelSelectorButton.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\LevelsLoading\LevelData.cs" />
+    <Compile Include="Assets\Scripts\LevelsLoading\LevelsGroup.cs" />
     <Compile Include="Assets\Scripts\MiniJSON.cs" />
     <Compile Include="Assets\Scripts\ResourceManager.cs" />
     <Compile Include="Assets\Scripts\SavingUserData\Persistance\PersistenceController.cs" />
